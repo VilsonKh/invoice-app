@@ -1,6 +1,9 @@
 .nav {
+  margin-bottom: 32px !important;
+
 	&__info {
     flex-grow: 1;
+
 		& p {
 			font-weight: 500;
 			font-size: 12px;

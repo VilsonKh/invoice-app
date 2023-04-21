@@ -1,0 +1,74 @@
+.invoicesList {
+	&__item {
+		padding: 24px !important;
+		background-color: white;
+    margin-bottom: 16px !important;
+
+		&-left {
+		}
+
+		&-right {
+      display: flex;
+      flex-direction: column;
+		}
+	}
+}
+
+.item {
+	&__status-container {
+		padding: 13px 30px;
+		border-radius: 6px;
+		background-color: #33d6a010;
+	}
+
+	&__status {
+		font-weight: 700;
+		font-size: 12px;
+		line-height: 15px;
+
+		&-icon {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background-color: black;
+			margin-right: 5px;
+		}
+	}
+
+	&__number {
+		font-weight: 700;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		margin-bottom: 24px !important;
+
+		& span {
+			color: #7e88c3;
+		}
+	}
+
+	&__date {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		margin-bottom: 8px !important;
+		color: #7e88c3;
+	}
+
+	&__name {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		color: #858bb2;
+    text-align: right;
+    margin-bottom: auto !important;
+	}
+
+	&__amount {
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 24px;
+	}
+}
