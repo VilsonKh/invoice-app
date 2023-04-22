@@ -3,6 +3,7 @@
 		padding: 24px !important;
 		background-color: white;
     margin-bottom: 16px !important;
+    border-radius: 8px;
 
 		&-left {
 		}
@@ -18,7 +19,6 @@
 	&__status-container {
 		padding: 13px 30px;
 		border-radius: 6px;
-		background-color: #33d6a010;
 	}
 
 	&__status {
@@ -30,7 +30,6 @@
 			width: 8px;
 			height: 8px;
 			border-radius: 50%;
-			background-color: black;
 			margin-right: 5px;
 		}
 	}
@@ -71,4 +70,41 @@
 		font-size: 16px;
 		line-height: 24px;
 	}
+}
+
+.paid-bg {
+	background: #33D69F10;
+}
+
+.paid-ft {
+	color: #33D69F;
+}
+
+.paid-icon {
+	background: #33D69F;
+}
+
+.pending-bg {
+	background: #ff8f0010;
+	
+}
+
+.pending-ft {
+	color: #ff8f00;
+}
+
+.pending-icon {
+	background: #ff8f00;
+}
+
+.draft-bg {
+	background: rgba(55,59,83, 0.06);
+}
+
+.draft-ft {
+	color: #373b53 !important;
+}
+
+.draft-icon {
+	background: #373b53 !important;
 }
