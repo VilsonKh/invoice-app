@@ -4,7 +4,7 @@ import avatar from "../assets/image-avatar.jpg"
 
 import "../styles/Header.scss";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className="header">
       <div className="header__container d-flex">

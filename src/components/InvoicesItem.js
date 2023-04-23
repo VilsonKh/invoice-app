@@ -1,26 +1,11 @@
 import "../styles/InvoicesItem.scss";
+import StatusElem from "./StatusElem";
 
 const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 	let price = amount.toLocaleString("en-US");
   let dateText = new Date(dateDue).toLocaleDateString('en-GB',{month: "short", day: 'numeric', year: 'numeric'});
 
-	const StatusElem = () => {
-
-    let statusText = "";
-
-    if(!status) {
-      return statusText = 'Processing...'
-    } else {
-      statusText = status[0].toUpperCase() + status.slice(1)
-    }
-     
-		return (
-			<div className={`item__status-container d-flex align-items-center ${status}-bg`}>
-				<div className={`item__status-icon ${status}-icon`}></div>
-				<p className={`item__status ${status}-ft`}>{statusText}</p>
-			</div>
-		);
-	};
+	
 
 	return (
 		<li className="invoicesList__item d-flex justify-content-between">

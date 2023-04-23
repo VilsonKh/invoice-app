@@ -4,7 +4,7 @@ import addIcon from "../assets/icon-plus.svg";
 import dropArrow from "../assets/icon-arrow-down.svg";
 import "../styles/Navigation.scss";
 
-const Navigation = () => {
+const Navigation = (props) => {
 	return (
 		<nav className="nav">
 			<div className="container d-flex justify-content-between">
@@ -16,7 +16,7 @@ const Navigation = () => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<button className="nav__addButton d-flex align-items-center">
+				<button onClick={props.onShow} className="nav__addButton d-flex align-items-center">
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
