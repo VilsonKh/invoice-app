@@ -2,11 +2,11 @@ import ButtonBack from "./ButtonBack";
 import "../styles/InvoicePreview.scss";
 import StatusElem from "./StatusElem";
 
-const InvoicePreview = () => {
+const InvoicePreview = ({onHidePreview}) => {
 	return (
 		<div className="invoicePreview">
 			<div className="container">
-				<ButtonBack></ButtonBack>
+				<ButtonBack onClick={onHidePreview}></ButtonBack>
 				<div className="invoicePreview__status">
 					<p className="invoicePreview__staus-text">Status</p>
 					<StatusElem></StatusElem>

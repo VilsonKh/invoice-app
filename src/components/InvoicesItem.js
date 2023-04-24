@@ -1,14 +1,12 @@
 import "../styles/InvoicesItem.scss";
 import StatusElem from "./StatusElem";
 
-const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
+const InvoicesItem = ({ number, name, dateDue, amount, status, onShowPreview }) => {
 	let price = amount.toLocaleString("en-US");
   let dateText = new Date(dateDue).toLocaleDateString('en-GB',{month: "short", day: 'numeric', year: 'numeric'});
 
-	
-
 	return (
-		<li className="invoicesList__item d-flex justify-content-between">
+		<li onClick={onShowPreview} key={number} number={number} className="invoicesList__item d-flex justify-content-between">
 			<div className="invoicesList__item-left">
 				<p className="item__number">
 					<span>#</span>
@@ -23,7 +21,7 @@ const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 			</div>
 			<div className="invoicesList__item-right">
 				<p className="item__name">{name}</p>
-				<StatusElem></StatusElem>
+				<StatusElem status={status}></StatusElem>
 			</div>
 		</li>
 	);

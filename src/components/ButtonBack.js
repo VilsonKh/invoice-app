@@ -1,11 +1,14 @@
 import leftArrow from "../assets/icon-arrow-left.svg";
 import "../styles/NewInvoice.scss";
 
-const ButtonBack = (props) => {
+const ButtonBack = ({onHide, onHidePreview}) => {
+
+ 
+
   return (
     <div className="addInvoice__button-container">
 					<img src={leftArrow} alt="" />
-					<button onClick={props.onHide}>Go back</button>
+					<button>Go back</button>
 				</div>
   )
 }

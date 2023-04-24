@@ -9,7 +9,18 @@ import "./styles/App.scss"
 
 function App() {
 
-  const [newInvoiceVisible, setnewInvoiceVisible] = useState(false)
+  const [newInvoiceVisible, setnewInvoiceVisible] = useState(false);
+  const [previewInvoiceVisible, setPreviewInvoiceVisible] = useState(false);
+
+  const showInvoicePreview = (e) => {
+    setPreviewInvoiceVisible(true)
+    const target = e.target.closest(['li']).getAttribute("number");
+    console.log(target)
+  }
+  
+  const hideInvoicePreview = () => {
+    setPreviewInvoiceVisible(false)
+  }
 
   const showNewInvoiceForm =() => {
     setnewInvoiceVisible(true)
@@ -22,10 +33,10 @@ function App() {
   return (
     <div className="App">
       <Header></Header>
-      {newInvoiceVisible && <NewInvoice onHide={hideNewInvoiceForm}></NewInvoice>}
-      <InvoicePreview></InvoicePreview>
+      {newInvoiceVisible && <NewInvoice onHidePreview={hideNewInvoiceForm}></NewInvoice>}
+      {previewInvoiceVisible && <InvoicePreview onHidePreview={hideInvoicePreview}></InvoicePreview>}
       <Navigation  onShow={showNewInvoiceForm}></Navigation>
-      <InvoicePreview></InvoicePreview>
+      {!previewInvoiceVisible && <InvoicesList onShowPreview={showInvoicePreview}></InvoicesList>}
 
     </div>
   );

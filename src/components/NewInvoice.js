@@ -20,9 +20,9 @@ const NewInvoice = (props) => {
 				<h1 className="addInvoice__heading">New Invoice</h1>
 				<Form></Form>
         <div className="addInvoice__groupButtons">
-          <button type="submit" className="addInvoice__discard btn-status">Discard</button>
-          <button type="submit" className="addInvoice__draft btn-status">Save ad Draft</button>
-          <button type="submit" className="addInvoice__send btn-status">Save & Send</button>
+          <button type="submit" form="newInvoice" id='discard' className="addInvoice__discard btn-status">Discard</button>
+          <button type="submit" form="newInvoice" id='draft' className="addInvoice__draft btn-status">Save ad Draft</button>
+          <button type="submit" form="newInvoice" id="pending" className="addInvoice__send btn-status">Save & Send</button>
         </div>
 			</div>
 		</section>
