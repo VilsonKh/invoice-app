@@ -3,6 +3,7 @@ import Dropdown from "./Dropdown";
 import addIcon from "../assets/icon-plus.svg";
 import dropArrow from "../assets/icon-arrow-down.svg";
 import "../styles/Navigation.scss";
+import { Link } from "react-router-dom";
 
 const Navigation = (props) => {
 	return (
@@ -16,12 +17,12 @@ const Navigation = (props) => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<button onClick={props.onShow} className="nav__addButton d-flex align-items-center">
+				<Link to="/new" className="nav__addButton d-flex align-items-center">
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
-					<p>New</p>
-				</button>
+					<p>New</p> 
+				</Link>
 			</div>
 		</nav>
 	);

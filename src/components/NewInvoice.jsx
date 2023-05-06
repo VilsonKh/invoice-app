@@ -16,7 +16,7 @@ const NewInvoice = (props) => {
 	return (
 		<section className="addInvoice">
 			<div className="container">
-				<ButtonBack onHide={props.onHide}></ButtonBack>
+				<ButtonBack ></ButtonBack>
 				<h1 className="addInvoice__heading">New Invoice</h1>
 				<Form></Form>
         <div className="addInvoice__groupButtons">

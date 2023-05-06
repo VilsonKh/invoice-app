@@ -5,6 +5,11 @@
     margin-bottom: 16px !important;
     border-radius: 8px;
 
+		&:hover {
+			box-shadow: 0 4px 8px 0 rgba(18,18,19,.1);
+			transform: scale(0.99);
+		}
+
 		&-left {
 		}
 
@@ -19,6 +24,7 @@
 	&__status-container {
 		padding: 13px 30px;
 		border-radius: 6px;
+		width: 104px;
 	}
 
 	&__status {

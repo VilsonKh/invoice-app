@@ -1,0 +1,49 @@
+import Header from "./components/Header";
+import InvoicesList from "./components/InvoicesList";
+import NewInvoice from "./components/NewInvoice";
+import InvoicePreview from "./components/InvoicePreview";
+import Page404 from "./components/Page404";
+
+import { BrowserRouter as Router, Route, Routes, } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import "./styles/App.scss";
+
+function App() {
+	// const showInvoicePreview = (e) => {
+	// 	const target = e.target.closest(["li"]).getAttribute("number");
+	// 	console.log(target);
+	// };
+
+  const [deleteId, setDeleteId] = useState(false);
+  const [openedInvoice, setOpenedInvoice] = useState('')
+
+    console.log(openedInvoice)
+
+    const onDelete = (id,data) => {
+      console.log(`deleted ${id}`)
+      data.splice(data.findIndex(elem => elem.id === id), 1)
+    }
+
+    const onHandleDelete = () => {
+      setDeleteId(true)
+    }
+
+	return (
+		<Router>
+			<div className="App">
+				<Header></Header>
+				<main>
+					<Routes>
+						<Route path="/new" element={<NewInvoice />}/>
+						<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} onHandleDelete={onHandleDelete}/>}/>
+						<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} onDelete={onDelete}/>}/>
+            <Route path="*"element={<Page404/>} />
+					</Routes>
+				</main>
+			</div>
+		</Router>
+	);
+}
+
+export default App;

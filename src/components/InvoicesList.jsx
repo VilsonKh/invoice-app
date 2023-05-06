@@ -1,13 +1,22 @@
 import "../styles/InvoicesList.scss";
 import InvoicesItem from "./InvoicesItem";
 import jsonData from "../data.json";
+import Navigation from "./Navigation";
 
-const InvoicesList = ({onShowPreview}) => {
+
+
+const InvoicesList = ({onShowPreview, currentInvoice}) => {
 	const data = [...jsonData];
-		
+
+	const onDelete = () => {
+		console.log(`deleted ${currentInvoice}`);
+		return data.splice(data.findIndex(elem => elem.id === currentInvoice), 1)
+	}
+
 	const elements = data.map((invoice) => {
-			const {id, paymentDue, items, clientName, status} = invoice;
+		const {id, paymentDue, items, clientName, status} = invoice;
 				return <InvoicesItem 
+					// onDelete={onDelete}
 					key={id}
 					number={id} 
 					dateDue={paymentDue} 
@@ -21,6 +30,7 @@ const InvoicesList = ({onShowPreview}) => {
 
 	return (
 		<section className="invoicesList">
+			<Navigation/>
 			<div className="container">
 				<ul className="invoicesList__list">{elements}</ul>
 			</div>
