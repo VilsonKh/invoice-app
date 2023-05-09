@@ -1,15 +1,15 @@
 import ButtonBack from "./ButtonBack";
 import StatusElem from "./StatusElem";
 import ConfirmDelete from "./ConfirmDelete";
-import jsonData from "../data.json";
 import { useParams } from "react-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import "../styles/InvoicePreview.scss";
+import invoiceContext from "../context/invoice/invoiceContext";
 
 
 const InvoicePreview = ({setOpenedInvoice}) => {
-	const data = [...jsonData];
+	const {invoices} = useContext(invoiceContext);
 
 	const { invoiceId } = useParams();
 	setOpenedInvoice(invoiceId);
@@ -24,7 +24,7 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 		setConfDelete(false);
 	}
 
-	const singleData = data.filter((el) => el.id === invoiceId);
+	const singleData = invoices.filter((el) => el.id === invoiceId);
 	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = singleData[0];
 
 	const dateTransform = (date) => {

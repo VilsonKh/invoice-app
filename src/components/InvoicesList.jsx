@@ -2,18 +2,21 @@ import "../styles/InvoicesList.scss";
 import InvoicesItem from "./InvoicesItem";
 import jsonData from "../data.json";
 import Navigation from "./Navigation";
-
+import invoiceContext from '../context/invoice/invoiceContext';
+import { useContext } from "react";
 
 
 const InvoicesList = ({onShowPreview, currentInvoice, isDelete}) => {
 	const data = [...jsonData];
 
+	const {invoices} = useContext(invoiceContext);
+	
 	// const onDelete = () => {
 	// 	console.log(`deleted ${currentInvoice}`);
 	// 	return data.splice(data.findIndex(elem => elem.id === currentInvoice), 1)
 	// }
 
-	const elements = data.map((invoice) => {
+	const listItems = invoices.map((invoice) => {
 		const {id, paymentDue, items, clientName, status} = invoice;
 				return <InvoicesItem 
 					key={id}
@@ -31,7 +34,7 @@ const InvoicesList = ({onShowPreview, currentInvoice, isDelete}) => {
 		<section className="invoicesList">
 			<Navigation/>
 			<div className="container">
-				<ul className="invoicesList__list">{elements}</ul>
+				<ul className="invoicesList__list">{listItems}</ul>
 			</div>
 		</section>
 	);
