@@ -4,10 +4,13 @@ import addIcon from "../assets/icon-plus.svg";
 import dropArrow from "../assets/icon-arrow-down.svg";
 import "../styles/Navigation.scss";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import darkContext from "../context/dark/darkContext";
 
 const Navigation = (props) => {
+	const { dark} = useContext(darkContext)
 	return (
-		<nav className="nav">
+		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
 			<div className="container d-flex justify-content-between">
 				<div className="nav__info">
 					<h1>Invoices</h1>

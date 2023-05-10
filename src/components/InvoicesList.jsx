@@ -1,21 +1,16 @@
 import "../styles/InvoicesList.scss";
 import InvoicesItem from "./InvoicesItem";
-import jsonData from "../data.json";
 import Navigation from "./Navigation";
 import invoiceContext from '../context/invoice/invoiceContext';
 import { useContext } from "react";
+import darkContext from "../context/dark/darkContext";
 
 
 const InvoicesList = ({onShowPreview, currentInvoice, isDelete}) => {
-	const data = [...jsonData];
 
+	const{dark} = useContext(darkContext);
 	const {invoices} = useContext(invoiceContext);
 	
-	// const onDelete = () => {
-	// 	console.log(`deleted ${currentInvoice}`);
-	// 	return data.splice(data.findIndex(elem => elem.id === currentInvoice), 1)
-	// }
-
 	const listItems = invoices.map((invoice) => {
 		const {id, paymentDue, items, clientName, status} = invoice;
 				return <InvoicesItem 

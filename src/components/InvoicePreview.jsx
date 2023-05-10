@@ -6,14 +6,17 @@ import { useContext, useState } from "react";
 
 import "../styles/InvoicePreview.scss";
 import invoiceContext from "../context/invoice/invoiceContext";
+import { initialState } from "../context/invoice/invoiceReducer";
 
 
 const InvoicePreview = ({setOpenedInvoice}) => {
 	const {invoices} = useContext(invoiceContext);
-
+	
 	const { invoiceId } = useParams();
 	setOpenedInvoice(invoiceId);
+	
 
+	
 	const [confDelete,setConfDelete] = useState(false)
 
 	const onHandleOpen = () => {

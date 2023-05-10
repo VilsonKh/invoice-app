@@ -11,18 +11,19 @@ import {
 	CANCEL_EDIT,
 	SAVE_CHANGES,
 	INVOICE_ERROR,
+	CURRENT_INVOICE
 } from "../types";
 
 export const initialState = {
-  invoices: [],
-  newInvoiceForm: false,
-  invoiceDetails: false,
-  editInvoiceForm: false,
-  deleteConfirmation: false,
-  currentUser: null,
-  filters: ['paid', 'pending', 'draft'],
-  error: null,
-}
+	invoices: [],
+	newInvoiceForm: false,
+	invoiceDetails: false,
+	editInvoiceForm: false,
+	deleteConfirmation: false,
+	currentInvoice: null,
+	filters: ["paid", "pending", "draft"],
+	error: null,
+};
 
 const invoiceReducer = (state, action) => {
 	switch (action.type) {
@@ -94,6 +95,11 @@ const invoiceReducer = (state, action) => {
 				...state,
 				error: action.payload,
 			};
+		case CURRENT_INVOICE:
+			return{
+				...state,
+				currentInvoice: action.payload
+			}
 		default:
 			return state;
 	}

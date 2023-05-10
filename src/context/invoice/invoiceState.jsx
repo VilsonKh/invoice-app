@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useReducer } from "react";
 import InvoiceContext from "./invoiceContext";
 import data from '../../data.json'
+import invoiceReducer, { initialState } from "./invoiceReducer";
+import { DELETE_CONFIRMATION } from "../types";
+import { useParams } from "react-router";
 
-const InvoiceState = (props) => {
+const InvoiceState = ({children}) => {
+
+
+  const [state, dispatch] = useReducer(invoiceReducer, initialState);
+
+  const deleteButtonClick = () => {
+     dispatch(
+      {
+      type: DELETE_CONFIRMATION,
+      payload: true, 
+      })
+      console.log()
+      // state.invoices.splice(state.invoices.findIndex())
+
+  }
+
+  const value = {
+        invoices: [...data],
+				newInvoiceForm: state.newInvoiceForm,
+				invoiceDetails: state.invoiceDetails,
+				editInvoiceForm: state.editInvoiceForm,
+				deleteConfirmation: state.deleteConfirmation,
+				currentInvoice: state.currentInvoice,
+				filters: state.filters,
+				error: state.error,
+        deleteButtonClick,
+  }
 
 	return (
 		<InvoiceContext.Provider
-			value={{
-				invoices: [...data],
-				newInvoiceForm: false,
-				invoiceDetails: false,
-				editInvoiceForm: false,
-				deleteConfirmation: false,
-				currentInvoice: null,
-				filters: ["paid", "pending", "draft"],
-				error: null,
-			}}
+			value={value}
 		>
-			{props.children}
+			{children}
 		</InvoiceContext.Provider>
 	);
 };

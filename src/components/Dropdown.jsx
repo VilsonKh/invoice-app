@@ -1,10 +1,13 @@
+import { useContext } from "react";
+import darkContext from "../context/dark/darkContext";
 import "../styles/Dropdown.scss";
 
 const Dropdown = () => {
+	const {dark} = useContext(darkContext)
 	return (
-		<div className="nav__dropdown d-flex align-items-center">
+		<div className={`nav__dropdown d-flex align-items-center ${dark ? 'dark-font' : ''}`}>
 					<form className="dropdown nav__dropdown d-flex align-items-center">
-						<button className="dropdown__button" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+						<button className={`dropdown__button ${dark ? 'dark-font' : ''}`} type="button"  data-bs-toggle="dropdown" aria-expanded="false">
 							Filter
 						</button>
 						<ul className="dropdown-menu">

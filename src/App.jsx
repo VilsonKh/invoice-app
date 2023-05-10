@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 
 import "./App.scss";
+import DarkState from "./context/dark/darkState";
 
 function App() {
 	// const showInvoicePreview = (e) => {
@@ -28,21 +29,23 @@ function App() {
 	};
 
 	return (
-		<Router>
-			<div className="App">
-				<Header></Header>
-			<InvoiceState>
-				<main>
-					<Routes>
-						<Route path="/new" element={<NewInvoice />} />
-						<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} />} />
-						<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} />} />
-						<Route path="*" element={<Page404 />} />
-					</Routes>
-				</main>
-				</InvoiceState>
-			</div>
-		</Router>
+		<DarkState>
+			<Router>
+				<div className="App">
+					<Header></Header>
+					<InvoiceState>
+						<main>
+							<Routes>
+								<Route path="/new" element={<NewInvoice />} />
+								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} />} />
+								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} />} />
+								<Route path="*" element={<Page404 />} />
+							</Routes>
+						</main>
+					</InvoiceState>
+				</div>
+			</Router>
+		</DarkState>
 	);
 }
 
