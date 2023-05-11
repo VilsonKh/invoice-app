@@ -11,12 +11,13 @@ import {
 	CANCEL_EDIT,
 	SAVE_CHANGES,
 	INVOICE_ERROR,
-	CURRENT_INVOICE
+	CURRENT_INVOICE,
+	GET_INVOICES
 } from "../types";
 
 export const initialState = {
 	invoices: [],
-	newInvoiceForm: false,
+	newInvoiceForm: null,
 	invoiceDetails: false,
 	editInvoiceForm: false,
 	deleteConfirmation: false,
@@ -27,6 +28,12 @@ export const initialState = {
 
 const invoiceReducer = (state, action) => {
 	switch (action.type) {
+
+		case GET_INVOICES: 
+		return {
+			...state,
+			invoices:action.payload
+		}
 		case NEW_INVOICE_FORM:
 			return {
 				...state,
@@ -66,8 +73,8 @@ const invoiceReducer = (state, action) => {
 			};
 		case MARK_PAID:
 			return {
-				...state,
-				currentUser: action.payload,
+				...state
+				
 			};
 		case CONFIRM_DELETE:
 			return {

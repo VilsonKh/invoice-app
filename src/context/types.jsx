@@ -12,3 +12,4 @@ export const SAVE_CHANGES = "SAVE_CHANGES";
 export const DARK = "DARK";
 export const INVOICE_ERROR = "INVOICE_ERROR";
 export const CURRENT_INVOICE = "CURRENT_INVOICE";
+export const GET_INVOICES = 'GET_INVOICES';

@@ -6,16 +6,18 @@ import "../styles/Navigation.scss";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import darkContext from "../context/dark/darkContext";
+import invoiceContext from "../context/invoice/invoiceContext";
 
 const Navigation = (props) => {
-	const { dark} = useContext(darkContext)
+	const { dark} = useContext(darkContext);
+	const {invoices} = useContext(invoiceContext)
 	return (
 		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
 			<div className="container d-flex justify-content-between">
 				<div className="nav__info">
 					<h1>Invoices</h1>
 					<p>
-						<span>7</span> invoices
+						<span>{invoices.length}</span> invoices
 					</p>
 				</div>
 				

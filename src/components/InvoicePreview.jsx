@@ -2,19 +2,20 @@ import ButtonBack from "./ButtonBack";
 import StatusElem from "./StatusElem";
 import ConfirmDelete from "./ConfirmDelete";
 import { useParams } from "react-router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import "../styles/InvoicePreview.scss";
 import invoiceContext from "../context/invoice/invoiceContext";
-import { initialState } from "../context/invoice/invoiceReducer";
+import darkContext from "../context/dark/darkContext";
 
 
-const InvoicePreview = ({setOpenedInvoice}) => {
-	const {invoices} = useContext(invoiceContext);
-	
+
+const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
+	const {invoices, addCurrentInvoice} = useContext(invoiceContext);
+	const {dark} = useContext(darkContext)
 	const { invoiceId } = useParams();
+
 	setOpenedInvoice(invoiceId);
-	
 
 	
 	const [confDelete,setConfDelete] = useState(false)
@@ -26,6 +27,12 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 	const onHandleClose = () => {
 		setConfDelete(false);
 	}
+
+	// const onMarkPaid = () => {
+	// 	const currentInvoiceIndex = invoices.findIndex(elem => elem.id===invoiceId)
+	// 	console.log(currentInvoiceIndex)
+	// 	// markPaid(currentInvoiceIndex)
+	// }
 
 	const singleData = invoices.filter((el) => el.id === invoiceId);
 	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = singleData[0];
@@ -41,7 +48,7 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 		return (
 			<div className="invoicePreview__list" key={i}>
 				<ul className="invoicePreview__list-inner">
-					<li className="invoicePreview__list-item">
+					<li className={`invoicePreview__list-item ${dark ? 'dark-light' : ''}`}>
 						<div className="invoicePreview__list-item-left">
 							<p className="invoicePreview__itemName">{elem.name}</p>
 							<p className="invoicePreview__qtySum">
@@ -60,17 +67,17 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 	return (
 		<>
 			{confDelete ? <ConfirmDelete confClose={onHandleClose}></ConfirmDelete> : null}
-			<div className="invoicePreview">
+			<div className={`invoicePreview ${dark ? 'dark-nav' : ''}`}>
 				<div className="container">
 					<ButtonBack></ButtonBack>
-					<div className="invoicePreview__status">
+					<div className={`invoicePreview__status ${dark ? 'dark-header' : ''}`}>
 						<p className="invoicePreview__staus-text">Status</p>
 						<StatusElem status={status}></StatusElem>
 					</div>
-					<div className="invoicePreview__info">
+					<div className={`invoicePreview__info ${dark ? 'dark-header' : ''}`}>
 						<div className="invoicePreview__heading">
 							<p className="invoicePreview__number">
-								#<span>{id}</span>
+								#<span className={`${dark ? 'dark-font' : ''}`}>{id}</span>
 							</p>
 							<p className="invoicePreview__description">{description}</p>
 						</div>
@@ -83,15 +90,15 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 						<div className="invoicePreview__bill">
 							<div className="invoicePreview__bill-date">
 								<label className="invoicePreview__labelDate label">Invoice Date</label>
-								<p className="invoicePreview__invoiceDate big-fs">{dateTransform(createdAt)}</p>
+								<p className={`invoicePreview__invoiceDate ${dark ? 'dark-font' : ''}`} big-fs>{dateTransform(createdAt)}</p>
 							</div>
 							<div className="invoicePreview__bill-dueDate">
 								<label className="invoicePreview__labelDue label">Payment Due</label>
-								<p className="invoicePreview__invoiceDue big-fs">{dateTransform(paymentDue)}</p>
+								<p className={`invoicePreview__invoiceDue big-fs ${dark ? 'dark-font' : ''}`} >{dateTransform(paymentDue)}</p>
 							</div>
 							<div className="invoicePreview__bill-addressTo label">
 								<label className="invoicePreview__labelDate">Bill To</label>
-								<p className="invoicePreview__clientName big-fs">{clientName}</p>
+								<p className={`invoicePreview__clientName big-fs ${dark ? 'dark-font' : ''}`}>{clientName}</p>
 								<p className="invoicePreview__ToStreet">{clientAddress.street}</p>
 								<p className="invoicePreview__ToCity">{clientAddress.city}</p>
 								<p className="invoicePreview__ToPost">{clientAddress.postCode}</p>
@@ -100,17 +107,17 @@ const InvoicePreview = ({setOpenedInvoice}) => {
 						</div>
 						<div className="invoicePreview__bill-email">
 							<label className="invoicePreview__label-email label">Sent To</label>
-							<p className="invoicePreview__email big-fs">{clientEmail}</p>
+							<p className={`invoicePreview__email big-fs ${dark ? 'dark-font' : ''}`}>{clientEmail}</p>
 						</div>
 						{TotalItems}
-						<div className="invoicePreview__total">
-							<p className="invoicePreview__total-text">Grand Total</p>
+						<div className={`invoicePreview__total ${dark ? 'dark-black' : ''}`}>
+							<p className="invoicePreview__total-text">Amount Due</p>
 							<p className="invoicePreview__total-sum">
 								£ <span>{total}</span>
 							</p>
 						</div>
 					</div>
-					<div className="invoicePreview__groupButtons">
+					<div className={`invoicePreview__groupButtons ${dark ? 'dark-header' : ''}`}>
 						<button className="invoicePreview__btn-edit">Edit</button>
 						<button className="invoicePreview__btn-delete" onClick={onHandleOpen}>Delete</button>
 						<button className="invoicePreview__btn-paid" >Mark as Paid</button>

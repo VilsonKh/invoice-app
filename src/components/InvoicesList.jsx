@@ -2,15 +2,26 @@ import "../styles/InvoicesList.scss";
 import InvoicesItem from "./InvoicesItem";
 import Navigation from "./Navigation";
 import invoiceContext from '../context/invoice/invoiceContext';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import darkContext from "../context/dark/darkContext";
+import dataJson from '../data.json';
 
 
-const InvoicesList = ({onShowPreview, currentInvoice, isDelete}) => {
+const InvoicesList = ({onShowPreview}) => {
 
 	const{dark} = useContext(darkContext);
-	const {invoices} = useContext(invoiceContext);
+	const {invoices, newInvoiceForm, getInvoices, addCurrentInvoice} = useContext(invoiceContext);
+	const [initialInvoices,setInitialInvoices] = useState([])
 	
+	useEffect (() => {
+		getInvoices();
+		setInitialInvoices(invoices)
+
+	},[])
+
+
+
+
 	const listItems = invoices.map((invoice) => {
 		const {id, paymentDue, items, clientName, status} = invoice;
 				return <InvoicesItem 
@@ -21,6 +32,7 @@ const InvoicesList = ({onShowPreview, currentInvoice, isDelete}) => {
 					name={clientName} 
 					status={status}
 			  	onShowPreview={onShowPreview}
+					
 					>
 				</InvoicesItem>;
 	});

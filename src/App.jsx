@@ -4,7 +4,7 @@ import NewInvoice from "./components/NewInvoice";
 import InvoicePreview from "./components/InvoicePreview";
 import Page404 from "./components/Page404";
 import InvoiceState from "./context/invoice/invoiceState";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useParams } from "react-router-dom";
 import { useState } from "react";
 
 import "./App.scss";
@@ -17,8 +17,6 @@ function App() {
 	// };
 
 	const [openedInvoice, setOpenedInvoice] = useState("");
-
-	console.log(openedInvoice);
 
 	const onDelete = (id, someData) => {
 		console.log(`deleted ${id}`);
@@ -37,7 +35,7 @@ function App() {
 						<main>
 							<Routes>
 								<Route path="/new" element={<NewInvoice />} />
-								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} />} />
+								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} openedInvoice={openedInvoice} />} />
 								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} />} />
 								<Route path="*" element={<Page404 />} />
 							</Routes>

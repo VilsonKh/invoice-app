@@ -1,17 +1,53 @@
 import busket from "../assets/icon-delete.svg"
 import "../styles/NewInvoice.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import invoiceContext from "../context/invoice/invoiceContext";
 
 const Form = (props) => {
 
-  const [formData,setFormData] = useState({})
+ 
   const [formField,setFormField] = useState([{value: ''}])
+	const {addNewInvoice} = useContext(invoiceContext)
 
   const onSubmit = (e) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form)
-  console.log(formData)
+	const today = new Date().toLocaleString()
+	const transformFormData = {
+    "id": null,
+    "createdAt": today,
+    "paymentDue": null,
+    "description": null,
+    "paymentTerms": formData.select,
+    "clientName": formData.name,
+    "clientEmail": formData.email,
+    "status": "paid",
+    "senderAddress": {
+      "street": formData.fromAddress,
+      "city": formData.city,
+      "postCode": formData.postCode,
+      "country": formData.country
+    },
+    "clientAddress": {
+      "street": formData.toAddress,
+      "city": formData.toCity,
+      "postCode": formData.toPostCode,
+      "country": formData.toCountry
+    },
+    "items": [
+      {
+        "name": formData.itemName,
+        "quantity": formData.qty,
+        "price": formData.itemPrice,
+        "total": formData.total
+      }
+    ],
+    "total": 1800.90
+  }
+
+	console.log(transformFormData)
+	addNewInvoice(transformFormData)
 }
 
 const addField = (e) => {
@@ -83,10 +119,10 @@ const submit = (event) => {
 						</div>
 						<div className="row">
 							<div className="form__input-container col-6">
-								<label className="form__label" htmlFor="toCountry">
+								<label className="form__label" htmlFor="toCity">
 									City
 								</label>
-								<input className="form__input" id="toCountry" name="toCountry" type="text" />
+								<input className="form__input" id="toCity" name="toCity" type="text" />
 							</div>
 							<div className="form__input-container col-6">
 								<label className="form__label" htmlFor="toPostCode">
@@ -131,7 +167,7 @@ const submit = (event) => {
 									<label className="form__label" htmlFor="itemName">
 										Item Name
 									</label>
-									<input value={input.value} className="form__input" id="itemName" name="itemName" type="text" />
+									<input  className="form__input" id="itemName" name="itemName" type="text" />
 								</div>
 							</div>
 							<div className="row">
@@ -139,17 +175,17 @@ const submit = (event) => {
 									<label className="form__label" htmlFor="qty">
 										Qty.
 									</label>
-									<input value={input.value} className="form__input" id="qty" name="qty" type="number" />
+									<input  className="form__input" id="qty" name="qty" type="number" />
 								</div>
 								<div className="form__input-container col-4">
-									<label className="form__label" htmlFor="itemName">
+									<label className="form__label" htmlFor="itemPrice">
 										Price
 									</label>
-									<input value={input.value} className="form__input" name="itemName" id="itemName" type="number" />
+									<input  className="form__input" name="itemPrice" id="itemPrice" type="number" />
 								</div>
 								<div className="form__input-container col-3">
 									<label className="form__label">Total</label>
-									<p className="form__totalPrice">0</p>
+									<input name="total" className="form__totalPrice" defaultValue={0}/>
 								</div>
 								<div className="form__button-container col-2">
 									<button onClick={submit} className="form__button" >
