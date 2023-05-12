@@ -16,10 +16,8 @@ const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 		console.log(currentInvoice)
 	}
 
-	console.log(number)
-
 	return (
-		<Link to={`/${number }`} key={number} number={number} className={`invoicesList__item d-flex justify-content-between ${dark ? ' dark-header' : ""}`} onClick={(e)=>{addCurrentInvoice(e.target.getAttribute('number'))}}>
+		<Link to={`/${number }`} key={number} number={number} className={`invoicesList__item d-flex justify-content-between ${dark ? ' dark-header' : ""}`} onClick={(e)=>{addCurrentInvoice(number)}}>
 
 				<div className={`invoicesList__item-left ${dark ? 'dark-header' : ''}`}>
 					<p className="item__number">

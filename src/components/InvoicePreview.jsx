@@ -1,8 +1,8 @@
 import ButtonBack from "./ButtonBack";
 import StatusElem from "./StatusElem";
 import ConfirmDelete from "./ConfirmDelete";
-import { useParams } from "react-router";
-import { useContext, useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router";
+import { useContext, useState } from "react";
 
 import "../styles/InvoicePreview.scss";
 import invoiceContext from "../context/invoice/invoiceContext";
@@ -11,14 +11,19 @@ import darkContext from "../context/dark/darkContext";
 
 
 const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
-	const {invoices, addCurrentInvoice} = useContext(invoiceContext);
+	const {invoices,  markAsPaid, confirmDelete} = useContext(invoiceContext);
 	const {dark} = useContext(darkContext)
 	const { invoiceId } = useParams();
 
 	setOpenedInvoice(invoiceId);
-
 	
+
+
 	const [confDelete,setConfDelete] = useState(false)
+
+	if(confirmDelete) {
+		return <Navigate to='/'></Navigate>
+	}
 
 	const onHandleOpen = () => {
 		setConfDelete(true);
@@ -33,6 +38,8 @@ const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
 	// 	console.log(currentInvoiceIndex)
 	// 	// markPaid(currentInvoiceIndex)
 	// }
+
+
 
 	const singleData = invoices.filter((el) => el.id === invoiceId);
 	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = singleData[0];
@@ -120,7 +127,7 @@ const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
 					<div className={`invoicePreview__groupButtons ${dark ? 'dark-header' : ''}`}>
 						<button className="invoicePreview__btn-edit">Edit</button>
 						<button className="invoicePreview__btn-delete" onClick={onHandleOpen}>Delete</button>
-						<button className="invoicePreview__btn-paid" >Mark as Paid</button>
+						<button className="invoicePreview__btn-paid" onClick={() => markAsPaid(id)} >Mark as Paid</button>
 					</div>
 			
 				</div>

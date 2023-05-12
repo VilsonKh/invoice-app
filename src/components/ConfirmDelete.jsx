@@ -3,6 +3,9 @@ import "../styles/ConfirmDelete.scss";
 import { useParams } from "react-router";
 import invoiceContext from "../context/invoice/invoiceContext";
 import darkContext from "../context/dark/darkContext";
+import {Link} from 'react-router-dom';
+
+
 const ConfirmDelete = ({confClose}) => {
   const { invoiceId } = useParams();
 	
@@ -17,7 +20,7 @@ const ConfirmDelete = ({confClose}) => {
 					<p className="confirmDelete__text">Are you sure you want to delete invoice #{invoiceId}? This action cannot be undone.</p>
 					<div className="confirmDelete__buttons">
 						<button className="confirmDelete__cancel" onClick={confClose}>Cancel</button>
-						<button className="confirmDelete__delete" onClick={deleteButtonClick}>Delete</button>
+						<Link style={{'color': 'white !important'}} to='/' className="confirmDelete__delete" onClick={deleteButtonClick}>Delete</Link>
 					</div>
 				</div>
 			</div>

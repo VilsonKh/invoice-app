@@ -1,9 +1,14 @@
 import { useContext } from "react";
 import darkContext from "../context/dark/darkContext";
+import invoiceContext from "../context/invoice/invoiceContext";
 import "../styles/Dropdown.scss";
 
 const Dropdown = () => {
-	const {dark} = useContext(darkContext)
+	const {dark} = useContext(darkContext);
+	const {onFilterClick} = useContext(invoiceContext)
+
+
+
 	return (
 		<div className={`nav__dropdown d-flex align-items-center ${dark ? 'dark-font' : ''}`}>
 					<form className="dropdown nav__dropdown d-flex align-items-center">
@@ -13,7 +18,7 @@ const Dropdown = () => {
 						<ul className="dropdown-menu">
 							<li className="dropdown-item">
 								<div className="dropdown__item-container">
-									<input className="dropdown__input" id="draft" type="checkbox" />
+									<input onChange={(e) => onFilterClick(e.target.id)} className="dropdown__input" id="draft" type="checkbox" defaultChecked/>
 									<label htmlFor="draft" className="dropdown__label">
 										Draft
 									</label>
@@ -21,7 +26,7 @@ const Dropdown = () => {
 							</li>
 							<li className="dropdown-item">
 								<div className="dropdown__item-container">
-									<input className="dropdown__input" id="pending" type="checkbox" />
+									<input onChange={(e) => onFilterClick(e.target.id)} className="dropdown__input" id="pending" type="checkbox" defaultChecked/>
 									<label htmlFor="pending" className="dropdown__label">
 										Pending
 									</label>
@@ -29,7 +34,7 @@ const Dropdown = () => {
 							</li>
 							<li className="dropdown-item">
 								<div className="dropdown__item-container">
-									<input className="dropdown__input" id="paid" type="checkbox" />
+									<input onChange={(e) => onFilterClick(e.target.id)} className="dropdown__input" id="paid" type="checkbox" defaultChecked/>
 									<label htmlFor="paid" className="dropdown__label">
 										Paid
 									</label>

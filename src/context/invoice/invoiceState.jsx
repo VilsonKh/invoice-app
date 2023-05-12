@@ -1,82 +1,68 @@
 import React, { useReducer } from "react";
 import InvoiceContext from "./invoiceContext";
-import data from '../../data.json'
 import invoiceReducer, { initialState } from "./invoiceReducer";
-import { CURRENT_INVOICE, DELETE_CONFIRMATION, GET_INVOICES, NEW_INVOICE_FORM } from "../types";
+import { CONFIRM_DELETE, CURRENT_INVOICE, FILTER_INVOICES, MARK_PAID, NEW_INVOICE_FORM } from "../types";
 
+const InvoiceState = ({ children }) => {
+	const [state, dispatch] = useReducer(invoiceReducer, initialState);
 
-const InvoiceState = ({children}) => {
+	const deleteButtonClick = () => {
+		dispatch({
+			type: CONFIRM_DELETE,
+      payload: true
+		});
+		// state.invoices.splice(state.invoices.findIndex())
+	};
 
+	const addCurrentInvoice = (number) => {
+		dispatch({
+			type: CURRENT_INVOICE,
+			payload: number,
+		});
+	};
 
-  const [state, dispatch] = useReducer(invoiceReducer, initialState);
+	const addNewInvoice = (formData) => {
+		dispatch({
+			type: NEW_INVOICE_FORM,
+			payload: formData,
+		});
+	};
 
+	const markAsPaid = (number) => {
+		dispatch({
+			type: MARK_PAID,
+			payload: number,
+		});
+	};
 
-
-  const getInvoices = () => {
-    dispatch (
-      {
-        type: GET_INVOICES,
-        payload: data
-      }
-    )
+  const onFilterClick = (filter) => {
+    dispatch({
+      type: FILTER_INVOICES,
+      payload: filter
+    })
   }
 
-  const deleteButtonClick = () => {
-     dispatch(
-      {
-      type: DELETE_CONFIRMATION,
-      payload: true, 
-      })
-      // state.invoices.splice(state.invoices.findIndex())
-  }
+	// const markPaid = (index) => {
+	//   state.invoices[index].status = 'paid'
+	// }
 
-  const addCurrentInvoice = () => {
-    dispatch (
-      {
-        type: CURRENT_INVOICE,
-        payload: state.payload
-      }
-    )
-  }
+	const value = {
+		invoices: state.invoices,
+		newInvoiceForm: state.newInvoiceForm,
+		invoiceDetails: state.invoiceDetails,
+		editInvoiceForm: state.editInvoiceForm,
+		deleteConfirmation: state.deleteConfirmation,
+		currentInvoice: state.currentInvoice,
+		filters: state.filters,
+		error: state.error,
+		deleteButtonClick,
+		addCurrentInvoice,
+		addNewInvoice,
+		markAsPaid,
+    onFilterClick
+	};
 
-  const addNewInvoice = (formData) => {
-    dispatch (
-      {
-        type: NEW_INVOICE_FORM,
-        payload: formData
-      }
-    )
-  }
-
-  
-
-  // const markPaid = (index) => {
-  //   state.invoices[index].status = 'paid'
-  // }
-
-  const value = {
-        invoices: state.invoices,
-				newInvoiceForm: state.newInvoiceForm,
-				invoiceDetails: state.invoiceDetails,
-				editInvoiceForm: state.editInvoiceForm,
-				deleteConfirmation: state.deleteConfirmation,
-				currentInvoice: state.currentInvoice,
-				filters: state.filters,
-				error: state.error,
-        deleteButtonClick,
-        addCurrentInvoice,
-        addNewInvoice,
-        getInvoices,
-   
-  }
-
-	return (
-		<InvoiceContext.Provider
-			value={value}
-		>
-			{children}
-		</InvoiceContext.Provider>
-	);
+	return <InvoiceContext.Provider value={value}>{children}</InvoiceContext.Provider>;
 };
 
 export default InvoiceState;
