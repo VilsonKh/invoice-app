@@ -4,8 +4,6 @@ import { useContext, useState } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 const Form = (props) => {
-
- 
   const [formField,setFormField] = useState([{value: ''}])
 	const {addNewInvoice} = useContext(invoiceContext)
 

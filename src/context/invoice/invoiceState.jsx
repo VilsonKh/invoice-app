@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import InvoiceContext from "./invoiceContext";
 import invoiceReducer, { initialState } from "./invoiceReducer";
-import { CONFIRM_DELETE, CURRENT_INVOICE, FILTER_INVOICES, MARK_PAID, NEW_INVOICE_FORM } from "../types";
+import { CHANGE_FILTERS, CLICK_BACK, CONFIRM_DELETE, CURRENT_INVOICE, FILTER_INVOICES, MARK_PAID, NEW_INVOICE_FORM } from "../types";
 
 const InvoiceState = ({ children }) => {
 	const [state, dispatch] = useReducer(invoiceReducer, initialState);
@@ -37,17 +37,26 @@ const InvoiceState = ({ children }) => {
 
   const onFilterClick = (filter) => {
     dispatch({
-      type: FILTER_INVOICES,
+      type: CHANGE_FILTERS,
       payload: filter
+    })
+    dispatch({
+      type: FILTER_INVOICES,
     })
   }
 
-	// const markPaid = (index) => {
-	//   state.invoices[index].status = 'paid'
-	// }
+  const onClickBack = () => {
+    dispatch ({
+      type: CLICK_BACK,
+    })
+    dispatch ({
+      type: FILTER_INVOICES
+    })
+  }
 
 	const value = {
 		invoices: state.invoices,
+		filteredInvoices: state.filteredInvoices,
 		newInvoiceForm: state.newInvoiceForm,
 		invoiceDetails: state.invoiceDetails,
 		editInvoiceForm: state.editInvoiceForm,
@@ -59,7 +68,8 @@ const InvoiceState = ({ children }) => {
 		addCurrentInvoice,
 		addNewInvoice,
 		markAsPaid,
-    onFilterClick
+    onFilterClick,
+    onClickBack
 	};
 
 	return <InvoiceContext.Provider value={value}>{children}</InvoiceContext.Provider>;

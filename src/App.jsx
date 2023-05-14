@@ -9,6 +9,7 @@ import { useState } from "react";
 
 import "./App.scss";
 import DarkState from "./context/dark/darkState";
+import EditInvoice from "./components/EditInvoice";
 
 function App() {
 	// const showInvoicePreview = (e) => {
@@ -35,7 +36,7 @@ function App() {
 						<main>
 							<Routes>
 								<Route path="/new" element={<NewInvoice />} />
-								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} openedInvoice={openedInvoice} />} />
+								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} openedInvoice={openedInvoice} />}/>
 								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} />} />
 								<Route path="*" element={<Page404 />} />
 							</Routes>

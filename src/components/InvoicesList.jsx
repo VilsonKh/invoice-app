@@ -10,12 +10,8 @@ import NoInvoicesPage from "./NoInvoicesPage";
 
 const InvoicesList = ({onShowPreview}) => {
 
-
 	const {invoices, filters} = useContext(invoiceContext);
 
-	
-
-	
 	const items = () =>{
 		if(invoices.length === 0) {
 		return <NoInvoicesPage/>
