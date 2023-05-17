@@ -14,6 +14,10 @@ const EditInvoice = () => {
       <ButtonBack></ButtonBack>
       <h1>Edit <span>#</span> {currentInvoice}</h1>
       <Form></Form>
+      <div className="editInvoice__buttons">
+        <button >Cancel</button>
+        <button type='submit' form='newInvoice'>Save Changes</button>
+      </div>
     </div>
   )
 }

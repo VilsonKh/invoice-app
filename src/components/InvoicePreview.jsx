@@ -14,7 +14,7 @@ import EditInvoice from "./EditInvoice";
 
 
 const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
-	const {invoices,  markAsPaid, currentInvoice} = useContext(invoiceContext);
+	const {invoices,  markAsPaid, currentInvoice, currentInvoiceData} = useContext(invoiceContext);
 	const {dark} = useContext(darkContext)
 	const { invoiceId } = useParams();
 
@@ -31,15 +31,14 @@ const InvoicePreview = ({setOpenedInvoice, openedInvoice}) => {
 		setConfDelete(false);
 	}
 
-	const singleData = invoices.filter((el) => el.id === invoiceId);
-	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = singleData[0];
+	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = currentInvoiceData[0];
 
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
 	}
 
-	const invoiceItems = singleData[0].items;
+	const invoiceItems = currentInvoiceData[0].items;
 
 	const TotalItems = invoiceItems.map((elem,i) => {
 		return (

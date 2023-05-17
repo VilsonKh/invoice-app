@@ -10,7 +10,7 @@ import invoiceContext from "../context/invoice/invoiceContext";
 
 const Navigation = (props) => {
 	const { dark} = useContext(darkContext);
-	const {invoices} = useContext(invoiceContext)
+	const {invoices, onClickAdd} = useContext(invoiceContext)
 	return (
 		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
 			<div className="container d-flex justify-content-between">
@@ -22,7 +22,7 @@ const Navigation = (props) => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<Link to="/new" className="nav__addButton d-flex align-items-center">
+				<Link to="/new" className="nav__addButton d-flex align-items-center" onClick={onClickAdd}>
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
