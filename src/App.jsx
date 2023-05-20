@@ -13,7 +13,7 @@ import DarkState from "./context/dark/darkState";
 
 function App() {
 	const [openedInvoice, setOpenedInvoice] = useState("");
-
+	const [clickNewInvoice, setClickNewInvoice] = useState(false)
 	return (
 		<DarkState>
 			<Router>
@@ -21,10 +21,11 @@ function App() {
 					<Header></Header>
 					<InvoiceState>
 						<main>
+							{clickNewInvoice ? <NewInvoice /> : ''}
 							<Routes>
-								<Route path="/new" element={<NewInvoice />} />
+								
 								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} openedInvoice={openedInvoice} />} />
-								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} />} />
+								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} clickNewInvoice={setClickNewInvoice}/>} />
 								<Route path="*" element={<Page404 />} />
 							</Routes>
 						</main>

@@ -11,6 +11,10 @@ import EditInvoice from "./EditInvoice";
 
 const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 	const { markAsPaid, currentInvoiceData } = useContext(invoiceContext);
+
+	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = currentInvoiceData[0];
+
+	
 	const { dark } = useContext(darkContext);
 	const { invoiceId } = useParams();
 
@@ -18,6 +22,9 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 
 	const [confDelete, setConfDelete] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
+	const [currentStatus, setCurrentStatus] = useState(status)
+
+	
 
 	const onHandleOpen = () => {
 		setConfDelete(true);
@@ -27,7 +34,11 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 		setConfDelete(false);
 	};
 
-	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = currentInvoiceData[0];
+
+	const onMarkClick = () => {
+		setCurrentStatus('paid');
+		markAsPaid(id)
+	}
 
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
@@ -78,7 +89,7 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 						<ButtonBack></ButtonBack>
 						<div className={`invoicePreview__status ${dark ? "dark-header" : ""}`}>
 							<p className="invoicePreview__staus-text">Status</p>
-							<StatusElem status={status}></StatusElem>
+							<StatusElem status={currentStatus}></StatusElem>
 							<div className={`invoicePreview__groupButtons invoicePreview__statusButtons ${dark ? "dark-header" : ""}`}>
 								<button
 									onClick={() => {
@@ -173,7 +184,11 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 							<button className="invoicePreview__btn-delete" onClick={onHandleOpen}>
 								Delete
 							</button>
-							<button className="invoicePreview__btn-paid" onClick={() => markAsPaid(id)}>
+							<button 
+							className="invoicePreview__btn-paid" 
+							onClick={onMarkClick}
+							style={currentStatus === 'paid' ? {'opacity': '0.5'} : null}
+							>
 								Mark as Paid
 							</button>
 						</div>

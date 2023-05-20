@@ -70,22 +70,61 @@ const Form = ({ onClickButtonGroup }) => {
 		//переадресует на главную страницу
 		// navigate("/", { replace: true });
 	};
-	const currentInvoiceObj = currentInvoiceData[0];
-	const senderStreet = currentInvoiceObj?.senderAddress?.street,
-		senderCity = currentInvoiceObj?.senderAddress?.city,
-		senderPostCode = currentInvoiceObj?.senderAddress?.postCode,
-		senderCountry = currentInvoiceObj?.senderAddress?.country,
-		clientName = currentInvoiceObj?.clientName,
-		clientEmail = currentInvoiceObj?.clientEmail,
-		clientStreet = currentInvoiceObj?.clientAddress?.street,
-		clientCity = currentInvoiceObj?.clientAddress?.city,
-		clientPostCode = currentInvoiceObj?.clientAddress?.postCode,
-		clientCountry = currentInvoiceObj?.clientAddress?.country,
-		paymentDue = currentInvoiceObj?.paymentDue,
-		paymentTerms = currentInvoiceObj?.paymentTerms,
-		items = currentInvoiceObj?.items ?? "",
-		description = currentInvoiceObj?.description;
 
+	// const senderStreet = currentInvoiceData[0]?.senderAddress?.street ?? "",
+	// 	senderCity = currentInvoiceData[0]?.senderAddress?.city ?? "",
+	// 	senderPostCode = currentInvoiceData[0]?.senderAddress?.postCode ?? "",
+	// 	senderCountry = currentInvoiceData[0]?.senderAddress?.country ?? "",
+	// 	clientName = currentInvoiceData[0]?.clientName ?? "",
+	// 	clientEmail = currentInvoiceData[0]?.clientEmail ?? "",
+	// 	clientStreet = currentInvoiceData[0]?.clientAddress?.street ?? "",
+	// 	clientCity = currentInvoiceData[0]?.clientAddress?.city ?? "",
+	// 	clientPostCode = currentInvoiceData[0]?.clientAddress?.postCode ?? "",
+	// 	clientCountry = currentInvoiceData[0]?.clientAddress?.country ?? "",
+	// 	paymentDue = currentInvoiceData[0]?.paymentDue ?? "",
+	// 	paymentTerms = currentInvoiceData[0]?.paymentTerms ?? "",
+	// 	items = currentInvoiceData[0]?.items ?? "",
+	// 	description = currentInvoiceData[0]?.description ?? "";
+
+	// создает дефолтные значения для формы создания нового инвойса
+	let defaultInputProps = {
+		senderStreet: "",
+		senderCity: "",
+		senderPostCode: "",
+		senderCountry: "",
+		clientName: "",
+		clientEmail: "",
+		clientStreet: "",
+		clientCity: "",
+		clientPostCode: "",
+		clientCountry: "",
+		paymentDue: "",
+		paymentTerms: "",
+		items: "",
+		description: "",
+	};
+
+	//дуструктуризирует дефолтные значения
+	let { senderStreet, senderCity, senderPostCode, senderCountry, clientName, clientEmail, clientStreet, clientCity, clientPostCode, clientCountry, paymentDue, paymentTerms, items, description } =
+		defaultInputProps;
+
+	if(currentInvoiceData !== null) {
+		senderStreet = currentInvoiceData[0]?.senderAddress?.street ?? "";
+		senderCity = currentInvoiceData[0]?.senderAddress?.city ?? "";
+		senderPostCode = currentInvoiceData[0]?.senderAddress?.postCode ?? "";
+		senderCountry =currentInvoiceData[0]?.senderAddress?.country ?? "";
+		clientName = currentInvoiceData[0]?.clientName ?? "";
+		clientEmail  = currentInvoiceData[0]?.clientEmail ?? "";
+		clientStreet= currentInvoiceData[0]?.clientAddress?.street ?? "";
+		clientCity = currentInvoiceData[0]?.clientAddress?.city ?? "";
+		clientPostCode = currentInvoiceData[0]?.clientAddress?.postCode ?? "";
+		clientCountry= currentInvoiceData[0]?.clientAddress?.country ?? "";
+		paymentDue= currentInvoiceData[0]?.paymentDue ?? "";
+		paymentTerms= currentInvoiceData[0]?.paymentTerms ?? "";
+		items = currentInvoiceData[0]?.items ?? "";
+		description= currentInvoiceData[0]?.description ?? "";
+	} 
+	
 	const addNewField = () => {
 		if (!items) {
 			return formField;

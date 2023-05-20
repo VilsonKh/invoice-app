@@ -22,12 +22,12 @@ const Navigation = (props) => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<Link to="/new" className="nav__addButton d-flex align-items-center" onClick={onClickAdd}>
+				<button className="nav__addButton d-flex align-items-center" onClick={()=> props.onClickNewInvoice(true)}>
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
 					<p>New</p> 
-				</Link>
+				</button>
 			</div>
 		</nav>
 	);
