@@ -13,7 +13,9 @@ const NewInvoice = (props) => {
 	const onClickButtonGroup = (e)=> {
 		const currentStatus = e.target.id;
 		clickSaveStatus(currentStatus)
+
 	}
+
 
 	return (
 		<section className="addInvoice">
@@ -22,9 +24,9 @@ const NewInvoice = (props) => {
 				<h1 className="addInvoice__heading">New Invoice</h1>
 				<Form onClickButton={(e) => onClickButtonGroup(e)}></Form>
         <div className="addInvoice__groupButtons" onClick={(e)=> onClickButtonGroup(e)}>
-          <button type="submit" form="newInvoice" id='discard' className="addInvoice__discard btn-status">Discard</button>
-          <button type="submit" form="newInvoice" id='draft' className="addInvoice__draft btn-status">Save as Draft</button>
-          <button type="submit" form="newInvoice" id="pending" className="addInvoice__send btn-status">Save & Send</button>
+          <button type="submit" form="newInvoice" id='discard' className="addInvoice__discard btn-status" >Discard</button>
+          <button type="submit" form="newInvoice" id='draft' className="addInvoice__draft btn-status" >Save as Draft</button>
+          <button type="submit" form="newInvoice" id="pending" className="addInvoice__send btn-status" >Save & Send</button>
         </div>
 			</div>
 		</section>

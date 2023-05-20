@@ -138,6 +138,11 @@
 		color: #888eb0;
 		position: relative;
 		top: 30%;
+		border: none;
+
+		@media screen and (min-width: 767px) {
+			top: 20%;
+		}
 	}
 
 	&__button {
@@ -166,6 +171,12 @@
     &:hover {
       background-color:#DFE3FA;;
     }
+	}
+}
+
+#qty {
+	@media screen and (min-width: 767px) {
+		padding: 15px;
 	}
 }
 

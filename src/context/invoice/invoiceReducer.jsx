@@ -1,16 +1,9 @@
 import {
 	NEW_INVOICE_FORM,
-	INVOICE_DETAILS,
-	EDIT_INVOICE_FORM,
-	DISCARD,
 	CHANGE_FILTERS,
 	FILTER_INVOICES,
 	MARK_PAID,
-	CANCEL_DELETE,
 	CONFIRM_DELETE,
-	CANCEL_EDIT,
-	SAVE_CHANGES,
-	INVOICE_ERROR,
 	CURRENT_INVOICE,
 	CLICK_BACK,
 	CURRENT_INVOICE_DATA,
@@ -44,28 +37,7 @@ const invoiceReducer = (state, action) => {
 				...state,
 				newInvoiceForm: action.payload,
 			};
-		// case INVOICE_DETAILS:
-		// 	return {
-		// 		...state,
-		// 		currentUser: action.payload,
-		// 		invoiceDetails: true,
-		// 	};
 
-		// case EDIT_INVOICE_FORM:
-		// 	return {
-		// 		...state,
-		// 		editInvoiceForm: action.payload,
-		// 	};
-		// case CANCEL_DELETE:
-		// 	return {
-		// 		...state,
-		// 		deleteConfirmation: action.payload,
-		// 	};
-		// case DISCARD:
-		// 	return {
-		// 		...state,
-		// 		newInvoiceForm: action.payload,
-		// 	};
 		case CHANGE_FILTERS:
 			let newFilters = [...state.filters];
 			const index = newFilters.indexOf(action.payload);
@@ -80,18 +52,19 @@ const invoiceReducer = (state, action) => {
 				filters: newFilters,
 			};
 
+			//фильтрует массив по клику на чекбокс
 		case FILTER_INVOICES:
-			const filteredInvoices = [...state.initialInvoices];
+			//пробую опять добавить invoices, чтобы новые инвойсы фильтровались
+			const filteredInvoices = [...state.invoices];
 			const filterResult = filteredInvoices.filter((invoice) => {
 				const invoiceStatus = invoice.status;
 				const filters = state.filters;
-				// return filters.includes(invoiceStatus)
 				if (filters.includes(invoiceStatus)) {
 					return true;
 				}
 				return false;
 			});
-			console.log("filtring");
+
 			return {
 				...state,
 				invoices: filterResult,
@@ -120,23 +93,7 @@ const invoiceReducer = (state, action) => {
 				confirmDelete: action.payload,
 				invoices: deletedInvoiceArr,
 			};
-		// case CANCEL_EDIT:
-		// 	return {
-		// 		...state,
-		// 		editInvoiceForm: action.payload,
-		// 	};
-		// case SAVE_CHANGES:
-		// 	return {
-		// 		...state,
-		// 		invoices: action.payloadOne,
-		// 		currentUser: action.payloadTwo,
-		// 		editInvoiceForm: false,
-		// 	};
-		// case INVOICE_ERROR:
-		// 	return {
-		// 		...state,
-		// 		error: action.payload,
-		// 	};
+
 		case CURRENT_INVOICE:
 			return {
 				...state,
@@ -144,13 +101,15 @@ const invoiceReducer = (state, action) => {
 			};
 
 		case CURRENT_INVOICE_DATA:
-			const newInvoicesArr = [...state.initialInvoices];
+			// ЗАМЕНИЛ initialInvoices на invoices, чтобы новые инвойсы тоже были в массиве
+			const newInvoicesArr = [...state.invoices];
 			const singleInvoiceData = newInvoicesArr.filter((el) => el.id === action.payload);
 
 			return {
 				...state,
 				currentInvoiceData: singleInvoiceData,
 			};
+
 		case CLICK_BACK:
 			console.log("click back");
 			return {
@@ -169,23 +128,24 @@ const invoiceReducer = (state, action) => {
 			// const addedInvoiceArr = state.invoices.push(state.newInvoiceForm)
 			const newID = state.newInvoiceForm.id;
 			let allInvoices = [...state.invoices];
-			console.log(allInvoices)
+
+			if (state.currentStatus === "") {
 				allInvoices.forEach((invoice, index) => {
-					console.log(newID)
-					console.log('начало поиска')
-					if (invoice.id === newID ) {
+					console.log(newID);
+					console.log("начало поиска");
+					if (invoice.id === newID) {
 						console.log("совпало");
-						console.log(state.newInvoiceForm)
-						allInvoices.splice(index,1,(state.newInvoiceForm))
-					} 
-					if(newID !== state.currentInvoice) {
-						console.log("не совпало")
+						console.log(state.newInvoiceForm);
+						allInvoices.splice(index, 1, state.newInvoiceForm);
+					}
+					if (newID !== state.currentInvoice) {
+						console.log("не совпало");
 						allInvoices = [...state.invoices, state.newInvoiceForm];
 						return allInvoices;
 					}
 				});
-			
-				console.log(allInvoices)
+			}
+			if(state.currentStatus !== '') {}
 
 			return {
 				...state,

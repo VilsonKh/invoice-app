@@ -2,4 +2,30 @@
   position: relative;
   z-index: 9999;
   background-color: white;
+
+  &__buttons {
+    text-align: right;
+  }
+
+  &__cancel {
+    background: #F9FAFE;
+    border: none;
+    font-size: 12px;
+    line-height: 15px;
+    padding: 16px 26px;
+    border-radius: 24px;
+    margin-right: 20px;
+  }
+
+  &__save {
+    background: #7C5DFA;
+    border: none;
+    font-size: 12px;
+    line-height: 15px;
+    padding: 17px 24px;
+    border-radius:24px;
+    color: white;
+
+  }
 }
+

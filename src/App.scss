@@ -1,5 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=League+Spartan:100,200,300,regular,500,600,700,800,900);
-
+@font-face {
+  font-family: "Spartan";
+  src: url(styles/fonts/Spartan-Regular.ttf);
+}
 p {
   margin: 0 !important;
 }
@@ -15,8 +17,7 @@ a {
 
 body {
   color: #0C0E16 !important;
-  font-family: "League Spartan", sans-serif !important;
-  // background-color: #f8f8f8 ;
+  font-family: "Spartan", sans-serif !important;
 }
 
 ul, li {

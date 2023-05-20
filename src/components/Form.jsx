@@ -2,11 +2,12 @@ import busket from "../assets/icon-delete.svg";
 import "../styles/NewInvoice.scss";
 import { useContext, useState } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
+import { useNavigate } from "react-router";
 
-const Form = ({onClickButtonGroup}) => {
+const Form = ({ onClickButtonGroup }) => {
 	const [formField, setFormField] = useState([{}]);
-
-	const { addNewInvoice, currentInvoiceData, currentStatus , currentInvoice} = useContext(invoiceContext);
+	const navigate = useNavigate();
+	const { addNewInvoice, currentInvoiceData, currentStatus, currentInvoice } = useContext(invoiceContext);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -24,18 +25,18 @@ const Form = ({onClickButtonGroup}) => {
 			}
 			let randomNumb = Math.floor(Math.random() * 10000);
 			newInvoiceId += randomNumb;
-			return newInvoiceId
+			return newInvoiceId;
 		};
 
 		//прибавляет к дате создания инвойса выбранное количество дней
-		let paymentDueInvoiceDate = new Date(formData.get('date'));
-		paymentDueInvoiceDate.setDate(new Date(paymentDueInvoiceDate).getDate() + parseFloat(formData.get('select')))
+		let paymentDueInvoiceDate = new Date(formData.get("date"));
+		paymentDueInvoiceDate.setDate(new Date(paymentDueInvoiceDate).getDate() + parseFloat(formData.get("select")));
 
 		//трансформирует структуру данных из FormData в идентичную массиву объектов в invoices(context)
 		const transformFormData = {
 			id: currentInvoice || createRandomInvoiceNumber(),
-			createdAt: new Date(formData.get('date')).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" }),
-			description: formData.get('description'),
+			createdAt: new Date(formData.get("date")).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" }),
+			description: formData.get("description"),
 			paymentTerms: formData.get("select"),
 			paymentDue: paymentDueInvoiceDate.toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" }),
 			clientName: formData.get("name"),
@@ -63,8 +64,11 @@ const Form = ({onClickButtonGroup}) => {
 			],
 			total: 1800.9,
 		};
+		//передает полученный объект в редьюсер для добавление в массив всех инвойсов
+		addNewInvoice(transformFormData);
 
-			addNewInvoice(transformFormData);
+		//переадресует на главную страницу
+		// navigate("/", { replace: true });
 	};
 	const currentInvoiceObj = currentInvoiceData[0];
 	const senderStreet = currentInvoiceObj?.senderAddress?.street,
@@ -117,19 +121,19 @@ const Form = ({onClickButtonGroup}) => {
 					<input name="fromAddress" className="form__input" id="fromAddress" type="text" defaultValue={senderStreet} />
 				</div>
 				<div className="row">
-					<div className="form__input-container col-6">
+					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="city">
 							City
 						</label>
 						<input name="city" className="form__input" id="city" type="text" defaultValue={senderCity} />
 					</div>
-					<div className="form__input-container col-6">
+					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="postCode">
 							Post Code
 						</label>
 						<input name="postCode" className="form__input" id="postCode" type="text" defaultValue={senderPostCode} />
 					</div>
-					<div className="form__input-container col-12">
+					<div className="form__input-container col-12 col-md-4">
 						<label className="form__label" htmlFor="country">
 							Country
 						</label>
@@ -158,19 +162,19 @@ const Form = ({onClickButtonGroup}) => {
 					<input className="form__input" id="toAddress" name="toAddress" type="text" defaultValue={clientStreet} />
 				</div>
 				<div className="row">
-					<div className="form__input-container col-6">
+					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="toCity">
 							City
 						</label>
 						<input className="form__input" id="toCity" name="toCity" type="text" defaultValue={clientCity} />
 					</div>
-					<div className="form__input-container col-6">
+					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="toPostCode">
 							Post Code
 						</label>
 						<input className="form__input" id="toPostCode" name="toPostCode" type="text" defaultValue={clientPostCode} />
 					</div>
-					<div className="form__input-container col-12">
+					<div className="form__input-container col-12 col-md-4">
 						<label className="form__label" htmlFor="toCountry">
 							Country
 						</label>
@@ -178,13 +182,13 @@ const Form = ({onClickButtonGroup}) => {
 					</div>
 				</div>
 				<div className="row">
-					<div className="form__input-container col-12">
+					<div className="form__input-container col-12 col-md-6">
 						<label className="form__label" htmlFor="date">
 							Invoice Date
 						</label>
 						<input className="form__input" id="date" type="date" name="date" defaultValue={paymentDue} />
 					</div>
-					<div className="form__input-container col-12">
+					<div className="form__input-container col-12 col-md-6">
 						<label className="form__label" htmlFor="select">
 							Payment Terms
 						</label>
@@ -196,8 +200,10 @@ const Form = ({onClickButtonGroup}) => {
 						</select>
 					</div>
 					<div className="form__input-container col-12">
-						<label htmlFor="" className="form__label">Project Desctiption</label>
-						<input type="text" className="form__input" id="description" name="description" defaultValue={description}/>
+						<label htmlFor="" className="form__label">
+							Project Desctiption
+						</label>
+						<input type="text" className="form__input" id="description" name="description" defaultValue={description} />
 					</div>
 				</div>
 			</fieldset>
@@ -206,28 +212,26 @@ const Form = ({onClickButtonGroup}) => {
 				{addNewField().map((item, index) => {
 					return (
 						<div key={index} className="form__item">
-							<div>
-								<div className="form__input-container col-12">
+							<div className="row ">
+								<div className="form__input-container col-12 col-md-4">
 									<label className="form__label" htmlFor="itemName">
 										Item Name
 									</label>
 									<input className="form__input" id="itemName" name="itemName" type="text" defaultValue={item.name} />
 								</div>
-							</div>
-							<div className="row">
-								<div className="form__input-container col-3">
+								<div className="form__input-container col-3 col-md-1">
 									<label className="form__label" htmlFor="qty">
 										Qty.
 									</label>
 									<input className="form__input" id="qty" name="qty" type="number" defaultValue={item.quantity} />
 								</div>
-								<div className="form__input-container col-4">
+								<div className="form__input-container col-4 col-md-3">
 									<label className="form__label" htmlFor="itemPrice">
 										Price
 									</label>
 									<input className="form__input" name="itemPrice" id="itemPrice" type="number" defaultValue={item.price} />
 								</div>
-								<div className="form__input-container col-3">
+								<div className="form__input-container col-3 col-md-2">
 									<label className="form__label">Total</label>
 									<input name="total" className="form__totalPrice" defaultValue={item.total} />
 								</div>

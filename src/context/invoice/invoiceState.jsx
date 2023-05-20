@@ -57,9 +57,6 @@ const InvoiceState = ({ children }) => {
     dispatch ({
       type: CLICK_BACK,
     })
-    // dispatch ({
-    //   type: FILTER_INVOICES
-    // })
   }
 
 	const onClickAdd = () => {

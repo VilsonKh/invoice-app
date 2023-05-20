@@ -4,6 +4,7 @@ import darkContext from "../context/dark/darkContext";
 import invoiceContext from "../context/invoice/invoiceContext";
 import "../styles/InvoicesItem.scss";
 import StatusElem from "./StatusElem";
+import arrowRight from '../assets/icon-arrow-right.svg';
 
 const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 	let price = amount.toLocaleString("en-US");
@@ -34,6 +35,7 @@ const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 				<div className="invoicesList__item-right">
 					<p className="item__name">{name}</p>
 					<StatusElem status={status}></StatusElem>
+					<img class="item__arrowRight" src={arrowRight} alt="" />
 				</div>
 
 		</Link>

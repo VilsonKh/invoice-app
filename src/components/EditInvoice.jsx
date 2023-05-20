@@ -7,7 +7,7 @@ import Form from './Form';
 
 
 const EditInvoice = () => {
-  const {currentInvoice, invoices} = useContext(invoiceContext)
+  const {currentInvoice} = useContext(invoiceContext)
 
   return (
     <div className='editInvoice container'>
@@ -15,8 +15,8 @@ const EditInvoice = () => {
       <h1>Edit <span>#</span> {currentInvoice}</h1>
       <Form></Form>
       <div className="editInvoice__buttons">
-        <button >Cancel</button>
-        <button type='submit' form='newInvoice'>Save Changes</button>
+        <button className='editInvoice__cancel'>Cancel</button>
+        <button className='editInvoice__save' type='submit' form='newInvoice'>Save Changes</button>
       </div>
     </div>
   )

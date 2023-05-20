@@ -12,20 +12,51 @@
 		}
 
 		&-left {
+			@media screen and (min-width: 767px) {
+				display: flex;
+				align-items: center;
+				width: 50%;
+				justify-content: space-between;
+				
+			}
 		}
 
 		&-right {
       display: flex;
       flex-direction: column;
+
+			@media screen and (min-width: 767px) {
+				flex-direction: row;
+				width: 50%;
+				justify-content: space-between;
+				align-items: center;
+				margin-left: 30px;
+			}
+		}
+
+		@media screen and (min-width: 767px) {
+			
 		}
 	}
 }
 
 .item {
 	&__status-container {
-		padding: 13px 30px;
+		padding: 13px ;
 		border-radius: 6px;
 		width: 104px;
+		display: flex;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: 30px;
+	}
+
+	&__arrowRight {
+		display: none;
+
+		@media screen and (min-width: 767px) {
+			display: block;
+		}
 	}
 
 	&__status {
@@ -51,6 +82,11 @@
 		& span {
 			color: #7e88c3;
 		}
+
+		@media screen and (min-width: 767px) {
+			margin-bottom: 0 !important;
+		}
+				
 	}
 
 	&__date {
@@ -60,6 +96,10 @@
 		letter-spacing: -0.25px;
 		margin-bottom: 8px !important;
 		color: #7e88c3;
+
+		@media screen and (min-width: 767px) {
+			margin-bottom: 0 !important;
+		}
 	}
 
 	&__name {
@@ -70,6 +110,11 @@
 		color: #858bb2;
     text-align: right;
     margin-bottom: auto !important;
+
+		@media screen and (min-width: 767px) {
+			margin-bottom: 0 !important;
+			margin-right: 30px !important;
+		}
 	}
 
 	&__amount {
