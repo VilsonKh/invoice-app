@@ -5,7 +5,7 @@ import darkContext from "../context/dark/darkContext";
 import invoiceContext from "../context/invoice/invoiceContext";
 import "../styles/NewInvoice.scss";
 
-const ButtonBack = () => {
+const ButtonBack = (props) => {
 
 	const {dark} = useContext(darkContext);
 	const {onClickBack} = useContext(invoiceContext)
@@ -15,7 +15,7 @@ const ButtonBack = () => {
 	return (
 		<Link onClick={onClickBack} to='..' className={`addInvoice__button-container ${dark ? 'dark-font' : ''}`}>
 			<img src={leftArrow} alt="" />
-			<button className={darkFont}>Go back</button>
+			<button onClick={props.onCloseNewInvoiceForm} className={darkFont}>Go back</button>
 		</Link>
 	);
 };

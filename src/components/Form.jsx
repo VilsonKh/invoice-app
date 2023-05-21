@@ -2,14 +2,14 @@ import busket from "../assets/icon-delete.svg";
 import "../styles/NewInvoice.scss";
 import { useContext, useState } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
-import { useNavigate } from "react-router";
 
-const Form = ({ onClickButtonGroup }) => {
+
+const Form = ({ onClickButtonGroup, onCloseNewForm, onClickCloseEditInvoice }) => {
 	const [formField, setFormField] = useState([{}]);
-	const navigate = useNavigate();
-	const { addNewInvoice, currentInvoiceData, currentStatus, currentInvoice } = useContext(invoiceContext);
+	const { addNewInvoice, currentInvoiceData, currentStatus, currentInvoice, isNewInvoice, isEditInvoiceForm, setNewInvoice } = useContext(invoiceContext);
 
 	const onSubmit = (e) => {
+		console.log('событие submit')
 		e.preventDefault();
 		const form = e.target;
 		const formData = new FormData(form);
@@ -23,7 +23,8 @@ const Form = ({ onClickButtonGroup }) => {
 				newInvoiceId += randomLetters;
 				randomLetters = randomLetters = alphabet[Math.floor(Math.random() * alphabet.length)];
 			}
-			let randomNumb = Math.floor(Math.random() * 10000);
+			// let randomNumb = Math.floor(Math.random() * 10000);
+			let randomNumb = Math.floor(Math.random() * (9999 + 1 - 1000)) + 1000
 			newInvoiceId += randomNumb;
 			return newInvoiceId;
 		};
@@ -31,10 +32,11 @@ const Form = ({ onClickButtonGroup }) => {
 		//прибавляет к дате создания инвойса выбранное количество дней
 		let paymentDueInvoiceDate = new Date(formData.get("date"));
 		paymentDueInvoiceDate.setDate(new Date(paymentDueInvoiceDate).getDate() + parseFloat(formData.get("select")));
+	
 
 		//трансформирует структуру данных из FormData в идентичную массиву объектов в invoices(context)
 		const transformFormData = {
-			id: currentInvoice || createRandomInvoiceNumber(),
+			id: isNewInvoice && !isEditInvoiceForm ? createRandomInvoiceNumber() : currentInvoice,
 			createdAt: new Date(formData.get("date")).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" }),
 			description: formData.get("description"),
 			paymentTerms: formData.get("select"),
@@ -64,27 +66,17 @@ const Form = ({ onClickButtonGroup }) => {
 			],
 			total: 1800.9,
 		};
+
+
 		//передает полученный объект в редьюсер для добавление в массив всех инвойсов
 		addNewInvoice(transformFormData);
-
-		//переадресует на главную страницу
-		// navigate("/", { replace: true });
+		//устанавливает флаг для определения создается новый инвойс или редактируется старый
+		setNewInvoice(false);
+		//изменяет state для закрытия окна формы нового инвойса
+		// onCloseNewForm(false);
+		//изменяет state для закрытия окна редактирования формы
+		onClickCloseEditInvoice(false)
 	};
-
-	// const senderStreet = currentInvoiceData[0]?.senderAddress?.street ?? "",
-	// 	senderCity = currentInvoiceData[0]?.senderAddress?.city ?? "",
-	// 	senderPostCode = currentInvoiceData[0]?.senderAddress?.postCode ?? "",
-	// 	senderCountry = currentInvoiceData[0]?.senderAddress?.country ?? "",
-	// 	clientName = currentInvoiceData[0]?.clientName ?? "",
-	// 	clientEmail = currentInvoiceData[0]?.clientEmail ?? "",
-	// 	clientStreet = currentInvoiceData[0]?.clientAddress?.street ?? "",
-	// 	clientCity = currentInvoiceData[0]?.clientAddress?.city ?? "",
-	// 	clientPostCode = currentInvoiceData[0]?.clientAddress?.postCode ?? "",
-	// 	clientCountry = currentInvoiceData[0]?.clientAddress?.country ?? "",
-	// 	paymentDue = currentInvoiceData[0]?.paymentDue ?? "",
-	// 	paymentTerms = currentInvoiceData[0]?.paymentTerms ?? "",
-	// 	items = currentInvoiceData[0]?.items ?? "",
-	// 	description = currentInvoiceData[0]?.description ?? "";
 
 	// создает дефолтные значения для формы создания нового инвойса
 	let defaultInputProps = {
@@ -104,32 +96,37 @@ const Form = ({ onClickButtonGroup }) => {
 		description: "",
 	};
 
-	//дуструктуризирует дефолтные значения
-	let { senderStreet, senderCity, senderPostCode, senderCountry, clientName, clientEmail, clientStreet, clientCity, clientPostCode, clientCountry, paymentDue, paymentTerms, items, description } =
-		defaultInputProps;
 
-	if(currentInvoiceData !== null) {
-		senderStreet = currentInvoiceData[0]?.senderAddress?.street ?? "";
-		senderCity = currentInvoiceData[0]?.senderAddress?.city ?? "";
-		senderPostCode = currentInvoiceData[0]?.senderAddress?.postCode ?? "";
-		senderCountry =currentInvoiceData[0]?.senderAddress?.country ?? "";
-		clientName = currentInvoiceData[0]?.clientName ?? "";
-		clientEmail  = currentInvoiceData[0]?.clientEmail ?? "";
-		clientStreet= currentInvoiceData[0]?.clientAddress?.street ?? "";
-		clientCity = currentInvoiceData[0]?.clientAddress?.city ?? "";
-		clientPostCode = currentInvoiceData[0]?.clientAddress?.postCode ?? "";
-		clientCountry= currentInvoiceData[0]?.clientAddress?.country ?? "";
-		paymentDue= currentInvoiceData[0]?.paymentDue ?? "";
-		paymentTerms= currentInvoiceData[0]?.paymentTerms ?? "";
-		items = currentInvoiceData[0]?.items ?? "";
-		description= currentInvoiceData[0]?.description ?? "";
-	} 
-	
+		console.log(`New: ${isNewInvoice}, Edit: ${isEditInvoiceForm}`)
+
+	// проверка на клик по кнопке "New", если нет заполняет дефолтные значения данными из context
+	if(!isNewInvoice && isEditInvoiceForm) {
+		defaultInputProps.senderStreet = currentInvoiceData[0].senderAddress.street;
+		defaultInputProps.senderCity = currentInvoiceData[0].senderAddress.city;
+		defaultInputProps.senderPostCode = currentInvoiceData[0].senderAddress.postCode;
+		defaultInputProps.senderCountry =currentInvoiceData[0].senderAddress.country;
+		defaultInputProps.clientName = currentInvoiceData[0].clientName;
+		defaultInputProps.clientEmail  = currentInvoiceData[0].clientEmail;
+		defaultInputProps.clientStreet= currentInvoiceData[0].clientAddress.street;
+		defaultInputProps.clientCity = currentInvoiceData[0].clientAddress.city;
+		defaultInputProps.clientPostCode = currentInvoiceData[0].clientAddress.postCode;
+		defaultInputProps.clientCountry= currentInvoiceData[0].clientAddress.country;
+		defaultInputProps.paymentDue= currentInvoiceData[0].paymentDue;
+		defaultInputProps.paymentTerms= currentInvoiceData[0].paymentTerms;
+		defaultInputProps.items = currentInvoiceData[0].items;
+		defaultInputProps.description= currentInvoiceData[0].description;
+	}
+
+console.log(defaultInputProps)
+
+
+console.log(defaultInputProps.senderStreet)
+
 	const addNewField = () => {
-		if (!items) {
+		if (!defaultInputProps.items) {
 			return formField;
 		} else {
-			return items;
+			return defaultInputProps.items;
 		}
 	};
 
@@ -157,26 +154,26 @@ const Form = ({ onClickButtonGroup }) => {
 					<label className="form__label" htmlFor="address">
 						Street Address
 					</label>
-					<input name="fromAddress" className="form__input" id="fromAddress" type="text" defaultValue={senderStreet} />
+					<input name="fromAddress" className="form__input" id="fromAddress" type="text" defaultValue={defaultInputProps.senderStreet} />
 				</div>
 				<div className="row">
 					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="city">
 							City
 						</label>
-						<input name="city" className="form__input" id="city" type="text" defaultValue={senderCity} />
+						<input name="city" className="form__input" id="city" type="text" defaultValue={defaultInputProps.senderCity} />
 					</div>
 					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="postCode">
 							Post Code
 						</label>
-						<input name="postCode" className="form__input" id="postCode" type="text" defaultValue={senderPostCode} />
+						<input name="postCode" className="form__input" id="postCode" type="text" defaultValue={defaultInputProps.senderPostCode} />
 					</div>
 					<div className="form__input-container col-12 col-md-4">
 						<label className="form__label" htmlFor="country">
 							Country
 						</label>
-						<input name="country" className="form__input" id="country" type="text" defaultValue={senderCountry} />
+						<input name="country" className="form__input" id="country" type="text" defaultValue={defaultInputProps.senderCountry} />
 					</div>
 				</div>
 			</fieldset>
@@ -186,38 +183,38 @@ const Form = ({ onClickButtonGroup }) => {
 					<label className="form__label" htmlFor="name">
 						Client's Name
 					</label>
-					<input className="form__input" id="name" name="name" type="text" defaultValue={clientName} />
+					<input className="form__input" id="name" name="name" type="text" defaultValue={defaultInputProps.clientName} />
 				</div>
 				<div className="form__input-container col-12">
 					<label className="form__label" htmlFor="email">
 						Client's Email
 					</label>
-					<input className="form__input" id="email" name="email" type="email" defaultValue={clientEmail} />
+					<input className="form__input" id="email" name="email" type="email" defaultValue={defaultInputProps.clientEmail} />
 				</div>
 				<div className="form__input-container col-12">
 					<label className="form__label" htmlFor="toAddress">
 						Street Address
 					</label>
-					<input className="form__input" id="toAddress" name="toAddress" type="text" defaultValue={clientStreet} />
+					<input className="form__input" id="toAddress" name="toAddress" type="text" defaultValue={defaultInputProps.clientStreet} />
 				</div>
 				<div className="row">
 					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="toCity">
 							City
 						</label>
-						<input className="form__input" id="toCity" name="toCity" type="text" defaultValue={clientCity} />
+						<input className="form__input" id="toCity" name="toCity" type="text" defaultValue={defaultInputProps.clientCity} />
 					</div>
 					<div className="form__input-container col-6 col-md-4">
 						<label className="form__label" htmlFor="toPostCode">
 							Post Code
 						</label>
-						<input className="form__input" id="toPostCode" name="toPostCode" type="text" defaultValue={clientPostCode} />
+						<input className="form__input" id="toPostCode" name="toPostCode" type="text" defaultValue={defaultInputProps.clientPostCode} />
 					</div>
 					<div className="form__input-container col-12 col-md-4">
 						<label className="form__label" htmlFor="toCountry">
 							Country
 						</label>
-						<input className="form__input" id="toCountry" name="toCountry" type="text" defaultValue={clientCountry} />
+						<input className="form__input" id="toCountry" name="toCountry" type="text" defaultValue={defaultInputProps.clientCountry} />
 					</div>
 				</div>
 				<div className="row">
@@ -225,13 +222,13 @@ const Form = ({ onClickButtonGroup }) => {
 						<label className="form__label" htmlFor="date">
 							Invoice Date
 						</label>
-						<input className="form__input" id="date" type="date" name="date" defaultValue={paymentDue} />
+						<input className="form__input" id="date" type="date" name="date" defaultValue={defaultInputProps.paymentDue} />
 					</div>
 					<div className="form__input-container col-12 col-md-6">
 						<label className="form__label" htmlFor="select">
 							Payment Terms
 						</label>
-						<select className="form__select" name="select" id="select" defaultValue={paymentTerms}>
+						<select className="form__select" name="select" id="select" defaultValue={defaultInputProps.paymentTerms}>
 							<option value="1">Net 1 Day</option>
 							<option value="7">Net 7 Day</option>
 							<option value="14">Net 14 Day</option>
@@ -242,7 +239,7 @@ const Form = ({ onClickButtonGroup }) => {
 						<label htmlFor="" className="form__label">
 							Project Desctiption
 						</label>
-						<input type="text" className="form__input" id="description" name="description" defaultValue={description} />
+						<input type="text" className="form__input" id="description" name="description" defaultValue={defaultInputProps.description} />
 					</div>
 				</div>
 			</fieldset>

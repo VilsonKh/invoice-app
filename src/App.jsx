@@ -5,15 +5,18 @@ import InvoicePreview from "./components/InvoicePreview";
 import Page404 from "./components/Page404";
 import InvoiceState from "./context/invoice/invoiceState";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 
 import "./styles/customBootstrap.scss";
 import "./App.scss";
 import DarkState from "./context/dark/darkState";
+import invoiceContext from "./context/invoice/invoiceContext";
 
 function App() {
 	const [openedInvoice, setOpenedInvoice] = useState("");
 	const [clickNewInvoice, setClickNewInvoice] = useState(false)
+
+const {isNewInvoice} = useContext(invoiceContext)
 	return (
 		<DarkState>
 			<Router>
@@ -21,11 +24,11 @@ function App() {
 					<Header></Header>
 					<InvoiceState>
 						<main>
-							{clickNewInvoice ? <NewInvoice /> : ''}
+							{clickNewInvoice ? <NewInvoice clickButtons={setClickNewInvoice}/> : ''}
 							<Routes>
 								
-								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} openedInvoice={openedInvoice} />} />
-								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} clickNewInvoice={setClickNewInvoice}/>} />
+								<Route path="/:invoiceId" element={<InvoicePreview setOpenedInvoice={setOpenedInvoice} />} />
+								<Route path="/" element={<InvoicesList currentInvoice={openedInvoice} setClickNewInvoice={setClickNewInvoice}/>} />
 								<Route path="*" element={<Page404 />} />
 							</Routes>
 						</main>

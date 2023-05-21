@@ -6,25 +6,27 @@ import invoiceContext from "../context/invoice/invoiceContext";
 
 
 
-const NewInvoice = (props) => {
+const NewInvoice = ({clickButtons}) => {
 
 	const {clickSaveStatus} = useContext(invoiceContext);
 
 	const onClickButtonGroup = (e)=> {
+		console.log('ButtonGroup click')
 		const currentStatus = e.target.id;
-		clickSaveStatus(currentStatus)
-
+		//передает в context "pending", "draft", "discard"
+		clickSaveStatus(currentStatus);
 	}
 
+	
 
 	return (
 		<>
 			<div className="addInvoice__overlay"></div>
 			<section className="addInvoice">
 					<div className="container">
-						<ButtonBack ></ButtonBack>
+						<ButtonBack onCloseNewInvoiceForm={clickButtons}></ButtonBack>
 						<h1 className="addInvoice__heading">New Invoice</h1>
-						<Form onClickButton={(e) => onClickButtonGroup(e)}></Form>
+						<Form onClickButton={(e) => onClickButtonGroup(e)} onCloseNewForm={clickButtons}></Form>
 		        <div className="addInvoice__groupButtons" onClick={(e)=> onClickButtonGroup(e)}>
 		          <button type="submit" form="newInvoice" id='discard' className="addInvoice__discard btn-status" >Discard</button>
 		          <button type="submit" form="newInvoice" id='draft' className="addInvoice__draft btn-status" >Save as Draft</button>

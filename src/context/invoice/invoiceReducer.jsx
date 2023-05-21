@@ -11,6 +11,8 @@ import {
 	ADD_TO_ALL_INVOICES,
 	CHOSEN_STATUS,
 	CHANGED_INVOICE,
+	IS_NEW_INVOICE,
+	EDIT_INVOICE_FORM,
 } from "../types";
 
 import jsonData from "../../data.json";
@@ -18,9 +20,10 @@ import jsonData from "../../data.json";
 export const initialState = {
 	invoices: [...jsonData],
 	initialInvoices: [...jsonData],
+	isNewInvoice: false,
 	newInvoiceForm: null,
 	invoiceDetails: false,
-	editInvoiceForm: false,
+	isEditInvoiceForm: false,
 	confirmDelete: false,
 	currentInvoice: "",
 	currentInvoiceData: null,
@@ -52,7 +55,7 @@ const invoiceReducer = (state, action) => {
 				filters: newFilters,
 			};
 
-			//фильтрует массив по клику на чекбокс
+		//фильтрует массив по клику на чекбокс
 		case FILTER_INVOICES:
 			//пробую опять добавить invoices, чтобы новые инвойсы фильтровались
 			const filteredInvoices = [...state.invoices];
@@ -115,6 +118,8 @@ const invoiceReducer = (state, action) => {
 			return {
 				...state,
 				filters: ["pending", "paid", "draft"],
+				isNewInvoice: false,
+				isEditInvoiceForm: false
 			};
 
 		case RESET_CURRENT_INVOICE:
@@ -129,7 +134,7 @@ const invoiceReducer = (state, action) => {
 			const newID = state.newInvoiceForm.id;
 			let allInvoices = [...state.invoices];
 
-			if (state.currentStatus === "") {
+			if (state.currentStatus === "pending" || state.currentStatus === 'draft') {
 				allInvoices.forEach((invoice, index) => {
 					console.log(newID);
 					console.log("начало поиска");
@@ -145,7 +150,6 @@ const invoiceReducer = (state, action) => {
 					}
 				});
 			}
-			if(state.currentStatus !== '') {}
 
 			return {
 				...state,
@@ -167,6 +171,18 @@ const invoiceReducer = (state, action) => {
 				...state,
 				changedInvoice: action.payload,
 			};
+
+		case IS_NEW_INVOICE:
+			return {
+				...state,
+				isNewInvoice: action.payload,
+			};
+		
+			case EDIT_INVOICE_FORM:
+				return {
+					...state,
+					isEditInvoiceForm: action.payload,
+				}
 		default:
 			return state;
 	}

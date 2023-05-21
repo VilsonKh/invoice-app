@@ -9,22 +9,25 @@ import invoiceContext from "../context/invoice/invoiceContext";
 import darkContext from "../context/dark/darkContext";
 import EditInvoice from "./EditInvoice";
 
-const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
-	const { markAsPaid, currentInvoiceData } = useContext(invoiceContext);
+const InvoicePreview = ({ setOpenedInvoice }) => {
+	const { markAsPaid, currentInvoiceData, setEditInvoice } = useContext(invoiceContext);
 
 	const { id, description, senderAddress, clientAddress, total, createdAt, paymentDue, clientName, clientEmail, status } = currentInvoiceData[0];
 
-	
 	const { dark } = useContext(darkContext);
 	const { invoiceId } = useParams();
 
 	setOpenedInvoice(invoiceId);
-
 	const [confDelete, setConfDelete] = useState(false);
 	const [openEdit, setOpenEdit] = useState(false);
-	const [currentStatus, setCurrentStatus] = useState(status)
+	const [currentStatus, setCurrentStatus] = useState(status);
 
-	
+	const onOpenEdit = () => {
+		console.log('открывает редактор')
+		setOpenEdit(true);
+		console.log('изменяет контекст isEditInvoiceForm')
+		setEditInvoice(true)
+	}
 
 	const onHandleOpen = () => {
 		setConfDelete(true);
@@ -34,11 +37,10 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 		setConfDelete(false);
 	};
 
-
 	const onMarkClick = () => {
-		setCurrentStatus('paid');
-		markAsPaid(id)
-	}
+		setCurrentStatus("paid");
+		markAsPaid(id);
+	};
 
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
@@ -82,7 +84,7 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 		<>
 			{confDelete ? <ConfirmDelete confClose={onHandleClose}></ConfirmDelete> : null}
 			{openEdit ? (
-				<EditInvoice></EditInvoice>
+				<EditInvoice onClickCloseEditInvoice={setOpenEdit}></EditInvoice>
 			) : (
 				<div className={`invoicePreview ${dark ? "dark-nav" : ""}`}>
 					<div className="container">
@@ -92,9 +94,7 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 							<StatusElem status={currentStatus}></StatusElem>
 							<div className={`invoicePreview__groupButtons invoicePreview__statusButtons ${dark ? "dark-header" : ""}`}>
 								<button
-									onClick={() => {
-										setOpenEdit(true);
-									}}
+									onClick={onOpenEdit}
 									className="invoicePreview__btn-edit"
 								>
 									Edit
@@ -151,13 +151,15 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 								{window.screen.width > "767" ? (
 									<div className="invoicePreview__table-container">
 										<table className="invoicePreview__table">
-											<tr className="invoicePreview__tableHead">
-												<th>Item Name</th>
-												<th className="invoicePreview__qtyCell">QTY.</th>
-												<th className="invoicePreview__priceCell">Price</th>
-												<th className="invoicePreview__totalCell">Total</th>
-											</tr>
-											{TotalItemsLG}
+											<thead className="invoicePreview__tableHead">
+												<tr>
+													<th>Item Name</th>
+													<th className="invoicePreview__qtyCell">QTY.</th>
+													<th className="invoicePreview__priceCell">Price</th>
+													<th className="invoicePreview__totalCell">Total</th>
+												</tr>
+											</thead>
+											<tbody>{TotalItemsLG}</tbody>
 										</table>
 									</div>
 								) : (
@@ -173,9 +175,7 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 						</div>
 						<div className={`invoicePreview__groupButtons ${dark ? "dark-header" : ""}`}>
 							<button
-								onClick={() => {
-									setOpenEdit(true);
-								}}
+								onClick={onOpenEdit}
 								className="invoicePreview__btn-edit"
 							>
 								Edit
@@ -184,11 +184,7 @@ const InvoicePreview = ({ setOpenedInvoice, openedInvoice }) => {
 							<button className="invoicePreview__btn-delete" onClick={onHandleOpen}>
 								Delete
 							</button>
-							<button 
-							className="invoicePreview__btn-paid" 
-							onClick={onMarkClick}
-							style={currentStatus === 'paid' ? {'opacity': '0.5'} : null}
-							>
+							<button className="invoicePreview__btn-paid" onClick={onMarkClick} style={currentStatus === "paid" ? { opacity: "0.5" } : null}>
 								Mark as Paid
 							</button>
 						</div>

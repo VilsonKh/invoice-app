@@ -6,7 +6,7 @@ import { useContext} from "react";
 import NoInvoicesPage from "./NoInvoicesPage";
 import '../styles/customBootstrap.scss';
 
-const InvoicesList = ({onShowPreview, clickNewInvoice}) => {
+const InvoicesList = ({onShowPreview, setClickNewInvoice}) => {
 
 	const {invoices, filters} = useContext(invoiceContext);
 
@@ -25,7 +25,7 @@ const InvoicesList = ({onShowPreview, clickNewInvoice}) => {
 
 	return (
 		<section className="invoicesList">
-			<Navigation onClickNewInvoice={clickNewInvoice}/>
+			<Navigation onClickNewInvoice={setClickNewInvoice}/>
 			{filters.length > 0 ? <div className="container">
 				{<ul className="invoicesList__list">{items()}</ul>}
 			</div> : <NoInvoicesPage/>}

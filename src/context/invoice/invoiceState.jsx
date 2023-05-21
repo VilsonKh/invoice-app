@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import InvoiceContext from "./invoiceContext";
 import invoiceReducer, { initialState } from "./invoiceReducer";
-import { ADD_TO_ALL_INVOICES, CHANGED_INVOICE, CHANGE_FILTERS, CHOSEN_STATUS, CLICK_BACK, CONFIRM_DELETE, CURRENT_INVOICE, CURRENT_INVOICE_DATA, FILTER_INVOICES, MARK_PAID, NEW_INVOICE_FORM, RESET_CURRENT_INVOICE } from "../types";
+import { ADD_TO_ALL_INVOICES, CHANGED_INVOICE, CHANGE_FILTERS, CHOSEN_STATUS, CLICK_BACK, CONFIRM_DELETE, CURRENT_INVOICE, CURRENT_INVOICE_DATA, EDIT_INVOICE_FORM, FILTER_INVOICES, IS_NEW_INVOICE, MARK_PAID, NEW_INVOICE_FORM, RESET_CURRENT_INVOICE } from "../types";
 
 const InvoiceState = ({ children }) => {
 	const [state, dispatch] = useReducer(invoiceReducer, initialState);
@@ -13,6 +13,13 @@ const InvoiceState = ({ children }) => {
 		});
 		// state.invoices.splice(state.invoices.findIndex())
 	};
+
+		const setNewInvoice = (boolean) => {
+			dispatch({
+				type: IS_NEW_INVOICE,
+				payload: boolean,
+			});
+	}
 
 	const addCurrentInvoice = (number) => {
 		dispatch({
@@ -79,12 +86,19 @@ const InvoiceState = ({ children }) => {
 		})
 	}
 
+	const setEditInvoice = (boolean) => {
+		dispatch({
+			type: EDIT_INVOICE_FORM,
+			payload: boolean,
+		})
+	}
+
 	const value = {
 		invoices: state.invoices,
 		initialInvoices: state.initialInvoices,
 		newInvoiceForm: state.newInvoiceForm,
 		invoiceDetails: state.invoiceDetails,
-		editInvoiceForm: state.editInvoiceForm,
+		isEditInvoiceForm: state.isEditInvoiceForm,
 		deleteConfirmation: state.deleteConfirmation,
 		currentInvoice: state.currentInvoice,
 		currentInvoiceData: state.currentInvoiceData,
@@ -92,6 +106,7 @@ const InvoiceState = ({ children }) => {
 		error: state.error,
 		currentStatus: state.currentStatus,
 		changedInvoice: state.changedInvoice,
+		isNewInvoice: state.isNewInvoice,
 		deleteButtonClick,
 		addCurrentInvoice,
 		addNewInvoice,
@@ -100,7 +115,9 @@ const InvoiceState = ({ children }) => {
     onClickBack,
 		onClickAdd,
 		clickSaveStatus,
-		clickChangeInvoice
+		clickChangeInvoice,
+		setNewInvoice,
+		setEditInvoice
 	};
 
 	return <InvoiceContext.Provider value={value}>{children}</InvoiceContext.Provider>;

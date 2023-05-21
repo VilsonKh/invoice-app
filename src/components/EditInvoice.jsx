@@ -6,14 +6,14 @@ import Form from './Form';
 
 
 
-const EditInvoice = () => {
+const EditInvoice = (props) => {
   const {currentInvoice} = useContext(invoiceContext)
 
   return (
     <div className='editInvoice container'>
       <ButtonBack></ButtonBack>
       <h1>Edit <span>#</span> {currentInvoice}</h1>
-      <Form></Form>
+      <Form onClickCloseEditInvoice={props.onClickCloseEditInvoice}></Form>
       <div className="editInvoice__buttons">
         <button className='editInvoice__cancel'>Cancel</button>
         <button className='editInvoice__save' type='submit' form='newInvoice'>Save Changes</button>

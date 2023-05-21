@@ -35,7 +35,7 @@ const InvoicesItem = ({ number, name, dateDue, amount, status }) => {
 				<div className="invoicesList__item-right">
 					<p className="item__name">{name}</p>
 					<StatusElem status={status}></StatusElem>
-					<img class="item__arrowRight" src={arrowRight} alt="" />
+					<img className="item__arrowRight" src={arrowRight} alt="" />
 				</div>
 
 		</Link>

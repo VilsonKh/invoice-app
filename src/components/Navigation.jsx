@@ -3,14 +3,19 @@ import Dropdown from "./Dropdown";
 import addIcon from "../assets/icon-plus.svg";
 import dropArrow from "../assets/icon-arrow-down.svg";
 import "../styles/Navigation.scss";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import darkContext from "../context/dark/darkContext";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 const Navigation = (props) => {
 	const { dark} = useContext(darkContext);
-	const {invoices, onClickAdd} = useContext(invoiceContext)
+	const {invoices,setNewInvoice} = useContext(invoiceContext)
+
+	const handleClickNew = () => {
+		props.onClickNewInvoice(true);
+		setNewInvoice(true)
+	}
+
 	return (
 		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
 			<div className="container d-flex justify-content-between">
@@ -22,7 +27,7 @@ const Navigation = (props) => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<button className="nav__addButton d-flex align-items-center" onClick={()=> props.onClickNewInvoice(true)}>
+				<button className="nav__addButton d-flex align-items-center" onClick={handleClickNew}>
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
