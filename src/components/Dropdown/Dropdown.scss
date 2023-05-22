@@ -1,0 +1,74 @@
+.dropdown {
+
+	&__button {
+		background: transparent;
+		border: none;
+		position: relative;
+
+		&::before {
+			content: '';
+			width: 8px;
+			height: 5px;
+			background-image: url(../../assets/icon-arrow-down.svg);
+			background-size: 100%;
+			position: absolute;
+			right: -10px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+
+	&__item-container {
+		display: flex;
+		align-items: center;
+	}
+
+	&__input {
+		position: absolute;
+		z-index: -1;
+		opacity: 0;
+
+		&:checked + label::before {
+			background-image: url(../../assets/input-checked.png);
+		}
+	}
+
+	&__label {
+		font-weight: 700;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		cursor: pointer;
+
+		&::before :hover {
+			border: 1px solid #7c5dfa;
+		}
+
+		&::before {
+			content: "";
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			border-radius: 2px;
+			background-color: #dfe3fa;
+			margin-right: 13px;
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	// Bootstrap custom
+
+	&-menu {
+		padding: 24px !important;
+		border: none !important;
+		box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25) !important;
+    top: 10px !important;
+    left: -40px !important;
+
+		&-item:focus, &-item:hover {
+			background-color: transparent !important;
+		}
+	}
+
+}

@@ -1,0 +1,23 @@
+.addInvoice{
+  &__button-container {
+		margin-top: 32px !important;
+		margin-bottom: 24px !important;
+		cursor: pointer;
+		display: block;
+
+		& img {
+			margin-right: 24px;
+			position: relative;
+			top: -2px;
+		}
+
+		& button {
+			background: transparent;
+			border: none;
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 15px;
+			letter-spacing: -0.25px;
+		}
+	}
+}

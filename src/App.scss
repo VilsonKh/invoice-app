@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Spartan";
+  src: url(./fonts/Spartan-Regular.ttf);
+}
+p {
+  margin: 0 !important;
+}
+
+h1 {
+  margin: 0 !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+body {
+  color: #0C0E16 !important;
+  font-family: "Spartan", sans-serif !important;
+}
+
+ul, li {
+  padding: 0 !important;
+}
+
+.App {
+  position: relative;
+}
+

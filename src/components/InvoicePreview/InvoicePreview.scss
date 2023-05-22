@@ -1,0 +1,232 @@
+.invoicePreview {
+	position: absolute;
+	z-index: 999;
+	top: 72px;
+	background: #f8f8fb;
+	width: 100%;
+
+	&__status {
+		display: flex;
+		justify-content: space-between;
+		padding: 24px;
+		background-color: white;
+		border-radius: 8px;
+		margin-bottom: 16px;
+
+		@media screen and (min-width: 767px) {
+			align-items: center;
+		}
+	}
+
+	&__info {
+		background-color: white;
+		border-radius: 8px;
+		padding: 24px;
+		margin-bottom: 56px;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	&__heading {
+		margin-bottom: 30px;
+		grid-area: 1/1/2/5;
+
+    @media screen and (min-width: 767px) {
+      grid-area: 1/1/2/3;
+    }
+	}
+
+	&__number {
+		color: #7e88c3;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		& span {
+			color: #0c0e16;
+		}
+	}
+
+	&__description {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 15px;
+		letter-spacing: -0.25px;
+		color: #7e88c3;
+	}
+
+	&__address {
+		margin-bottom: 30px;
+		grid-area: 2/1/3/5;
+
+    @media screen and (min-width: 767px) {
+      grid-area: 1/3/2/5;
+      text-align: right;
+    }
+	}
+
+	&__bill {
+		// display: grid !important;
+		// grid-template-columns: 1fr 1fr;
+		margin-bottom: 36px;
+		grid-area: 3/1/4/5;
+		display: flex;
+		justify-content: space-between;
+
+    @media screen and (min-width: 767px) {
+      grid-area: 2/1/3/3;
+    }
+	}
+
+	&__bill-email {
+		margin-bottom: 40px;
+		grid-area: 4/1/5/5;
+
+    @media screen and (min-width: 767px) {
+      grid-area: 2/3/3/5;
+      display: flex;
+      flex-direction: column;
+      margin-left: 100px;
+      }
+	}
+
+	&__list-inner {
+		margin: 0;
+	}
+
+	&__list-item {
+		display: flex;
+		justify-content: space-between;
+		background-color: #f9fafe;
+		padding: 24px !important;
+		border-radius: 8px 8px 0 0;
+	}
+
+	&__list-item-right {
+		display: flex;
+		align-items: center;
+	}
+
+	&__totalItems {
+		grid-area: 5/1/6/5;
+	}
+
+	&__total {
+		display: flex;
+		justify-content: space-between;
+		padding: 24px;
+		background: #373b53;
+		border-radius: 0 0 8px 8px;
+		color: white;
+	}
+
+	&__groupButtons {
+		padding-top: 21px;
+		padding-bottom: 21px;
+		display: flex;
+		justify-content: space-between;
+		background-color: white;
+
+		& button {
+			border: none;
+			padding: 10px 24px;
+			border-radius: 24px;
+		}
+
+		@media screen and (min-width: 767px) {
+			display: none;
+		}
+	}
+
+	&__statusButtons {
+		display: none;
+		@media screen and (min-width: 767px) {
+			display: block;
+		}
+
+		& button:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+
+	&__btn-edit {
+		background-color: #f9fafe !important;
+		color: #7e88c3;
+	}
+
+	&__btn-delete {
+		background: #ec5757;
+		color: #ffffff;
+	}
+
+	&__btn-paid {
+		background: #7c5dfa;
+		color: #ffffff;
+	}
+
+	&__table-container {
+
+		background-color: #f9fafe;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+	}
+
+	&__table {
+		width: 100%;
+    border-spacing: 32px 30px;
+    border-collapse:separate;
+    font-size: 12px;
+	}
+
+	&__totalCell,
+	&__priceCell {
+		text-align: right;
+	}
+
+	&__qtyCell {
+		text-align: center;
+	}
+
+	&__tableHead {
+		color: #7e88c3;
+		font-size: 11px;
+		line-height: 18px;
+	}
+}
+
+.label {
+	font-weight: 500;
+	font-size: 11px;
+	line-height: 18px;
+	letter-spacing: -0.229167px;
+	color: #7e88c3;
+}
+
+.big-fs {
+	font-weight: 700;
+	font-size: 15px;
+	line-height: 20px;
+	letter-spacing: -0.3125px;
+	color: #0c0e16;
+}
+
+.dark-header {
+	background-color: #1e2139 !important;
+	color: white;
+}
+
+.dark-font {
+	color: white !important;
+}
+
+.dark-nav {
+	background-color: rgb(20, 22, 37);
+	color: white;
+}
+
+.dark-light {
+	background-color: #252945;
+}
+
+.dark-black {
+	background-color: #0c0e16;
+}
