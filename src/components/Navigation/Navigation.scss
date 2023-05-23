@@ -1,10 +1,29 @@
 .nav {
-  margin: 0 auto;
-  margin-bottom: 32px !important;
-  max-width: 730px;
+	margin: 0 auto;
+	margin-bottom: 32px !important;
+	max-width: 730px;
+
+	@media screen and (min-width: 767px) {
+		padding-top: 50px;
+	}
 
 	&__info {
-    flex-grow: 1;
+		flex-grow: 1;
+
+		& h1 {
+			font-style: normal;
+			font-weight: 700;
+			font-size: 20px;
+			line-height: 22px;
+			letter-spacing: -0.625px;
+			margin-bottom: 4px;
+
+			@media screen and (min-width: 767px) {
+				font-weight: 700;
+				font-size: 32px;
+				line-height: 36px;
+			}
+		}
 
 		& p {
 			font-weight: 500;
@@ -12,38 +31,44 @@
 			line-height: 15px;
 			letter-spacing: -0.25px;
 			color: #888eb0;
-      flex-grow: 1;
+			flex-grow: 1;
 		}
 	}
 
 	&__dropdown {
-    margin-right: 20px;
-    & img {
-      margin-left: 10px;
-    }
+		margin-right: 20px;
+		& img {
+			margin-left: 10px;
+		}
 	}
 
 	&__addButton {
-    border-radius: 30px;
-    background-color: #7C5DFA;
-    border: none;
-    padding: 0 6px;
+		border-radius: 30px;
+		background-color: #7c5dfa;
+		border: none;
+		padding: 0 6px;
 
-    & p {
-      padding: 6px 15px 6px 8px;
-      color: white;
-    }
+		& p {
+			padding: 6px 15px 6px 8px;
+			color: white;
+			font-weight: 700;
+			font-size: 12px;
+			line-height: 15px;
+		}
 	}
-
-
 }
 
 .addButton__icon {
+	border-radius: 24px;
+	background-color: white;
 
-  border-radius: 24px;
-  background-color: white;
+	& img {
+		padding: 10px;
+	}
+}
 
-  & img {
-    padding: 10px;
-  }
+.dropdown__button {
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 15px;
 }

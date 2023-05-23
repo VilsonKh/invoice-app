@@ -12,13 +12,22 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 
 const Navigation = ({onClickOpenNewInvoiceForm}) => {
 	const { dark} = useContext(darkContext);
-	const {invoices,setNewInvoice} = useContext(invoiceContext)
+	const {invoices,setNewInvoice,resetForm} = useContext(invoiceContext)
 
 	const onClickButton = (e)=> {
-		e.preventDefault()
-		console.log(true)
+		e.preventDefault();
+		resetForm()
 		setNewInvoice(true);
+	}
 
+	const shownInvoicesCount = () => {
+		const newInvoices= [];
+		invoices.forEach(invoice => {
+			if(invoice.show) {
+				newInvoices.push(invoice.id)
+			}
+		})
+		return newInvoices.length
 	}
 	return (
 		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
@@ -26,7 +35,7 @@ const Navigation = ({onClickOpenNewInvoiceForm}) => {
 				<div className="nav__info">
 					<h1>Invoices</h1>
 					<p>
-						<span>{invoices.length}</span> invoices
+						{window.screen.width > '767' ? <span>{`There are ${shownInvoicesCount()} total invoices`}</span> : <span>{`${shownInvoicesCount()} invoices`}</span> }
 					</p>
 				</div>
 				
@@ -35,7 +44,7 @@ const Navigation = ({onClickOpenNewInvoiceForm}) => {
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
-					<p>New</p> 
+					<p>{window.screen.width > '767' ? 'New Invoice' : 'New'}</p> 
 				</button>
 			</div>
 		</nav>

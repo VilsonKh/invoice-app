@@ -9,7 +9,7 @@ import { useContext } from 'react';
 //context
 import invoiceContext from '../../context/invoice/invoiceContext';
 
-const InvoicesList = ({onClickOpenNewInvoiceForm, onClickOpenPreview}) => {
+const InvoicesList = () => {
 
   const {invoices, filters,setCurrentInvoiceNumber,setPreviewInvoice} = useContext(invoiceContext);
 
@@ -18,10 +18,13 @@ const InvoicesList = ({onClickOpenNewInvoiceForm, onClickOpenPreview}) => {
 		return <NoInvoicesPage/>
 	} else {
 		const listItems = invoices.map((invoice) => {
-			const {id, paymentDue, items, clientName, status} = invoice;
+			if(invoice.show === true) {
+				const {id, paymentDue, items, clientName, status} = invoice;
 					return (
 						<InvoicesItem key={id} number={id} dateDue={paymentDue} amount={items[0].price} name={clientName} status={status}></InvoicesItem>
 					);
+			}
+			return false
 		});
 		return listItems
 	}}
@@ -40,7 +43,7 @@ const InvoicesList = ({onClickOpenNewInvoiceForm, onClickOpenPreview}) => {
 
   return (
     <section className='invoicesList'>
-      <Navigation onClickOpenNewInvoiceForm={onClickOpenNewInvoiceForm}/>
+      <Navigation />
       {filters.length > 0 ? <div className='container'>
         {<ul onClick={(e)=>getCurrentInvoiceNumber(e)} className='invoicesList__list'>{items()}</ul>}
       </div> : <NoInvoicesPage/>}

@@ -5,15 +5,20 @@ import darkContext from "../../context/dark/darkContext";
 import invoiceContext from "../../context/invoice/invoiceContext";
 import "./ButtonBack.scss";
 
-const ButtonBack = ({setIsPreviewOpen}) => {
-
+const ButtonBack = () => {
 	const {dark} = useContext(darkContext);
-
-
 	const darkFont = dark ? 'dark-font' : ''
 
+	const {setNewInvoice, setPreviewInvoice,setEditInvoice} = useContext(invoiceContext);
+
+	const onButtonBackClick = () => {
+		setPreviewInvoice(false);
+		setNewInvoice(false);
+		setEditInvoice(false)
+	}
+
 	return (
-		<div onClick={()=>setIsPreviewOpen(false)} className={`addInvoice__button-container ${dark ? 'dark-font' : ''}`}>
+		<div onClick={onButtonBackClick} className={`addInvoice__button-container ${dark ? 'dark-font' : ''}`}>
 			<img src={leftArrow} alt="" />
 			<button  className={darkFont}>Go back</button>
 		</div>

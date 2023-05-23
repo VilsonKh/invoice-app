@@ -1,5 +1,6 @@
 //styles
 import "./App.scss";
+import './components/darkTheme.scss'
 //components
 import Header from "./components/Header/Header";
 import InvoicesList from "./components/InvoicesList/InvoicesList";
@@ -9,44 +10,28 @@ import DarkState from "./context/dark/darkState";
 import InvoiceState from "./context/invoice/invoiceState";
 import invoiceContext from "./context/invoice/invoiceContext";
 //hooks
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 //libs
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import InvoicePreview from "./components/InvoicePreview/InvoicePreview";
 
 function App() {
-	const { isNewInvoice, isPreviewInvoice } = useContext(invoiceContext);
-	// const [isNewInvoiceOpen, setIsNewInvoiceOpen] = useState(false);
-	// const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+	const {isNewInvoice, isPreviewInvoice, isEditInvoice} = useContext(invoiceContext)
 
-	// //можно использовать prev = !prev
-	// const onClickOpenNewInvoiceForm = () => {
-	// 	setIsNewInvoiceOpen(true);
-	// };
-
-	// const onClickOpenPreview = () => {
-	// 	setIsPreviewOpen(true);
-	// };
-
-	// const onClickCloseInvoiceForm = () => {
-	// 	setIsPreviewOpen(prev => !prev);
-	// 	// setIsNewInvoiceOpen((prev) => {
-	// 	// 	if (prev === true) {
-	// 	// 		return false
-	// 	// 	} 
-	// 	// });
-	// };
+	useEffect(() => {
+		window.scrollTo(0,0)
+	},[isNewInvoice,isPreviewInvoice,isEditInvoice])
 
 	return (
 		<DarkState>
-			<InvoiceState>
+
 				<Header></Header>
 				<main>
 					{isNewInvoice && <Form  />}
 					{isPreviewInvoice && <InvoicePreview />}
-					{<InvoicesList />}
+					{!isPreviewInvoice && <InvoicesList />}
 				</main>
-			</InvoiceState>
+
 		</DarkState>
 	);
 }

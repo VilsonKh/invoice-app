@@ -1,5 +1,6 @@
 [
   {
+    "show":true,
     "id": "RT3080",
     "createdAt": "2021-08-18",
     "paymentDue": "2021-08-19",
@@ -31,6 +32,7 @@
     "total": 1800.90
   },
   {
+    "show":true,
     "id": "XM9141",
     "createdAt": "2021-08-21",
     "paymentDue": "2021-09-20",
@@ -68,6 +70,7 @@
     "total": 556.00
   },
   {
+    "show":true,
     "id": "RG0314",
     "createdAt": "2021-09-24",
     "paymentDue": "2021-10-01",
@@ -99,6 +102,7 @@
     "total": 14002.33
   },
   {
+    "show":true,
     "id": "RT2080",
     "createdAt": "2021-10-11",
     "paymentDue": "2021-10-12",
@@ -130,6 +134,7 @@
     "total": 102.04
   },
   {
+    "show":true,
     "id": "AA1449",
     "createdAt": "2021-10-7",
     "paymentDue": "2021-10-14",
@@ -167,6 +172,7 @@
     "total": 4032.33
   },
   {
+    "show":true,
     "id": "TY9141",
     "createdAt": "2021-10-01",
     "paymentDue": "2021-10-31",
@@ -198,6 +204,7 @@
     "total": 6155.91
   },
   {
+    "show":true,
     "id": "FV2353",
     "createdAt": "2021-11-05",
     "paymentDue": "2021-11-12",
