@@ -1,7 +1,35 @@
 import React, { useReducer } from "react";
 import InvoiceContext from "./invoiceContext";
 import invoiceReducer, { initialState } from "./invoiceReducer";
-import { ADD_NEW_FORMFIELD, ADD_TO_ALL_INVOICES, CHANGED_INVOICE, CHANGE_FILTERS, CHANGE_FORM_STATE, CHANGE_SHOWN_INVOICES, CHOSEN_STATUS, CLICK_BACK, CONFIRM_DELETE, CURRENT_INVOICE, CURRENT_INVOICE_DATA, CURRENT_INVOICE_NUMBER, DELETE_NEW_FORMFIELD, EDIT_INVOICE_FORM, FILTER_INVOICES, IS_DELETE_CONF, IS_EDIT_INVOICE, IS_NEW_INVOICE, IS_PREVIEW_INVOICE, MARK_AS_PAID, MARK_PAID, NEW_INVOICE_FORM, RESET_CURRENT_INVOICE, RESET_FORM } from "../types";
+import {
+	GET_ALL_INVOICES,
+	ADD_NEW_FORMFIELD,
+	ADD_TO_ALL_INVOICES,
+	CHANGED_INVOICE,
+	CHANGE_FILTERS,
+	CHANGE_FORM_STATE,
+	CHANGE_SHOWN_INVOICES,
+	CHOSEN_STATUS,
+	CLICK_BACK,
+	CONFIRM_DELETE,
+	CURRENT_INVOICE,
+	CURRENT_INVOICE_DATA,
+	CURRENT_INVOICE_NUMBER,
+	DELETE_NEW_FORMFIELD,
+	EDIT_INVOICE_FORM,
+	FILTER_INVOICES,
+	IS_DELETE_CONF,
+	IS_EDIT_INVOICE,
+	IS_NEW_INVOICE,
+	IS_PREVIEW_INVOICE,
+	MARK_AS_PAID,
+	MARK_PAID,
+	NEW_INVOICE_FORM,
+	RESET_CURRENT_INVOICE,
+	RESET_FORM,
+	GET_ALL_INVOICES_ITEMS,
+	SET_VISIBLE_INVOICES,
+} from "../types";
 
 const InvoiceState = ({ children }) => {
 	const [state, dispatch] = useReducer(invoiceReducer, initialState);
@@ -9,103 +37,123 @@ const InvoiceState = ({ children }) => {
 	// const deleteButtonClick = () => {
 	// 	dispatch({
 	// 		type: CONFIRM_DELETE,
-  //     payload: true
+	//     payload: true
 	// 	});
 	// 	// state.invoices.splice(state.invoices.findIndex())
 	// };
+
+	const getAllInvoicesItems = (data) => {
+		dispatch({
+			type: GET_ALL_INVOICES_ITEMS,
+			payload: data,
+		});
+	};
 
 	const setPreviewInvoice = (boolean) => {
 		dispatch({
 			type: IS_PREVIEW_INVOICE,
 			payload: boolean,
-		})
-	}
+		});
+	};
 
-		const setNewInvoice = (boolean) => {
-			dispatch({
-				type: IS_NEW_INVOICE,
-				payload: boolean,
-			});
-		}
+	const setVisibleInvoices = (numb) => {
+		dispatch({
+			type: SET_VISIBLE_INVOICES,
+			payload: numb,
+		});
+	};
 
-		const setEditInvoice = (boolean) => {
-			dispatch({
-				type: IS_EDIT_INVOICE,
-				payload: boolean,
-			})
-		}
+	const setNewInvoice = (boolean) => {
+		dispatch({
+			type: IS_NEW_INVOICE,
+			payload: boolean,
+		});
+	};
 
-		const setCurrentInvoiceNumber = (invoiceNumber) => {
-			dispatch ({
-				type: CURRENT_INVOICE_NUMBER,
-				payload: invoiceNumber
-			})
-		}
+	const setEditInvoice = (boolean) => {
+		dispatch({
+			type: IS_EDIT_INVOICE,
+			payload: boolean,
+		});
+	};
 
-		const setDeleteConf = (boolean) => {
-			dispatch ({
-				type: IS_DELETE_CONF,
-				payload: boolean,
-			})
-		}
+	const setCurrentInvoiceNumber = (invoiceNumber) => {
+		dispatch({
+			type: CURRENT_INVOICE_NUMBER,
+			payload: invoiceNumber,
+		});
+	};
 
-		const confirmDeletion = () => {
-			dispatch ({
-				type: CONFIRM_DELETE,
-			})
-		}
+	const setDeleteConf = (boolean) => {
+		dispatch({
+			type: IS_DELETE_CONF,
+			payload: boolean,
+		});
+	};
 
-		const changeFormState = (data) => {
-			dispatch({
-				type: CHANGE_FORM_STATE,
+	const confirmDeletion = () => {
+		dispatch({
+			type: CONFIRM_DELETE,
+		});
+	};
 
-			})
-		}
+	const changeFormState = (data) => {
+		dispatch({
+			type: CHANGE_FORM_STATE,
+		});
+	};
 
-		const resetForm = () => {
-			dispatch ({
-				type: RESET_FORM
-			})
-		}
+	const resetForm = () => {
+		dispatch({
+			type: RESET_FORM,
+		});
+	};
 
-		const changeFilters = (filter) => {
-			dispatch({
-				type: CHANGE_FILTERS,
-				payload: filter
-			})
-		}
+	const changeFilters = (filter) => {
+		dispatch({
+			type: CHANGE_FILTERS,
+			payload: filter,
+		});
+	};
 
-		const changeShownInvoices = () => {
-			dispatch ({
-				type: CHANGE_SHOWN_INVOICES,
-			})
-		}
+	const changeShownInvoices = () => {
+		dispatch({
+			type: CHANGE_SHOWN_INVOICES,
+		});
+	};
 
-		const markAsPaid = () => {
-			dispatch({
-				type: MARK_AS_PAID,
-			})
-		}
+	const markAsPaid = () => {
+		dispatch({
+			type: MARK_AS_PAID,
+		});
+	};
 
-		const addNewFormfield = () => {
-			dispatch ({
-				type: ADD_NEW_FORMFIELD
-			})
-		}
+	const addNewFormfield = (invoiceNumber) => {
+		dispatch({
+			type: ADD_NEW_FORMFIELD,
+			payload: invoiceNumber
+		});
+	};
 
-		const deleteNewFormfield = () => {
-			dispatch ({
-				type: DELETE_NEW_FORMFIELD
-			})
-		}
+	const deleteNewFormfield = () => {
+		dispatch({
+			type: DELETE_NEW_FORMFIELD,
+		});
+	};
 
-		const addToAllInvoices = (data) => {
-			dispatch ({
-				type: ADD_TO_ALL_INVOICES,
-				payload: data
-			})
-		}
+	const addToAllInvoices = (data) => {
+		dispatch({
+			type: ADD_TO_ALL_INVOICES,
+			payload: data,
+		});
+	};
 
+	const getAllInvoices = (data) => {
+		dispatch({
+			type: GET_ALL_INVOICES,
+			payload: data,
+		});
+	};
 	// const addCurrentInvoice = (number) => {
 	// 	dispatch({
 	// 		type: CURRENT_INVOICE,
@@ -135,32 +183,32 @@ const InvoiceState = ({ children }) => {
 	// 	});
 	// };
 
-  // const onFilterClick = (filter) => {
-  //   dispatch({
-  //     type: CHANGE_FILTERS,
-  //     payload: filter
-  //   })
-  //   dispatch({
-  //     type: FILTER_INVOICES,
-  //   })
-  // }
+	// const onFilterClick = (filter) => {
+	//   dispatch({
+	//     type: CHANGE_FILTERS,
+	//     payload: filter
+	//   })
+	//   dispatch({
+	//     type: FILTER_INVOICES,
+	//   })
+	// }
 
-  // const onClickBack = () => {
-  //   dispatch ({
-  //     type: CLICK_BACK,
-  //   })
-  // }
+	// const onClickBack = () => {
+	//   dispatch ({
+	//     type: CLICK_BACK,
+	//   })
+	// }
 
 	// const onClickAdd = () => {
 	// 	dispatch({
 	// 		type: RESET_CURRENT_INVOICE,
-	// 	})	
+	// 	})
 	// }
 
 	// const clickSaveStatus = (status) => {
 	// 	dispatch({
 	// 		type: CHOSEN_STATUS,
-	// 		payload: status 
+	// 		payload: status
 	// 	})
 	// }
 
@@ -170,16 +218,12 @@ const InvoiceState = ({ children }) => {
 	// 		payload: invoice
 	// 	})
 	// }
-
-	// const setEditInvoice = (boolean) => {
-	// 	dispatch({
-	// 		type: EDIT_INVOICE_FORM,
-	// 		payload: boolean,
-	// 	})
 	// }
 
 	const value = {
 		invoices: state.invoices,
+		invoiceItems: state.invoiceItems,
+		visibleInvoices: state.visibleInvoices,
 		// initialInvoices: state.initialInvoices,
 		// newInvoiceForm: state.newInvoiceForm,
 		// invoiceDetails: state.invoiceDetails,
@@ -201,8 +245,8 @@ const InvoiceState = ({ children }) => {
 		// deleteButtonClick,
 		// addCurrentInvoice,
 		// addNewInvoice,
-    // onFilterClick,
-    // onClickBack,
+		// onFilterClick,
+		// onClickBack,
 		// onClickAdd,
 		// clickSaveStatus,
 		// clickChangeInvoice,
@@ -219,9 +263,14 @@ const InvoiceState = ({ children }) => {
 		addNewFormfield,
 		deleteNewFormfield,
 		addToAllInvoices,
+		getAllInvoices,
+		getAllInvoicesItems,
+		setVisibleInvoices,
 	};
 
-	return <InvoiceContext.Provider value={value}>{children}</InvoiceContext.Provider>;
+	return <InvoiceContext.Provider value={value}>
+					{children}
+				</InvoiceContext.Provider>;
 };
 
 export default InvoiceState;

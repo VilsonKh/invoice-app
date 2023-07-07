@@ -20,22 +20,13 @@ const Navigation = ({onClickOpenNewInvoiceForm}) => {
 		setNewInvoice(true);
 	}
 
-	const shownInvoicesCount = () => {
-		const newInvoices= [];
-		invoices.forEach(invoice => {
-			if(invoice.show) {
-				newInvoices.push(invoice.id)
-			}
-		})
-		return newInvoices.length
-	}
 	return (
 		<nav className={`nav ${dark ? "dark-nav" : ''}`}>
 			<div className="container d-flex justify-content-between">
 				<div className="nav__info">
 					<h1>Invoices</h1>
 					<p>
-						{window.screen.width > '767' ? <span>{`There are ${shownInvoicesCount()} total invoices`}</span> : <span>{`${shownInvoicesCount()} invoices`}</span> }
+						{window.screen.width > '767' ? <span>{`There are ${invoices.length} total invoices`}</span> : <span>{`${invoices.length} invoices`}</span> }
 					</p>
 				</div>
 				

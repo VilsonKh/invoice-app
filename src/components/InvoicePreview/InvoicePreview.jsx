@@ -12,8 +12,10 @@ import darkContext from "../../context/dark/darkContext";
 
 
 const InvoicePreview = (setIsPreviewOpen) => {
+
 	const { dark } = useContext(darkContext);
 	const { invoices, 
+					invoiceItems,
 					currentInvoiceNumber, 
 					setEditInvoice, 
 					isEditInvoice, 
@@ -22,30 +24,44 @@ const InvoicePreview = (setIsPreviewOpen) => {
 					setDeleteConf 
 				} = useContext(invoiceContext);
 
-	const currentInvoices = [...invoices].filter((invoice) => {
-		if (invoice.id === currentInvoiceNumber) {
+	const currentInvoice = [...invoices].filter((invoice) => {
+		if (invoice.invoiceId === currentInvoiceNumber) {
 			return invoice;
 		}
 	});
+
+	const currentItems = invoiceItems.filter(item => {
+		if(item.invoiceId === currentInvoiceNumber) {
+			return item
+		}
+	})
+
 	const { status, 
-					id, 
+					invoiceId, 
 					description, 
-					senderAddress, 
+					senderStreet,
+					senderCity,
+					senderPostCode,
+					senderCountry, 
 					clientName, 
-					clientAddress, 
+					clientStreet,
+					clientCity,
+					clientPostCode,
+					clientCountry, 
 					clientEmail, 
 					createdAt, 
 					paymentDue, 
-					items, 
 					total 
-				} = currentInvoices[0];
+				} = currentInvoice[0];
+
+	
 
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
 	};
 
-	const TotalItemsSM = items.map((elem, i) => {
+	const TotalItemsSM = currentItems.map((elem, i) => {
 		return (
 			<div className="invoicePreview__list" key={i}>
 				<ul className="invoicePreview__list-inner">
@@ -65,7 +81,8 @@ const InvoicePreview = (setIsPreviewOpen) => {
 		);
 	});
 
-	const TotalItemsLG = items.map((elem, i) => {
+
+	const TotalItemsLG = currentItems.map((elem, i) => {
 		return (
 			<tr key={i}>
 				<td>{elem.name}</td>
@@ -75,8 +92,6 @@ const InvoicePreview = (setIsPreviewOpen) => {
 			</tr>
 		);
 	});
-
-	console.log(isDeleteConf)
 
 	return (
 		<>
@@ -89,7 +104,8 @@ const InvoicePreview = (setIsPreviewOpen) => {
 						<p className="invoicePreview__staus-text">Status</p>
 						<StatusElem status={status}></StatusElem>
 						<div className={`invoicePreview__groupButtons invoicePreview__statusButtons ${dark ? "dark-header" : ""}`}>
-							<button onClick={() => setEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
+					
+							<button 	onClick={() => setEditInvoice(true)}  className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
 								Edit
 							</button>
 
@@ -104,15 +120,15 @@ const InvoicePreview = (setIsPreviewOpen) => {
 					<div className={`invoicePreview__info ${dark ? "dark-header" : ""}`}>
 						<div className="invoicePreview__heading">
 							<p className="invoicePreview__number">
-								#<span className={`${dark ? "dark-font" : ""}`}>{id}</span>
+								#<span className={`${dark ? "dark-font" : ""}`}>{invoiceId}</span>
 							</p>
 							<p className="invoicePreview__description">{description}</p>
 						</div>
 						<div className="invoicePreview__address label">
-							<p className="invoicePreview__street">{senderAddress.street}</p>
-							<p className="invoicePreview__city">{senderAddress.city}</p>
-							<p className="invoicePreview__post">{senderAddress.postCode}</p>
-							<p className="invoicePreview__country">{senderAddress.country}</p>
+							<p className="invoicePreview__street">{senderStreet}</p>
+							<p className="invoicePreview__city">{senderCity}</p>
+							<p className="invoicePreview__post">{senderPostCode}</p>
+							<p className="invoicePreview__country">{senderCountry}</p>
 						</div>
 						<div className="invoicePreview__bill">
 							<div>
@@ -130,10 +146,10 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<div className="invoicePreview__bill-addressTo label">
 								<label className="invoicePreview__labelDate">Bill To</label>
 								<p className={`invoicePreview__clientName big-fs ${dark ? "dark-font" : ""}`}>{clientName}</p>
-								<p className="invoicePreview__ToStreet">{clientAddress.street}</p>
-								<p className="invoicePreview__ToCity">{clientAddress.city}</p>
-								<p className="invoicePreview__ToPost">{clientAddress.postCode}</p>
-								<p className="invoicePreview__ToCountry">{clientAddress.country}</p>
+								<p className="invoicePreview__ToStreet">{clientStreet}</p>
+								<p className="invoicePreview__ToCity">{clientCity}</p>
+								<p className="invoicePreview__ToPost">{clientPostCode}</p>
+								<p className="invoicePreview__ToCountry">{clientCountry}</p>
 							</div>
 						</div>
 						<div className="invoicePreview__bill-email">
@@ -141,8 +157,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<p className={`invoicePreview__email big-fs ${dark ? "dark-font" : ""}`}>{clientEmail}</p>
 						</div>
 						<div className="invoicePreview__totalItems">
-							{window.screen.width > "767" ? (
-								<div className="invoicePreview__table-container">
+							{window.screen.width > "767" ? (<div className="invoicePreview__table-container">
 									<table className={`invoicePreview__table ${dark ? "dark-light" : ""}`}>
 										<thead className="invoicePreview__tableHead">
 											<tr>
@@ -152,12 +167,14 @@ const InvoicePreview = (setIsPreviewOpen) => {
 												<th className="invoicePreview__totalCell">Total</th>
 											</tr>
 										</thead>
-										<tbody>{TotalItemsLG}</tbody>
+										<tbody>
+											{TotalItemsLG}
+										</tbody>
 									</table>
-								</div>
-							) : (
-								TotalItemsSM
-							)}
+								</div>) : (
+									TotalItemsSM
+								)}
+								
 							<div className={`invoicePreview__total ${dark ? "dark-black" : ""}`}>
 								<p className="invoicePreview__total-text">Amount Due</p>
 								<p className="invoicePreview__total-sum">

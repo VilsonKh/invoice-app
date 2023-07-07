@@ -9,18 +9,14 @@
     "clientName": "Jensen Huang",
     "clientEmail": "jensenh@mail.com",
     "status": "paid",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "106 Kendell Street",
-      "city": "Sharrington",
-      "postCode": "NR24 5WQ",
-      "country": "United Kingdom"
-    },
+    "senderStreet": "19 Union Terrace",
+    "senderCity": "London",
+    "senderPostCode": "E1 3EZ",
+    "senderCountry": "United Kingdom",
+    "clientStreet": "106 Kendell Street",
+    "clientCity": "Sharrington",
+    "clientPostCode": "NR24 5WQ",
+    "clientCountry": "United Kingdom",
     "items": [
       {
         "name": "Brand Guidelines",
@@ -41,18 +37,14 @@
     "clientName": "Alex Grim",
     "clientEmail": "alexgrim@mail.com",
     "status": "pending",
-    "senderAddress": {
-      "street": "19 Union Terrace",
-      "city": "London",
-      "postCode": "E1 3EZ",
-      "country": "United Kingdom"
-    },
-    "clientAddress": {
-      "street": "84 Church Way",
-      "city": "Bradford",
-      "postCode": "BD1 9PB",
-      "country": "United Kingdom"
-    },
+    "senderStreet": "19 Union Terrace",
+    "senderCity": "London",
+    "senderPostCode": "E1 3EZ",
+    "senderCountry": "United Kingdom",
+    "clientStreet": "84 Church Way",
+    "clientCity": "Bradford",
+    "clientPostCode": "BD1 9PB",
+    "clientCountry": "United Kingdom",
     "items": [
       {
         "name": "Banner Design",
