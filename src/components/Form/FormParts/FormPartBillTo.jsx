@@ -26,7 +26,7 @@ const FormPartBillTo = () => {
     paymentDue,
     paymentTerms,
     description
-  } = currentInvoice[0]
+  } = currentInvoice?.[0] ?? {}
 
   return (
     <fieldset className="form__fieldset">

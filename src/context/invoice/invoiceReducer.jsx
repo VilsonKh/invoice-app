@@ -2,7 +2,6 @@ import {
 	ADD_NEW_FORMFIELD,
 	ADD_TO_ALL_INVOICES,
 	CHANGE_FILTERS,
-	CHANGE_FORM_STATE,
 	CHANGE_SHOWN_INVOICES,
 	CONFIRM_DELETE,
 	CURRENT_INVOICE_NUMBER,
@@ -28,7 +27,7 @@ export const initialState = {
 	isEditInvoice: false,
 	isDeleteConf: false,
 	confirmDeletion: false,
-	currentInvoiceNumber: "RT3080",
+	currentInvoiceNumber: "",
 	filters: ["paid", "pending", "draft"],
 	// formState: {
 	// 	status: "",
@@ -94,30 +93,6 @@ const invoiceReducer = (state, action) => {
 				...state,
 				currentInvoiceNumber: action.payload,
 			};
-		// case CHANGE_FORM_STATE:
-		// 	const newInvoicesArr = [...state.invoices];
-		// 	const currentInvoiceData = newInvoicesArr.filter((invoice) => invoice.id === state.currentInvoiceNumber);
-
-		// 	return {
-		// 		...state,
-		// 		formState: {
-		// 			senderStreet: currentInvoiceData[0].senderAddress.street,
-		// 			senderCity: currentInvoiceData[0].senderAddress.city,
-		// 			senderPostCode: currentInvoiceData[0].senderAddress.postCode,
-		// 			senderCountry: currentInvoiceData[0].senderAddress.country,
-		// 			clientName: currentInvoiceData[0].clientName,
-		// 			clientEmail: currentInvoiceData[0].clientEmail,
-		// 			clientStreet: currentInvoiceData[0].clientAddress.street,
-		// 			clientCity: currentInvoiceData[0].clientAddress.city,
-		// 			clientPostCode: currentInvoiceData[0].clientAddress.postCode,
-		// 			clientCountry: currentInvoiceData[0].clientAddress.country,
-		// 			paymentDue: currentInvoiceData[0].paymentDue,
-		// 			paymentTerms: currentInvoiceData[0].paymentTerms,
-		// 			items: currentInvoiceData[0].items,
-		// 			description: currentInvoiceData[0].description,
-		// 			status: currentInvoiceData[0].status,
-		// 		},
-		// 	};
 
 		case RESET_FORM:
 			return {

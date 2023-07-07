@@ -97,11 +97,6 @@ const InvoiceState = ({ children }) => {
 		});
 	};
 
-	const changeFormState = (data) => {
-		dispatch({
-			type: CHANGE_FORM_STATE,
-		});
-	};
 
 	const resetForm = () => {
 		dispatch({
@@ -253,7 +248,6 @@ const InvoiceState = ({ children }) => {
 		setNewInvoice,
 		setPreviewInvoice,
 		setEditInvoice,
-		changeFormState,
 		resetForm,
 		changeFilters,
 		changeShownInvoices,

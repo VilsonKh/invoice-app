@@ -1,23 +1,22 @@
 //styles
 import "./Form.scss";
-
-//hooks
-import { useContext, useEffect, useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
-//context
-import invoiceContext from "../../context/invoice/invoiceContext";
-import ButtonBack from "../ButtonBack/ButtonBack";
-import darkContext from "../../context/dark/darkContext";
+//components
 import FormPartBillFrom from "./FormParts/FormPartBillFrom";
 import FormPartBillTo from "./FormParts/FormPartBillTo";
 import FormPartItemsList from "./FormParts/FormPartItemsList";
 import EditInvoiceButtons from "../EditInvoiceButtons/EditInvoiceButtons";
 import NewInvoiceButtons from "../NewInvoiceButtons/NewInvoiceButtons";
-
+import ButtonBack from "../ButtonBack/ButtonBack";
+//hooks
+import { useContext, useEffect, useMemo } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+//context
+import invoiceContext from "../../context/invoice/invoiceContext";
+import darkContext from "../../context/dark/darkContext";
 
 const Form = ({ onClickCloseInvoiceForm }) => {
-	const { invoices, isEditInvoice, isNewInvoice, changeFormState, currentInvoiceNumber } = useContext(invoiceContext);
+	const { isEditInvoice, isNewInvoice, currentInvoiceNumber } = useContext(invoiceContext);
 
 	const { dark } = useContext(darkContext);
 
@@ -40,40 +39,51 @@ const Form = ({ onClickCloseInvoiceForm }) => {
 		}
 	}
 
-	const formData = useForm({
-		defaultValues: defaultFormData()
-	});
+	const formData = useForm({});
 
-	//очищает все инпуты
-	// useEffect(() => {
-	// 	if (isNewInvoice) {
-	// 		const inputs = document.querySelectorAll("input");
-	// 		inputs.forEach((input) => {
-	// 			input.value = "";
-	// 		});
-	// 	}
-	// }, [isNewInvoice]);
+	const onSubmit = (data) => console.log(data);
 
-	const currentInvoice = [...invoices].filter((invoice) => {
-		if (invoice.invoiceId === currentInvoiceNumber) {
-			return invoice;
-		}
-		return false;
-	});
 
-	// const { status } = currentInvoice[0]
 
-	useEffect(() => {
-		if (isEditInvoice) {
-			changeFormState();
-		}
-	}, [isEditInvoice]);
+	return (
+		<div className={`formPage ${dark ? "dark-black" : ""}`}>
+			{/* onClick={() => setEditInvoice(false)} */}
+			{/* <div  className="formOverlay"></div> */}
+			<div className={`formContainer container ${dark ? "dark-black" : ""}`}>
+				<ButtonBack onClickCloseInvoiceForm={onClickCloseInvoiceForm}></ButtonBack>
+				{isEditInvoice && (
+					<h1 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>
+						Edit <span className="editInvoice__hash">#</span> {currentInvoiceNumber}
+					</h1>
+				)}
+				<FormProvider {...formData}>
+					<form method="post" id="newInvoice" onSubmit={formData.handleSubmit(onSubmit)} className={`form ${dark ? "dark-black" : ""}`}>
+						<FormPartBillFrom />
+						<FormPartBillTo />
+						<fieldset className="form__fieldset">
+							<legend className="form__legend-second">Item List</legend>
+							<FormPartItemsList />
+						</fieldset>
 
-	const [savingStatus, setSavingStatus] = useState("");
+					</form>
+					
+				{isEditInvoice && <EditInvoiceButtons />}
+				{isNewInvoice && <NewInvoiceButtons />}
+				</FormProvider>
+				<DevTool control={formData.control} />
+	
+			</div>
+		</div>
+	);
+};
 
-	const onSaveButtonsClick = (e) => {
-		setSavingStatus(e.target.getAttribute("id"));
-	};
+export default Form;
+
+// const [savingStatus, setSavingStatus] = useState("");
+
+	// const onSaveButtonsClick = (e) => {
+	// 	setSavingStatus(e.target.getAttribute("id"));
+	// };
 
 	// const onSubmit = (e) => {
 	// 	e.preventDefault();
@@ -140,39 +150,4 @@ const Form = ({ onClickCloseInvoiceForm }) => {
 	// 	setPreviewInvoice(false);
 	// 	// setEditInvoice(false);
 	// };
-
-	const onSubmit = (data) => console.log(data);
-
-	return (
-		<div className={`formPage ${dark ? "dark-black" : ""}`}>
-			{/* onClick={() => setEditInvoice(false)} */}
-			{/* <div  className="formOverlay"></div> */}
-			<div className={`formContainer container ${dark ? "dark-black" : ""}`}>
-				<ButtonBack onClickCloseInvoiceForm={onClickCloseInvoiceForm}></ButtonBack>
-				{isEditInvoice && (
-					<h1 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>
-						Edit <span className="editInvoice__hash">#</span> {currentInvoiceNumber}
-					</h1>
-				)}
-				<FormProvider {...formData}>
-					<form method="post" id="newInvoice" onSubmit={formData.handleSubmit(onSubmit)} className={`form ${dark ? "dark-black" : ""}`}>
-						<FormPartBillFrom />
-						<FormPartBillTo />
-						<fieldset className="form__fieldset">
-							<legend className="form__legend-second">Item List</legend>
-							<FormPartItemsList />
-						</fieldset>
-
-					</form>
-					
-				{isEditInvoice && <EditInvoiceButtons />}
-				{isNewInvoice && <NewInvoiceButtons />}
-				</FormProvider>
-				<DevTool control={formData.control} />
-	
-			</div>
-		</div>
-	);
-};
-
-export default Form;
+	// const { status } = currentInvoice[0]

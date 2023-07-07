@@ -16,7 +16,7 @@ const FormPartBillFrom = () => {
 		return false;
 	});
 
-	const { senderStreet, senderCity, senderPostCode, senderCountry } = currentInvoice[0];
+	const { senderStreet, senderCity, senderPostCode, senderCountry } = currentInvoice?.[0] ?? {};
 
 	console.log(senderPostCode)
 
