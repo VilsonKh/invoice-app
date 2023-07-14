@@ -1,36 +1,88 @@
-import { collection, onSnapshot, getDocs, addDoc, doc, where, query } from "@firebase/firestore";
+import { collection, onSnapshot, getDocs, addDoc, doc, where, query, deleteDoc, writeBatch, orderBy, setDoc, updateDoc } from "@firebase/firestore";
 import { db } from "./config";
 import { useContext, useEffect } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 export const useQueryAllInvoicesData = () => {
-	const { getAllInvoices, filters } = useContext(invoiceContext);
+	const { getAllInvoices, filters, invoices } = useContext(invoiceContext);
 	useEffect(() => {
-		console.log(filters);
-		const ref = query(collection(db, "invoices"), filters.length > 0 ? where("status", "in", [...filters]) : "");
+		const ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"), filters.length > 0 ? where("status", "in", [...filters]) : "");
 		onSnapshot(ref, (snapshot) => {
 			let results = [];
-
 			snapshot.docs.forEach((doc) => {
 				results.push({ id: doc.id, ...doc.data() });
 			});
-
+			console.log(results);
 			getAllInvoices(results);
 		});
 	}, [filters]);
 };
 
-export const useQueryAllInvoiceItems = () => {
-	const { getAllInvoicesItems } = useContext(invoiceContext);
-	useEffect(() => {
-		const ref = collection(db, "invoiceItems");
-		onSnapshot(ref, (snapshot) => {
-			let results = [];
-			snapshot.docs.forEach((doc) => {
-				results.push({ id: doc.id, ...doc.data() });
-			});
-
-			getAllInvoicesItems(results);
+export const queryInvoiceItems = async (docId, method) => {
+	const ref = collection(db, `invoices/${docId}/items`);
+	await getDocs(ref).then((snapshot) => {
+		const items = snapshot.docs;
+		let result = [];
+		items.map((item) => {
+			console.log(item.data());
+			result.push({ ...item.data(), itemId: item.id });
 		});
-	}, []);
+		method(result);
+	});
+};
+
+export const postNewInvoice = async (invoiceData, itemsData) => {
+	console.log("добавлен новый инвойс");
+	const batch = writeBatch(db);
+
+	//создает новый id документа
+	const randNumb = [];
+	while (randNumb.length < 8) {
+		const numb = Math.floor(Math.random() * 100) + 1;
+		if (randNumb.indexOf(numb) === -1) {
+			randNumb.push(numb);
+		}
+	}
+
+	//записывает новый инвойс
+	const invoiceRef = doc(db, "invoices", randNumb.join(""));
+	batch.set(invoiceRef, invoiceData);
+
+	//записывает новую подколлекцию items
+	const collectionRef = collection(invoiceRef, "items");
+	itemsData.forEach((item) => {
+		addDoc(collectionRef, { ...item });
+	});
+
+	await batch.commit();
+};
+
+export const deleteInvoice = async (docId) => {
+	console.log("удален инвойс");
+	await deleteDoc(doc(db, `invoices/${docId}`));
+};
+
+export const updateInvoice = async (invoiceId, invoiceData, itemsData) => {
+	const batch = writeBatch(db);
+
+	const invoiceRef = doc(db, "invoices", invoiceId);
+	batch.set(invoiceRef, invoiceData);
+
+	itemsData.forEach((item) => {
+		console.log(item);
+		if (item.itemId) {
+			batch.set(doc(db, "invoices", invoiceId, "items", item.itemId), { ...item });
+			//дополнительная проверка нужна для добавления нового item в старом invoice,тк этот item нужно просто добавить, а не перезаписать
+		} else {
+			addDoc(collection(db, "invoices", invoiceId, "items"), { ...item });
+		}
+	});
+
+	await batch.commit();
+};
+
+export const updateInvoiceStatus = async (docId) => {
+	console.log(docId);
+	const docRef = doc(db, "invoices", docId);
+	await updateDoc(docRef, { status: "paid" });
 };

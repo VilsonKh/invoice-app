@@ -7,7 +7,6 @@ import {
 	CURRENT_INVOICE_NUMBER,
 	DELETE_NEW_FORMFIELD,
 	GET_ALL_INVOICES,
-	GET_ALL_INVOICES_ITEMS,
 	IS_DELETE_CONF,
 	IS_EDIT_INVOICE,
 	IS_NEW_INVOICE,
@@ -16,11 +15,18 @@ import {
 	RESET_FORM,
 	ADD_USER_INPUTS_ITEMS,
 	SET_VISIBLE_INVOICES,
+	GET_INVOICE_ITEMS,
+	SET_CURRENT_INVOICE_ID,
+	GET_ITEMS,
 } from "../types";
+
+import { collection, getDocs} from "@firebase/firestore";
+import { db } from "../../firebase/config";
 
 export const initialState = {
 	invoices: [],
 	invoiceItems: [],
+	currentInvoiceId: '',
 	visibleInvoices: '',
 	isNewInvoice: false,
 	isPreviewInvoice: false,
@@ -50,7 +56,8 @@ export const initialState = {
 
 const invoiceReducer = (state, action) => {
 	switch (action.type) {
-		case GET_ALL_INVOICES_ITEMS:
+
+		case GET_INVOICE_ITEMS:
 			return {
 				...state,
 				invoiceItems: [...action.payload],
@@ -93,6 +100,12 @@ const invoiceReducer = (state, action) => {
 				...state,
 				currentInvoiceNumber: action.payload,
 			};
+
+		case SET_CURRENT_INVOICE_ID:
+			return {
+				...state,
+				currentInvoiceId: action.payload,
+			}
 
 		case RESET_FORM:
 			return {

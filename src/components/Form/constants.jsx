@@ -1,10 +1,6 @@
-export class Item {
-	constructor() {
-		this.itemId = Math.random().toString();
-		this.name = "";
-		this.quantity = "";
-		this.price = "";
-		this.total = 0;
-	}
-}
-
+export const item = [{
+	name: "New Item",
+	quantity: 1,
+	price: 1,
+	total: 1,
+}];

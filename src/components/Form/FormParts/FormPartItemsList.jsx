@@ -3,87 +3,150 @@ import invoiceContext from "../../../context/invoice/invoiceContext";
 import darkContext from "../../../context/dark/darkContext";
 //img
 import busket from "../../../assets/icon-delete.svg";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { Item } from "../constants";
+import { useFieldArray, useForm, useFormContext, useWatch } from "react-hook-form";
+import { item } from "../constants";
 
 const FormPartItemsList = (formData) => {
-	const { register } = useFormContext();
 	const { dark } = useContext(darkContext);
-	const { invoiceItems, currentInvoiceNumber, addNewFormfield, isNewInvoice } = useContext(invoiceContext);
+	const { invoiceItems, isNewInvoice } = useContext(invoiceContext);
 
-	const { control } = useFormContext();
+	const {
+		register,
+		control,
+		setValue,
+		formState: { errors },
+		setFocus
+	} = useFormContext();
 
-	const [items, setItems] = useState([]);
+	const { fields, append, remove, unpdate } = useFieldArray({
+		control,
+		name: "items",
+		rules: { minLength: 1, maxLength: 3 },
+		
+	});
 
-	useEffect(() => {
-		const currentItems = [];
-
-		invoiceItems.forEach((item) => {
-			if (item.invoiceId === currentInvoiceNumber) {
-				currentItems.push(item);
-			}
+	const ShowTotal = ({ index }) => {
+		const quantityWatch = useWatch({
+			control,
+			name: `items.${index}.quantity`,
 		});
-		setItems(currentItems.length === 0 ? [new Item()] : currentItems);
-	}, [invoiceItems, currentInvoiceNumber]);
+
+		const priceWatch = useWatch({
+			control,
+			name: `items.${index}.price`,
+		});
+
+		const updateTotal = useMemo(() => (+quantityWatch ?? 0) * (+priceWatch ?? 0), [quantityWatch, priceWatch]);
+
+		useEffect(() => {
+			if (updateTotal >= 0) {
+				setValue(`items.${index}.total`, updateTotal);
+			}
+		}, [index, updateTotal]);
+
+		return <input name="total" className={`form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={updateTotal} {...register(`items.${index}.total`, { required: true })} />;
+	};
+
+
+	// useEffect(() => {
+	// 	invoiceItems.forEach((item) => {
+	// 		append(item);
+	// 	});
+	// }, [isNewInvoice]);
+
+	// фиксит баг дополнительного рендера
+	// useEffect(() => {
+	// 	remove(878);
+	// }, [remove]);
+
 
 	//очищает все инпуты
 	useEffect(() => {
+		remove();
 		if (isNewInvoice) {
 			const inputs = document.querySelectorAll("input");
 			inputs.forEach((input) => {
 				input.value = "";
+			})
+			append(item, {shouldFocus: false});
+			setFocus('fromStreet')
+		} else {
+			invoiceItems.forEach((item) => {
+				append(item, {shouldFocus: false});
+				setFocus('fromStreet')
 			});
 		}
 	}, [isNewInvoice]);
 
-	const addNewItem = () => {
-		setItems((prev) => [...prev, new Item()]);
-	};
-
-	// const deleteFormField = (e) => {
-	// 	const currentIndex = e.target.closest('.form__item').getAttribute('index')
-	// 	console.log(currentIndex)
-	// 	const newInputFields = [...inputField]
-	// 	newInputFields.splice(currentIndex, 1)
-	// 	console.log(newInputFields)
-	// 	setInputField([...newInputFields])
-	// }
-
-	const deleteItem = (id) => {
-		const newItems = items.filter((item) => item.itemId !== id)
-		setItems(newItems)
-	}
-
-	console.log(items);
-
-	const renderItems = items.map((field, index) => {
+	const renderItems = fields.map((field, index) => {
 		return (
-			<div className="form__item" key={field.itemId}>
+			<div className="form__item" key={field.id}>
 				<div className="row ">
 					<div className="form__input-container col-12 col-md-4">
-						<label className="form__label" htmlFor="name">
-							Item Name
-						</label>
-						<input className={`form__input ${dark ? "dark-input" : ""}`} id="itemName" name="name" type="text" defaultValue={field.name} {...register("name" + index)} />
+						<div className="form__label-container">
+							<label className="form__label" htmlFor="name">
+								Item Name
+							</label>
+						</div>
+						<input
+							className={`form__input ${dark ? "dark-input" : ""}`}
+							id="name"
+							name="name"
+							type="text"
+							defaultValue={field.name}
+							{...register(`items.${index}.name`, { required: true })}
+							autoFocus={false}
+							// {...register(`items.${index}.name`)}
+							// aria-invalid={`errors.items.${index}.name` ? "true" : "false"}
+						/>
 					</div>
 					<div className="form__input-container col-3 col-md-1">
-						<label className="form__label" htmlFor="qty">
-							Qty.
-						</label>
-						<input className={`form__input ${dark ? "dark-input" : ""}`} id="qty" name="qty" type="number" defaultValue={field.quantity} {...register("quantity" + index)} />
+						<div className="form__label-container">
+							<label className="form__label" htmlFor="qty">
+								Qty.
+							</label>
+							{`errors.items.${index}.quantity` === "required" && (
+								<p role="alert" className="error-message">
+									can't be empty
+								</p>
+							)}
+						</div>
+						<input
+							className={`form__input ${dark ? "dark-input" : ""}`}
+							id="qty"
+							type="number"
+							defaultValue={field.quantity}
+							{...register(`items.${index}.quantity`, { required: { value: true, valueAsNumber: true, validate: ((value) => value > 0)} })}
+							// {...register(`items.${index}.quantity`)}
+							aria-invalid={errors?.["items"]?.[index]?.["quantity"] ? true : false}
+							autoFocus={false}
+						/>
 					</div>
 					<div className="form__input-container col-4 col-md-3">
-						<label className="form__label" htmlFor="itemPrice">
-							Price
-						</label>
-						<input className={`form__input ${dark ? "dark-input" : ""}`} name="itemPrice" id="itemPrice" type="text" defaultValue={field.price} {...register("price" + index)} />
+						<div className="form__label-container">
+							<label className="form__label" htmlFor="itemPrice">
+								Price
+							</label>
+						</div>
+						<input
+							className={`form__input ${dark ? "dark-input" : ""}`}
+							name="itemPrice"
+							id="itemPrice"
+							type="number"
+							defaultValue={field.price}
+							{...register(`items.${index}.price`, { required: { value: true, valueAsNumber: true, max: 9999 } })}
+							aria-invalid={errors?.["items"]?.[index]?.["price"] ? "true" : "false"}
+							autoFocus={false}
+						/>
 					</div>
 					<div className="form__input-container col-3 col-md-2">
-						<label className="form__label">Total</label>
-						<input name="total" className={`form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={field.total} {...register("total" + index)} />
+						<div className="form__label-container">
+							<label className="form__label">Total</label>
+						</div>
+						<ShowTotal index={index} />
 					</div>
 					<div className="form__button-container col-2">
-						<button type="button" className="form__button" onClick={() => deleteItem(field.itemId)}>
+						<button type="button" className="form__button" onClick={() => remove(index)} disabled={fields.length === 1 ? true : false}>
 							<img src={busket} alt="" />
 						</button>
 					</div>
@@ -95,8 +158,9 @@ const FormPartItemsList = (formData) => {
 	return (
 		<>
 			{renderItems}
+			
 			<div className="form__submit-container">
-				<button type="button" className={`form__submit ${dark ? "dark-light" : ""}`} onClick={addNewItem}>
+				<button type="button" className={`form__submit ${dark ? "dark-light" : ""}`} onClick={() => append(item)}>
 					+ Add New Item
 				</button>
 			</div>

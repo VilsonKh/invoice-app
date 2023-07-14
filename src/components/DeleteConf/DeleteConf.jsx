@@ -2,17 +2,18 @@ import { useContext } from "react";
 import "./DeleteConf.scss";
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
+import { deleteInvoice } from "../../firebase/service";
 
 
 const ConfirmDelete = ({confClose}) => {
 	
-	const {currentInvoiceNumber,confirmDeletion,setDeleteConf,setPreviewInvoice} = useContext(invoiceContext);
+	const {currentInvoiceNumber,currentInvoiceId,setDeleteConf,setPreviewInvoice} = useContext(invoiceContext);
 	const {dark} = useContext(darkContext)
 	
   const onDeleteClick = () => {
-    confirmDeletion()
-    setDeleteConf(false)
-    setPreviewInvoice(false)
+    setDeleteConf(false);
+    setPreviewInvoice(false);
+		deleteInvoice(currentInvoiceId)
   }
 
   const onCloseClick = () => {

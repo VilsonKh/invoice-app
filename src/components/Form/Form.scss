@@ -88,6 +88,7 @@
 			font-size: 12px;
 			line-height: 15px;
 			letter-spacing: -0.25px;
+
 		}
 	}
 
@@ -136,8 +137,6 @@
 .form {
 	background-color: white;
 	z-index: 2;
-	&__fieldset {
-	}
 
 	&__legend {
 		font-weight: 500;
@@ -160,6 +159,15 @@
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 24px;
+		position: relative;
+	}
+
+	&__label-container {
+		height: 20px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
 	}
 
 	&__label {
@@ -168,7 +176,6 @@
 		line-height: 15px;
 		letter-spacing: -0.25px;
 		color: #7e88c3;
-		margin-bottom: 10px;
 	}
 
 	&__input,
@@ -181,7 +188,7 @@
 		font-weight: 700;
 		font-size: 12px;
 		line-height: 15px;
-		color: #0C0E16 !important;
+		color: #0c0e16 !important;
 
 		&:focus,
 		&:active {
@@ -196,9 +203,9 @@
 		line-height: 15px;
 		letter-spacing: -0.25px;
 		color: #888eb0;
-		position: relative;
-		top: 25%;
 		border: none;
+		height: 48px;
+		padding: 0 20px 0 20px;
 
 		@media screen and (min-width: 767px) {
 			top: 20%;
@@ -211,6 +218,10 @@
 		position: relative;
 		top: 50%;
 		transform: translateY(-50%);
+	}
+
+	&__button[disabled] {
+		opacity: 0.5;
 	}
 
 	&__submit {
@@ -256,7 +267,7 @@ input {
 	font-weight: 700;
 	font-size: 12px;
 	line-height: 15px;
-	color: #0C0E16 !important;
+	color: #0c0e16 !important;
 }
 
 .editInvoice {
@@ -296,7 +307,6 @@ input {
 	}
 }
 
-
 .dark-header {
 	background-color: #1e2139 !important;
 	color: white;
@@ -307,7 +317,7 @@ input {
 }
 
 .dark-font_purple {
-	color:#DFE3FA !important;
+	color: #dfe3fa !important;
 }
 
 .dark-nav {
@@ -329,3 +339,13 @@ input {
 	background-color: #252945 !important;
 	color: white !important;
 }
+
+input[aria-invalid="true"] {
+	border: 1px solid #ec5757;
+}
+
+.error-message {
+	font-size: 15px;
+	color: #ec5757;
+}
+

@@ -9,6 +9,7 @@ import ConfirmDelete from "../DeleteConf/DeleteConf";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
+import { updateInvoice, updateInvoiceStatus } from "../../firebase/service";
 
 
 const InvoicePreview = (setIsPreviewOpen) => {
@@ -19,22 +20,18 @@ const InvoicePreview = (setIsPreviewOpen) => {
 					currentInvoiceNumber, 
 					setEditInvoice, 
 					isEditInvoice, 
-					markAsPaid, 
+					currentInvoiceId,
 					isDeleteConf, 
-					setDeleteConf 
+					setDeleteConf,
+ 
 				} = useContext(invoiceContext);
 
 	const currentInvoice = [...invoices].filter((invoice) => {
 		if (invoice.invoiceId === currentInvoiceNumber) {
 			return invoice;
 		}
+      return false
 	});
-
-	const currentItems = invoiceItems.filter(item => {
-		if(item.invoiceId === currentInvoiceNumber) {
-			return item
-		}
-	})
 
 	const { status, 
 					invoiceId, 
@@ -54,17 +51,15 @@ const InvoicePreview = (setIsPreviewOpen) => {
 					total 
 				} = currentInvoice[0];
 
-	
 
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
 	};
 
-	const TotalItemsSM = currentItems.map((elem, i) => {
+	const TotalItemsSM = invoiceItems.map((elem, i) => {
 		return (
-			<div className="invoicePreview__list" key={i}>
-				<ul className="invoicePreview__list-inner">
+			
 					<li className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
 						<div className="invoicePreview__list-item-left">
 							<p className="invoicePreview__itemName">{elem.name}</p>
@@ -76,13 +71,11 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							£<span>{elem.total}</span>
 						</div>
 					</li>
-				</ul>
-			</div>
 		);
 	});
 
 
-	const TotalItemsLG = currentItems.map((elem, i) => {
+	const TotalItemsLG = invoiceItems.map((elem, i) => {
 		return (
 			<tr key={i}>
 				<td>{elem.name}</td>
@@ -112,7 +105,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">
 								Delete
 							</button>
-							<button onClick={markAsPaid} style={status === "paid" ? { opacity: "0.5" } : null} className="invoicePreview__btn-paid">
+							<button onClick={() => updateInvoiceStatus(currentInvoiceId)}  style={status === "paid" ? { opacity: "0.5" } : null} disabled={status === 'paid' ? true : false}className="invoicePreview__btn-paid">
 								Mark as Paid
 							</button>
 						</div>
@@ -172,7 +165,12 @@ const InvoicePreview = (setIsPreviewOpen) => {
 										</tbody>
 									</table>
 								</div>) : (
-									TotalItemsSM
+									<div className="invoicePreview__list">
+										<ul className="invoicePreview__list-inner">
+                                  { TotalItemsSM } 
+										</ul>
+									</div>
+									
 								)}
 								
 							<div className={`invoicePreview__total ${dark ? "dark-black" : ""}`}>
@@ -188,7 +186,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							Edit
 						</button>
 						<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">Delete</button>
-						<button onClick={markAsPaid} className="invoicePreview__btn-paid" style={status === "paid" ? { opacity: "0.5" } : null}>
+						<button onClick={() => updateInvoiceStatus(currentInvoiceId)} className="invoicePreview__btn-paid" style={status === "paid" ? { opacity: "0.5" } : null} disabled={status === 'paid' ? true : false}>
 							Mark as Paid
 						</button>
 					</div>

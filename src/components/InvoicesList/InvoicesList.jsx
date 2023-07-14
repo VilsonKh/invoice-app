@@ -5,17 +5,16 @@ import Navigation from "../Navigation/Navigation";
 import NoInvoicesPage from "../NoInvoicesPage/NoInvoicesPage";
 import InvoicesItem from "../InvoicesItem/InvoicesItem";
 //hooks
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 
-import { useQueryAllInvoiceItems, useQueryAllInvoicesData } from "../../firebase/service";
+import { queryInvoiceItems, useQueryAllInvoicesData, getInvoiceItems } from "../../firebase/service";
 
 const InvoicesList = () => {
-	const { invoices, filters, setCurrentInvoiceNumber, setPreviewInvoice, setVisibleInvoices } = useContext(invoiceContext);
+	const { invoices, filters, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, currentInvoiceId, getInvoiceItems } = useContext(invoiceContext);
 
 	useQueryAllInvoicesData();
-	useQueryAllInvoiceItems();
 
 	const items = () => {
 		if (invoices.length === 0) {
@@ -33,16 +32,22 @@ const InvoicesList = () => {
 		}
 	};
 
-	const getCurrentInvoiceNumber = (e) => {
+	const getCurrentInvoiceNumber = async (e) => {
 		const target = e.target.closest(".invoicesList__item");
 		if (target === null) {
 			return;
 		} else {
 			const currentInvoiceNumber = target.getAttribute("data-number");
+			const currentInvoiceId = target.getAttribute('id');
 			setCurrentInvoiceNumber(currentInvoiceNumber);
+			setCurrentInvoiceId(currentInvoiceId)
+			await queryInvoiceItems(currentInvoiceId, getInvoiceItems)
 		}
-		setPreviewInvoice(true);
+		setPreviewInvoice(true);	
+		
 	};
+
+	
 
 	return (
 		<section className="invoicesList">

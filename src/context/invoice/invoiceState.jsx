@@ -27,9 +27,12 @@ import {
 	NEW_INVOICE_FORM,
 	RESET_CURRENT_INVOICE,
 	RESET_FORM,
-	GET_ALL_INVOICES_ITEMS,
+	GET_INVOICE_ITEMS,
 	SET_VISIBLE_INVOICES,
+	SET_CURRENT_INVOICE_ID,
 } from "../types";
+
+
 
 const InvoiceState = ({ children }) => {
 	const [state, dispatch] = useReducer(invoiceReducer, initialState);
@@ -42,9 +45,9 @@ const InvoiceState = ({ children }) => {
 	// 	// state.invoices.splice(state.invoices.findIndex())
 	// };
 
-	const getAllInvoicesItems = (data) => {
+	const getInvoiceItems = (data) => {
 		dispatch({
-			type: GET_ALL_INVOICES_ITEMS,
+			type: GET_INVOICE_ITEMS,
 			payload: data,
 		});
 	};
@@ -81,6 +84,13 @@ const InvoiceState = ({ children }) => {
 		dispatch({
 			type: CURRENT_INVOICE_NUMBER,
 			payload: invoiceNumber,
+		});
+	};
+
+	const setCurrentInvoiceId = (invoiceId) => {
+		dispatch({
+			type: SET_CURRENT_INVOICE_ID,
+			payload: invoiceId,
 		});
 	};
 
@@ -213,12 +223,13 @@ const InvoiceState = ({ children }) => {
 	// 		payload: invoice
 	// 	})
 	// }
-	// }
+	// }]
 
 	const value = {
 		invoices: state.invoices,
 		invoiceItems: state.invoiceItems,
 		visibleInvoices: state.visibleInvoices,
+		currentInvoiceId: state.currentInvoiceId,
 		// initialInvoices: state.initialInvoices,
 		// newInvoiceForm: state.newInvoiceForm,
 		// invoiceDetails: state.invoiceDetails,
@@ -258,8 +269,9 @@ const InvoiceState = ({ children }) => {
 		deleteNewFormfield,
 		addToAllInvoices,
 		getAllInvoices,
-		getAllInvoicesItems,
+		getInvoiceItems,
 		setVisibleInvoices,
+		setCurrentInvoiceId,
 	};
 
 	return <InvoiceContext.Provider value={value}>
