@@ -116,8 +116,10 @@ const FormPartItemsList = (formData) => {
 							id="qty"
 							type="number"
 							defaultValue={field.quantity}
-							{...register(`items.${index}.quantity`, { required: { value: true, valueAsNumber: true, validate: ((value) => value > 0)} })}
-							// {...register(`items.${index}.quantity`)}
+							{...register(`items.${index}.quantity`, { 
+								required: { value: true, valueAsNumber: true, validate: ((value) => value > 0)} 
+							  
+							})}
 							aria-invalid={errors?.["items"]?.[index]?.["quantity"] ? true : false}
 							autoFocus={false}
 						/>
