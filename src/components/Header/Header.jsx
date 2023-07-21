@@ -15,7 +15,6 @@ const Header = () => {
 
   return (
     <header className={`header ${dark ? "dark-header" : ''}`}>
-			<div className="header__container d-flex">
 				<div className="header__nav d-flex align-items-center justify-content-between w-100">
 					<div className="header__logo">
 						<img src={logo} alt="" />
@@ -27,7 +26,6 @@ const Header = () => {
 				<div className="header__avatar">
 					<img src={avatar} alt="" />
 				</div>
-			</div>
 		</header>
   )
 }

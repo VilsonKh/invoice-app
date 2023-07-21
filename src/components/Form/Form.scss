@@ -10,11 +10,18 @@
 	position: absolute;
 	background-color: white;
 	margin-top: -32px;
-	padding: 0 20px 20px 20px;
 	width: 100vw;
-	z-index: 100;
+	z-index: 99;
+	margin-left: 92px;
+
 	@media screen and (min-width: 767px) {
 		border-radius: 0 20px 20px 0;
+	}
+
+	@media screen and (min-width: 1439px) {
+		margin-top: 0px;
+		
+		max-width: 616px;
 	}
 }
 
@@ -24,9 +31,10 @@
 	width: 100vw;
 	height: 100vh;
 	position: absolute;
-	z-index: 100;
-	margin-left: -20px;
+	z-index: 99;
 	display: none;
+	margin-left: -92px;
+
 	@media screen and (min-width: 767px) {
 		display: block;
 	}
@@ -39,7 +47,12 @@
 
 	@media screen and (min-width: 767px) {
 		border-radius: 0 20px 20px 0;
-		padding: 20px;
+		padding: 56px 56px 56px 66px !important;
+	}
+
+	@media screen and (min-width: 1439px) {
+		height: 100vh;
+		overflow: scroll;
 	}
 }
 
@@ -70,8 +83,6 @@
 	}
 
 	&__button-container {
-		margin-top: 32px !important;
-		margin-bottom: 24px !important;
 		cursor: pointer;
 		display: block;
 
@@ -202,10 +213,9 @@
 		font-size: 12px;
 		line-height: 15px;
 		letter-spacing: -0.25px;
-		color: #888eb0;
+		color: #888eb0 !important;
 		border: none;
 		height: 48px;
-		padding: 0 20px 0 20px;
 
 		@media screen and (min-width: 767px) {
 			top: 20%;
@@ -349,3 +359,20 @@ input[aria-invalid="true"] {
 	color: #ec5757;
 }
 
+.translate-enter {
+	transform: translateX(-100%);
+}
+
+.translate-enter-active {
+	transform: translateX(0);
+	transition: transform 500ms;
+}
+
+.translate-exit {
+	transform: translateX(0);
+}
+
+.translate-exit-active {
+	transform: translateX(-100%);
+	transition: transform 500ms ;
+}

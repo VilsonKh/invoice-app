@@ -7,7 +7,9 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 const EditInvoiceButtons = () => {
 	const { dark } = useContext(darkContext);
 	const formData = useFormContext();
-	const { currentInvoiceId, currentInvoiceNumber, invoices } = useContext(invoiceContext);
+	const { currentInvoiceId, currentInvoiceNumber, invoices, invoiceItems} = useContext(invoiceContext);
+
+console.log(invoiceItems)
 
 	const saveChangesHandler = (data) => {
 		let itemsSum = 0;
@@ -23,16 +25,32 @@ const EditInvoiceButtons = () => {
 			}
 		})
 		//разделяет объект
-		const items = [...data.items];
+		const fieldItems = [...data.items];
 		delete data.inputs;
 		delete data.items;
-		console.log(items)
-		if (!items.length) {
-			console.log(" items пустой");
+
+		let deletedItems = [];
+		console.log(fieldItems)
+
+
+		invoiceItems.forEach((item) => {
+			fieldItems.forEach((fieldItem) => {
+				if(item.itemId !== fieldItem.itemId) {
+					deletedItems.push(item.itemId)
+				}
+			})
+		})
+
+		console.log(deletedItems)
+
+
+		if (!fieldItems.length) {
+			console.log("items пустой");
 		} else {
 			console.log("форма отправлена");
+			
 			console.log(data)
-			updateInvoice(currentInvoiceId, data, items);
+			updateInvoice(currentInvoiceId, data, fieldItems, deletedItems);
 		}
 	};
 

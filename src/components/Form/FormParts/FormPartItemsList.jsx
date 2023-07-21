@@ -47,19 +47,6 @@ const FormPartItemsList = (formData) => {
 		return <input name="total" className={`form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={updateTotal} {...register(`items.${index}.total`, { required: true })} />;
 	};
 
-
-	// useEffect(() => {
-	// 	invoiceItems.forEach((item) => {
-	// 		append(item);
-	// 	});
-	// }, [isNewInvoice]);
-
-	// фиксит баг дополнительного рендера
-	// useEffect(() => {
-	// 	remove(878);
-	// }, [remove]);
-
-
 	//очищает все инпуты
 	useEffect(() => {
 		remove();
@@ -80,7 +67,7 @@ const FormPartItemsList = (formData) => {
 
 	const renderItems = fields.map((field, index) => {
 		return (
-			<div className="form__item" key={field.id}>
+			<div className="form__item " key={field.id}>
 				<div className="row ">
 					<div className="form__input-container col-12 col-md-4">
 						<div className="form__label-container">
@@ -100,7 +87,7 @@ const FormPartItemsList = (formData) => {
 							// aria-invalid={`errors.items.${index}.name` ? "true" : "false"}
 						/>
 					</div>
-					<div className="form__input-container col-3 col-md-1">
+					<div className="form__input-container col-3 col-md-2">
 						<div className="form__label-container">
 							<label className="form__label" htmlFor="qty">
 								Qty.
@@ -147,7 +134,7 @@ const FormPartItemsList = (formData) => {
 						</div>
 						<ShowTotal index={index} />
 					</div>
-					<div className="form__button-container col-2">
+					<div className="form__button-container col-1">
 						<button type="button" className="form__button" onClick={() => remove(index)} disabled={fields.length === 1 ? true : false}>
 							<img src={busket} alt="" />
 						</button>

@@ -1,9 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { postNewInvoice } from "../../firebase/service";
+import { useContext } from "react";
+import invoiceContext from "../../context/invoice/invoiceContext";
 
 const NewInvoiceButtons = () => {
 	const formData = useFormContext();
-
+	const {setNewInvoice} = useContext(invoiceContext)
 		//создает новый рандомный ID
 		const createRandomInvoiceNumber = () => {
 			const alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYZ";
@@ -66,7 +68,7 @@ const NewInvoiceButtons = () => {
 	return (
 		// onClick={onSaveButtonsClick}
 		<div className="addInvoice__groupButtons">
-			<button type="submit" form="newInvoice" id="discard" className="addInvoice__discard btn-status">
+			<button type="submit" form="newInvoice" id="discard" className="addInvoice__discard btn-status" onClick={() => setNewInvoice(false)}>
 				Discard
 			</button>
 			<button type="submit" form="newInvoice" id="draft" className="addInvoice__draft btn-status" onClick={formData.handleSubmit(saveAsDraftHandler)}>

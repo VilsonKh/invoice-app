@@ -14,9 +14,13 @@ import { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import InvoicePreview from "./components/InvoicePreview/InvoicePreview";
 import TestForm from "./components/Form/TestForm";
+import TestComponent from "./components/TestComponent";
+
 
 function App() {
 	const { isNewInvoice, isPreviewInvoice, isEditInvoice } = useContext(invoiceContext);
+
+	const [animate, setAnimate] = useState(false)
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -26,9 +30,10 @@ function App() {
 		<DarkState>
 			<Header></Header>
 			<main>
-				{isNewInvoice && <Form />}
-				{isPreviewInvoice && <InvoicePreview />}
-				{!isPreviewInvoice && <InvoicesList />}
+				<Form/>
+				{isPreviewInvoice ? <InvoicePreview /> : <InvoicesList />}
+				<button style={{marginLeft: "100px"}} onClick={() => setAnimate(!animate)}>ANIMATE</button>
+				<TestComponent setAnimate={setAnimate} animate={animate}></TestComponent>
 			</main>
 		</DarkState>
 	);

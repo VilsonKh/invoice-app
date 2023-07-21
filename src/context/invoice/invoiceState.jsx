@@ -30,6 +30,7 @@ import {
 	GET_INVOICE_ITEMS,
 	SET_VISIBLE_INVOICES,
 	SET_CURRENT_INVOICE_ID,
+	SET_DEFAULT_FILTERS,
 } from "../types";
 
 
@@ -51,6 +52,12 @@ const InvoiceState = ({ children }) => {
 			payload: data,
 		});
 	};
+
+	const setDefaultFilters = () => {
+		dispatch({
+			type: SET_DEFAULT_FILTERS
+		})
+	}
 
 	const setPreviewInvoice = (boolean) => {
 		dispatch({
@@ -272,6 +279,7 @@ const InvoiceState = ({ children }) => {
 		getInvoiceItems,
 		setVisibleInvoices,
 		setCurrentInvoiceId,
+		setDefaultFilters,
 	};
 
 	return <InvoiceContext.Provider value={value}>

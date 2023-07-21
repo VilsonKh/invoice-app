@@ -9,12 +9,13 @@ const ButtonBack = () => {
 	const {dark} = useContext(darkContext);
 	const darkFont = dark ? 'dark-font' : ''
 
-	const {setNewInvoice, setPreviewInvoice,setEditInvoice} = useContext(invoiceContext);
+	const {setNewInvoice, setPreviewInvoice,setEditInvoice, setDefaultFilters} = useContext(invoiceContext);
 
 	const onButtonBackClick = () => {
 		setPreviewInvoice(false);
 		setNewInvoice(false);
-		setEditInvoice(false)
+		setEditInvoice(false);
+		setDefaultFilters()
 	}
 
 	return (

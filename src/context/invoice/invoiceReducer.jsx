@@ -18,10 +18,8 @@ import {
 	GET_INVOICE_ITEMS,
 	SET_CURRENT_INVOICE_ID,
 	GET_ITEMS,
+	SET_DEFAULT_FILTERS,
 } from "../types";
-
-import { collection, getDocs} from "@firebase/firestore";
-import { db } from "../../firebase/config";
 
 export const initialState = {
 	invoices: [],
@@ -35,23 +33,6 @@ export const initialState = {
 	confirmDeletion: false,
 	currentInvoiceNumber: "",
 	filters: ["paid", "pending", "draft"],
-	// formState: {
-	// 	status: "",
-	// 	senderStreet: "",
-	// 	senderCity: "",
-	// 	senderPostCode: "",
-	// 	senderCountry: "",
-	// 	clientName: "",
-	// 	clientEmail: "",
-	// 	clientStreet: "",
-	// 	clientCity: "",
-	// 	clientPostCode: "",
-	// 	clientCountry: "",
-	// 	paymentDue: "",
-	// 	paymentTerms: "",
-	// 	items: [{}],
-	// 	description: "",
-	// },
 };
 
 const invoiceReducer = (state, action) => {
@@ -76,7 +57,6 @@ const invoiceReducer = (state, action) => {
 			};
 
 		case IS_NEW_INVOICE:
-			console.log("isNewInvoice: true");
 			return {
 				...state,
 				isNewInvoice: action.payload,
@@ -143,25 +123,11 @@ const invoiceReducer = (state, action) => {
 				filters: newFilters,
 			};
 
-		// case CHANGE_SHOWN_INVOICES:
-		// 	const filteredInvoices = [...state.invoices];
-		// 	console.log(filteredInvoices);
-		// 	const filters = state.filters;
-		// 	console.log(filters);
-		// 	const filterResult = filteredInvoices.map((invoice) => {
-		// 		const invoiceStatus = invoice.status;
-		// 		if (!filters.includes(invoiceStatus)) {
-		// 			invoice.show = false;
-		// 		} else if (filters.includes(invoiceStatus)) {
-		// 			invoice.show = true;
-		// 		}
-		// 		return invoice;
-		// 	});
-
-		// 	return {
-		// 		...state,
-		// 		invoices: filterResult,
-		// 	};
+		case SET_DEFAULT_FILTERS:
+			return {
+				...state,
+				filters: ["paid", "pending", "draft"]
+			}
 
 		case MARK_AS_PAID:
 			const invoicesArr = [...state.invoices];

@@ -76,12 +76,13 @@ const InvoicePreview = (setIsPreviewOpen) => {
 
 
 	const TotalItemsLG = invoiceItems.map((elem, i) => {
+
 		return (
 			<tr key={i}>
 				<td>{elem.name}</td>
 				<td className="invoicePreview__qtyCell">{elem.quantity}</td>
-				<td className="invoicePreview__priceCell">{elem.price}</td>
-				<td className="invoicePreview__totalCell">{elem.total}</td>
+				<td className="invoicePreview__priceCell">{"£ " + (+elem.price).toLocaleString('en-GB')}</td>
+				<td className="invoicePreview__totalCell">{"£ " + elem.total.toLocaleString('en-GB')}</td>
 			</tr>
 		);
 	});
@@ -176,7 +177,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<div className={`invoicePreview__total ${dark ? "dark-black" : ""}`}>
 								<p className="invoicePreview__total-text">Amount Due</p>
 								<p className="invoicePreview__total-sum">
-									£ <span>{total}</span>
+									£ <span>{total.toLocaleString('en-GB')}</span>
 								</p>
 							</div>
 						</div>

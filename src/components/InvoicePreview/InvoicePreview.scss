@@ -1,9 +1,13 @@
 .invoicePreview {
 	position: absolute;
-	z-index: 99;
+	z-index: 98;
 	top: 72px;
 	background: #f8f8fb;
 	width: 100%;
+
+	@media screen and (min-width: 1439px) {
+		margin-top: -72px;		
+	}
 
 	&__status {
 		display: flex;

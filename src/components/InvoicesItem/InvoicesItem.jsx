@@ -13,6 +13,8 @@ const InvoicesItem = ({ id, number, name, dateDue, status, total }) => {
 
 	let dateText = new Date(dateDue).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 
+
+
 	return (
 		<div key={number} id={id} data-number={number} className={`invoicesList__item ${dark ? " dark-header" : ""}`}>
 				<p className="item__number">
@@ -24,7 +26,7 @@ const InvoicesItem = ({ id, number, name, dateDue, status, total }) => {
 				</p>
 				<p className="item__name">{name}</p>
 				<p className="item__amount">
-					£ <span>{total.toLocaleString('en-GB')}</span>
+					£ <span>{+total > 1000000 ? (+total/1000000).toFixed(1) + ' mln.' : total.toLocaleString('en-GB')}</span>
 				</p>
 				<StatusElem status={status}></StatusElem>
 				<img className="item__arrowRight" src={arrowRight} alt="" />

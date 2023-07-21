@@ -1,33 +1,38 @@
-@import '../customBootstrap.scss';
+@import "../customBootstrap.scss";
 
 .header {
 	background: #373b53;
-  margin-bottom: 32px;
+	margin-bottom: 32px;
+	display: flex;
+	position: relative;
+	z-index: 100;
 
 	@media screen and (min-width: 1439px) {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
-		height: 102vh;
-		width: 103px;
+		height: 100vh;
+		width: 102px;
 		border-radius: 0 20px 20px 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	&__container {
 		@media screen and (min-width: 1439px) {
 			flex-direction: column !important;
-		
 		}
 	}
 
 	&__nav {
-		border-right: 1px solid #494E6E;
-		
+		border-right: 1px solid #494e6e;
+
 		@media screen and (min-width: 1439px) {
 			flex-direction: column;
-			justify-content: space-between !important;
-			height: 90vh;
 			border: none;
+			// justify-content: space-between !important;
+			height: 100%;
 		}
 	}
 
@@ -49,43 +54,48 @@
 		}
 	}
 
-  &__switcher {
-    background-color: transparent;
-    border: none;
-    position: relative;
-    left: -20px;
-		
+	&__switcher {
+		background-color: transparent;
+		border: none;
+		position: relative;
+		left: -20px;
+
 		@media screen and (min-width: 1439px) {
 			left: 0;
 			padding: 31px 42px;
-			border-bottom: 1px solid #494E6E;
 		}
-  }
+	}
 
 	&__avatar {
-		border-radius: 50%;
-		padding: 20px 24px;
-   
+		height: 100%;
+		position: relative;
+		border-top: 2px solid #494e6e !important;
+		height: 80px;
+		width: 80px;
 
 		& img {
 			width: 32px;
 			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 
 		@media screen and (min-width: 1439px) {
-			padding: 24px 31px;
-			
+			// padding: 24px 31px;
+			height: 102px;
+			width: 102px;
 
 			& img {
-				width:40px;
-				border-radius: 50%;
+				width: 40px;
 			}
 		}
 	}
 }
 
 .dark-header {
-	background-color: #1E2139 !important;
+	background-color: #1e2139 !important;
 	color: white !important;
 }
 
@@ -94,6 +104,6 @@
 }
 
 .dark-nav {
-  background-color: rgb(20,22,37);
-  color: white;
+	background-color: rgb(20, 22, 37);
+	color: white;
 }

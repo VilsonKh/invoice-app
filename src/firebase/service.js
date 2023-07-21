@@ -4,15 +4,20 @@ import { useContext, useEffect } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 export const useQueryAllInvoicesData = () => {
-	const { getAllInvoices, filters, invoices } = useContext(invoiceContext);
+	const { getAllInvoices, filters } = useContext(invoiceContext);
+
 	useEffect(() => {
-		const ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"), filters.length > 0 ? where("status", "in", [...filters]) : "");
+		let ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"));
+
+		if (filters.length > 0) {
+			ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"), where("status", "in", [...filters]));
+		}
+
 		onSnapshot(ref, (snapshot) => {
 			let results = [];
 			snapshot.docs.forEach((doc) => {
 				results.push({ id: doc.id, ...doc.data() });
 			});
-			console.log(results);
 			getAllInvoices(results);
 		});
 	}, [filters]);
@@ -24,7 +29,6 @@ export const queryInvoiceItems = async (docId, method) => {
 		const items = snapshot.docs;
 		let result = [];
 		items.map((item) => {
-			console.log(item.data());
 			result.push({ ...item.data(), itemId: item.id });
 		});
 		method(result);
@@ -62,11 +66,15 @@ export const deleteInvoice = async (docId) => {
 	await deleteDoc(doc(db, `invoices/${docId}`));
 };
 
-export const updateInvoice = async (invoiceId, invoiceData, itemsData) => {
+export const updateInvoice = async (invoiceId, invoiceData, itemsData, deletedItemsId) => {
 	const batch = writeBatch(db);
 
 	const invoiceRef = doc(db, "invoices", invoiceId);
 	batch.set(invoiceRef, invoiceData);
+
+	deletedItemsId.forEach((itemId) => {
+		deleteDoc(doc(db, "invoices", invoiceId, "items", itemId));
+	});
 
 	itemsData.forEach((item) => {
 		console.log(item);
