@@ -2,12 +2,11 @@
 
 .header {
 	background: #373b53;
-	margin-bottom: 32px;
 	display: flex;
 	position: relative;
 	z-index: 100;
 
-	@media screen and (min-width: 1439px) {
+	@media screen and (min-width: 1500px) {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -17,10 +16,11 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		margin-bottom: 0;
 	}
 
 	&__container {
-		@media screen and (min-width: 1439px) {
+		@media screen and (min-width: 1500px) {
 			flex-direction: column !important;
 		}
 	}
@@ -28,7 +28,7 @@
 	&__nav {
 		border-right: 1px solid #494e6e;
 
-		@media screen and (min-width: 1439px) {
+		@media screen and (min-width: 1500px) {
 			flex-direction: column;
 			border: none;
 			// justify-content: space-between !important;
@@ -45,7 +45,7 @@
 		overflow: hidden;
 		z-index: 0;
 
-		@media screen and (min-width: 1439px) {
+		@media screen and (min-width: 767px) {
 			padding: 31px;
 			background-size: 100%;
 			& img {
@@ -60,7 +60,7 @@
 		position: relative;
 		left: -20px;
 
-		@media screen and (min-width: 1439px) {
+		@media screen and (min-width: 1500px) {
 			left: 0;
 			padding: 31px 42px;
 		}
@@ -70,7 +70,7 @@
 		height: 100%;
 		position: relative;
 		border-top: 2px solid #494e6e !important;
-		height: 80px;
+		height: 72px;
 		width: 80px;
 
 		& img {
@@ -82,10 +82,14 @@
 			transform: translate(-50%, -50%);
 		}
 
-		@media screen and (min-width: 1439px) {
-			// padding: 24px 31px;
+		@media screen and (min-width: 767px) {
 			height: 102px;
 			width: 102px;
+			border: none !important;
+		}
+
+		@media screen and (min-width: 1500px) {
+			// padding: 24px 31px;
 
 			& img {
 				width: 40px;

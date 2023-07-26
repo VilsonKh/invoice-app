@@ -9,10 +9,10 @@ import { useContext } from "react";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 
-import { queryInvoiceItems, useQueryAllInvoicesData, getInvoiceItems } from "../../firebase/service";
+import { queryInvoiceItems, useQueryAllInvoicesData } from "../../firebase/service";
 
 const InvoicesList = () => {
-	const { invoices, filters, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, currentInvoiceId, getInvoiceItems } = useContext(invoiceContext);
+	const { invoices, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, getInvoiceItems, isPending } = useContext(invoiceContext);
 
 	useQueryAllInvoicesData();
 
@@ -38,21 +38,27 @@ const InvoicesList = () => {
 			return;
 		} else {
 			const currentInvoiceNumber = target.getAttribute("data-number");
-			const currentInvoiceId = target.getAttribute('id');
+			const currentInvoiceId = target.getAttribute("id");
 			setCurrentInvoiceNumber(currentInvoiceNumber);
-			setCurrentInvoiceId(currentInvoiceId)
-			await queryInvoiceItems(currentInvoiceId, getInvoiceItems)
+			setCurrentInvoiceId(currentInvoiceId);
+			await queryInvoiceItems(currentInvoiceId, getInvoiceItems);
 		}
-		setPreviewInvoice(true);	
-		
+		setPreviewInvoice(true);
 	};
-
-	
 
 	return (
 		<section className="invoicesList">
 			<Navigation />
-			{filters.length > 0 ? (
+			
+				<div className="container">
+					{
+						<ul onClick={(e) => getCurrentInvoiceNumber(e)} className="invoicesList__list">
+							{isPending ? <span className="loader"></span> : items()}
+						</ul>
+					}
+				</div>
+			
+			{/* {filters.length > 0 ? (
 				<div className="container">
 					{
 						<ul onClick={(e) => getCurrentInvoiceNumber(e)} className="invoicesList__list">
@@ -60,9 +66,9 @@ const InvoicesList = () => {
 						</ul>
 					}
 				</div>
-			) : (
-				<NoInvoicesPage />
-			)}
+			) : (  
+				<NoInvoicesPage /> 
+			)} */}
 		</section>
 	);
 };

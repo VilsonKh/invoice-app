@@ -7,9 +7,8 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 const EditInvoiceButtons = () => {
 	const { dark } = useContext(darkContext);
 	const formData = useFormContext();
-	const { currentInvoiceId, currentInvoiceNumber, invoices, invoiceItems} = useContext(invoiceContext);
+	const { setIsEditInvoice, setIsNewInvoice, currentInvoiceId, currentInvoiceNumber, invoices, invoiceItems} = useContext(invoiceContext);
 
-console.log(invoiceItems)
 
 	const saveChangesHandler = (data) => {
 		let itemsSum = 0;
@@ -29,9 +28,8 @@ console.log(invoiceItems)
 		delete data.inputs;
 		delete data.items;
 
+		//собирает id items, которые надо удалить, чтобы передать в функцию и удалить
 		let deletedItems = [];
-		console.log(fieldItems)
-
 
 		invoiceItems.forEach((item) => {
 			fieldItems.forEach((fieldItem) => {
@@ -41,26 +39,17 @@ console.log(invoiceItems)
 			})
 		})
 
-		console.log(deletedItems)
-
-
 		if (!fieldItems.length) {
-			console.log("items пустой");
 		} else {
-			console.log("форма отправлена");
-			
-			console.log(data)
 			updateInvoice(currentInvoiceId, data, fieldItems, deletedItems);
+			setIsNewInvoice(false)
+			setIsEditInvoice(false)	
 		}
 	};
 
-	//суммирует items
-
 	return (
 		<div className="editInvoice__buttons">
-			{/* onClick={() => setEditInvoice(false)}  */}
-			<button className={`editInvoice__cancel ${dark ? "dark-light dark-font" : ""}`}>Cancel</button>
-			{/* onClick={formData.handleSubmit(onSubmitSave)} */}
+			<button className={`editInvoice__cancel ${dark ? "dark-light dark-font" : ""}`} onClick={() => {setIsEditInvoice(false); setIsNewInvoice(false)}}>Cancel</button>
 			<button className="editInvoice__save" type="submit" form="newInvoice" onClick={formData.handleSubmit(saveChangesHandler)}>
 				Save Changes
 			</button>

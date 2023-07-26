@@ -12,12 +12,14 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 
 const Navigation = ({onClickOpenNewInvoiceForm}) => {
 	const { dark} = useContext(darkContext);
-	const {invoices,setNewInvoice,resetForm} = useContext(invoiceContext)
+	const {invoices,setIsNewInvoice,resetForm} = useContext(invoiceContext)
 
 	const onClickButton = (e)=> {
 		e.preventDefault();
+
+		// document.style.overflow = 'hidden'
 		resetForm()
-		setNewInvoice(true);
+		setIsNewInvoice(true);
 	}
 
 	return (

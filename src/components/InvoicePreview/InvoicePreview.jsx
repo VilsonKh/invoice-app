@@ -1,57 +1,46 @@
-import { useContext} from "react";
+import { useContext } from "react";
 //styles
 import "./InvoicePreview.scss";
 //components
 import ButtonBack from "../ButtonBack/ButtonBack";
 import StatusElem from "../StatusElem/StatusElem";
-import Form from "../Form/Form";
 import ConfirmDelete from "../DeleteConf/DeleteConf";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
-import { updateInvoice, updateInvoiceStatus } from "../../firebase/service";
-
+import {  updateInvoiceStatus } from "../../firebase/service";
 
 const InvoicePreview = (setIsPreviewOpen) => {
-
 	const { dark } = useContext(darkContext);
-	const { invoices, 
-					invoiceItems,
-					currentInvoiceNumber, 
-					setEditInvoice, 
-					isEditInvoice, 
-					currentInvoiceId,
-					isDeleteConf, 
-					setDeleteConf,
- 
-				} = useContext(invoiceContext);
+	const { invoices, invoiceItems, currentInvoiceNumber, setIsEditInvoice, currentInvoiceId, setDeleteConf } = useContext(invoiceContext);
 
 	const currentInvoice = [...invoices].filter((invoice) => {
 		if (invoice.invoiceId === currentInvoiceNumber) {
 			return invoice;
 		}
-      return false
+		return false;
 	});
 
-	const { status, 
-					invoiceId, 
-					description, 
-					senderStreet,
-					senderCity,
-					senderPostCode,
-					senderCountry, 
-					clientName, 
-					clientStreet,
-					clientCity,
-					clientPostCode,
-					clientCountry, 
-					clientEmail, 
-					createdAt, 
-					paymentDue, 
-					total 
-				} = currentInvoice[0];
+	const {
+		status,
+		invoiceId,
+		description,
+		senderStreet,
+		senderCity,
+		senderPostCode,
+		senderCountry,
+		clientName,
+		clientStreet,
+		clientCity,
+		clientPostCode,
+		clientCountry,
+		clientEmail,
+		createdAt,
+		paymentTerms,
+		total,
+	} = currentInvoice[0];
 
-
+	const paymentDue = new Date(new Date(createdAt).setDate(new Date(createdAt).getDate() + parseInt(paymentTerms)));
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
@@ -59,54 +48,55 @@ const InvoicePreview = (setIsPreviewOpen) => {
 
 	const TotalItemsSM = invoiceItems.map((elem, i) => {
 		return (
-			
-					<li className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
-						<div className="invoicePreview__list-item-left">
-							<p className="invoicePreview__itemName">{elem.name}</p>
-							<p className="invoicePreview__qtySum">
-								<span>1</span> x £ <span>{elem.price}</span>
-							</p>
-						</div>
-						<div className="invoicePreview__list-item-right">
-							£<span>{elem.total}</span>
-						</div>
-					</li>
+			<li className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
+				<div className="invoicePreview__list-item-left">
+					<p className="invoicePreview__itemName">{elem.name}</p>
+					<p className="invoicePreview__qtySum">
+						<span>1</span> x £ <span>{parseInt(elem.price).toFixed()}</span>
+					</p>
+				</div>
+				<div className="invoicePreview__list-item-right">
+					£<span>{parseInt(elem.total).toFixed()}</span>
+				</div>
+			</li>
 		);
 	});
 
-
 	const TotalItemsLG = invoiceItems.map((elem, i) => {
-
 		return (
 			<tr key={i}>
 				<td>{elem.name}</td>
 				<td className="invoicePreview__qtyCell">{elem.quantity}</td>
-				<td className="invoicePreview__priceCell">{"£ " + (+elem.price).toLocaleString('en-GB')}</td>
-				<td className="invoicePreview__totalCell">{"£ " + elem.total.toLocaleString('en-GB')}</td>
+				<td className="invoicePreview__priceCell">{"£ " + parseInt(elem.price).toFixed().toLocaleString("en-GB")}</td>
+				<td className="invoicePreview__totalCell">{"£ " + parseInt(elem.price).toFixed().toLocaleString("en-GB")}</td>
 			</tr>
 		);
 	});
 
+
 	return (
 		<>
-			{isEditInvoice && <Form />}
-			{isDeleteConf && <ConfirmDelete />}
+			<ConfirmDelete />
 			<div className={`invoicePreview ${dark ? "dark-nav" : ""}`}>
 				<div className="container">
 					<ButtonBack setIsPreviewOpen={setIsPreviewOpen}></ButtonBack>
 					<div className={`invoicePreview__status ${dark ? "dark-header" : ""}`}>
-						<p className="invoicePreview__staus-text">Status</p>
+						<p className="invoicePreview__status-text">Status</p>
 						<StatusElem status={status}></StatusElem>
 						<div className={`invoicePreview__groupButtons invoicePreview__statusButtons ${dark ? "dark-header" : ""}`}>
-					
-							<button 	onClick={() => setEditInvoice(true)}  className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
+							<button onClick={() => setIsEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
 								Edit
 							</button>
 
 							<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">
 								Delete
 							</button>
-							<button onClick={() => updateInvoiceStatus(currentInvoiceId)}  style={status === "paid" ? { opacity: "0.5" } : null} disabled={status === 'paid' ? true : false}className="invoicePreview__btn-paid">
+							<button
+								onClick={() => updateInvoiceStatus(currentInvoiceId)}
+								style={status === "paid" ? { opacity: "0.5" } : null}
+								disabled={status === "paid" ? true : false}
+								className="invoicePreview__btn-paid"
+							>
 								Mark as Paid
 							</button>
 						</div>
@@ -128,9 +118,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<div>
 								<div className="invoicePreview__bill-date">
 									<label className="invoicePreview__labelDate label">Invoice Date</label>
-									<p className={`invoicePreview__invoiceDate ${dark ? "dark-font" : ""}`}>
-										{dateTransform(createdAt)}
-									</p>
+									<p className={`invoicePreview__invoiceDate ${dark ? "dark-font" : ""}`}>{dateTransform(createdAt)}</p>
 								</div>
 								<div className="invoicePreview__bill-dueDate">
 									<label className="invoicePreview__labelDue label">Payment Due</label>
@@ -151,7 +139,8 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							<p className={`invoicePreview__email big-fs ${dark ? "dark-font" : ""}`}>{clientEmail}</p>
 						</div>
 						<div className="invoicePreview__totalItems">
-							{window.screen.width > "767" ? (<div className="invoicePreview__table-container">
+							{window.screen.width > "767" ? (
+								<div className="invoicePreview__table-container">
 									<table className={`invoicePreview__table ${dark ? "dark-light" : ""}`}>
 										<thead className="invoicePreview__tableHead">
 											<tr>
@@ -161,33 +150,36 @@ const InvoicePreview = (setIsPreviewOpen) => {
 												<th className="invoicePreview__totalCell">Total</th>
 											</tr>
 										</thead>
-										<tbody>
-											{TotalItemsLG}
-										</tbody>
+										<tbody>{TotalItemsLG}</tbody>
 									</table>
-								</div>) : (
-									<div className="invoicePreview__list">
-										<ul className="invoicePreview__list-inner">
-                                  { TotalItemsSM } 
-										</ul>
-									</div>
-									
-								)}
-								
+								</div>
+							) : (
+								<div className="invoicePreview__list">
+									<ul className="invoicePreview__list-inner">{TotalItemsSM}</ul>
+								</div>
+							)}
+
 							<div className={`invoicePreview__total ${dark ? "dark-black" : ""}`}>
 								<p className="invoicePreview__total-text">Amount Due</p>
 								<p className="invoicePreview__total-sum">
-									£ <span>{total.toLocaleString('en-GB')}</span>
+									£ <span>{parseInt(total).toFixed().toLocaleString("en-GB")}</span>
 								</p>
 							</div>
 						</div>
 					</div>
 					<div className={`invoicePreview__groupButtons ${dark ? "dark-header" : ""}`}>
-						<button onClick={() => setEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
+						<button onClick={() => setIsEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
 							Edit
 						</button>
-						<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">Delete</button>
-						<button onClick={() => updateInvoiceStatus(currentInvoiceId)} className="invoicePreview__btn-paid" style={status === "paid" ? { opacity: "0.5" } : null} disabled={status === 'paid' ? true : false}>
+						<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">
+							Delete
+						</button>
+						<button
+							onClick={() => updateInvoiceStatus(currentInvoiceId)}
+							className="invoicePreview__btn-paid"
+							style={status === "paid" ? { opacity: "0.5" } : null}
+							disabled={status === "paid" ? true : false}
+						>
 							Mark as Paid
 						</button>
 					</div>

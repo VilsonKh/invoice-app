@@ -2,10 +2,11 @@ import { useFormContext } from "react-hook-form";
 import { postNewInvoice } from "../../firebase/service";
 import { useContext } from "react";
 import invoiceContext from "../../context/invoice/invoiceContext";
+import { getFormatedDate } from "../helpers/formatDate";
 
 const NewInvoiceButtons = () => {
 	const formData = useFormContext();
-	const {setNewInvoice} = useContext(invoiceContext)
+	const {setIsNewInvoice, setIsEditInvoice} = useContext(invoiceContext)
 		//создает новый рандомный ID
 		const createRandomInvoiceNumber = () => {
 			const alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYZ";
@@ -15,7 +16,6 @@ const NewInvoiceButtons = () => {
 				newInvoiceId += randomLetters;
 				randomLetters = randomLetters = alphabet[Math.floor(Math.random() * alphabet.length)];
 			}
-			// let randomNumb = Math.floor(Math.random() * 10000);
 			let randomNumb = Math.floor(Math.random() * (9999 + 1 - 1000)) + 1000;
 			newInvoiceId += randomNumb;
 			return newInvoiceId;
@@ -30,15 +30,15 @@ const NewInvoiceButtons = () => {
 		data.total = itemsSum;
 		data.status = "draft";
 		data.invoiceId = createRandomInvoiceNumber();
+
+		const paymentDue = new Date(new Date(data.createdAt).setDate(new Date(data.createdAt).getDate() + parseInt(data.paymentTerms)));
+		data.paymentDue = getFormatedDate(paymentDue);
+
 		//разделяет объект
 		const items = [...data.items];
 		delete data.items;
-		console.log(data);
-		console.log(items);
 		if (!items.length) {
-			console.log(" items пустой");
 		} else {
-			console.log("форма отправлена");
 			postNewInvoice(data, items);
 		}
 	};
@@ -52,23 +52,29 @@ const NewInvoiceButtons = () => {
 		data.total = itemsSum;
 		data.status = "pending";
 		data.invoiceId = createRandomInvoiceNumber();
+
+		const paymentDue = new Date(new Date(data.createdAt).setDate(new Date(data.createdAt).getDate() + parseInt(data.paymentTerms)));
+		data.paymentDue = getFormatedDate(paymentDue)
+
+
 		//разделяет объект
 		const items = [...data.items];
 		delete data.items;
-		console.log(data);
-		console.log(items);
+		delete data.inputs;
+		console.log(data)
+
 		if (!items.length) {
-			console.log(" items пустой");
 		} else {
-			console.log("форма отправлена");
 			postNewInvoice(data, items);
 		}
+		setIsNewInvoice(false)
+		setIsEditInvoice(false)	
 	};
 
 	return (
 		// onClick={onSaveButtonsClick}
 		<div className="addInvoice__groupButtons">
-			<button type="submit" form="newInvoice" id="discard" className="addInvoice__discard btn-status" onClick={() => setNewInvoice(false)}>
+			<button type="submit" form="newInvoice" id="discard" className="addInvoice__discard btn-status" onClick={() => setIsNewInvoice(false)}>
 				Discard
 			</button>
 			<button type="submit" form="newInvoice" id="draft" className="addInvoice__draft btn-status" onClick={formData.handleSubmit(saveAsDraftHandler)}>

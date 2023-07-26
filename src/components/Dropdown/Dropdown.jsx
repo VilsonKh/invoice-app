@@ -8,7 +8,7 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 
 const Dropdown = () => {
 	const {dark} = useContext(darkContext);
-	const {changeFilters, changeShownInvoices} = useContext(invoiceContext)
+	const {changeFilters, } = useContext(invoiceContext)
 
 	const onFilterClick = (e) => {
 		const currentFilter = e.target.getAttribute('id');
@@ -16,8 +16,6 @@ const Dropdown = () => {
 			return
 		}
 		changeFilters(currentFilter)
-		changeShownInvoices()
-
 	}
 
 	return (
@@ -26,7 +24,7 @@ const Dropdown = () => {
 						<button className={`dropdown__button ${dark ? 'dark-font' : ''}`} type="button"  data-bs-toggle="dropdown" aria-expanded="false">
 							{window.screen.width > "767" ? 'Filter by status' : 'Filter'}
 						</button>
-						<ul onClick={(e)=> onFilterClick(e)} className="dropdown-menu">
+						<ul onClick={(e)=> onFilterClick(e)} className={`dropdown-menu ${dark ? 'dark-font dark-light' : ''}`}>
 							<li className="dropdown-item">
 								<div className="dropdown__item-container">
 									<input className="dropdown__input" id="draft" type="checkbox" defaultChecked/>

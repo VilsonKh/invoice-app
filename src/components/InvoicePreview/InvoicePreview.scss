@@ -1,12 +1,12 @@
 .invoicePreview {
 	position: absolute;
 	z-index: 98;
-	top: 72px;
+	// top: 72px;
 	background: #f8f8fb;
 	width: 100%;
 
 	@media screen and (min-width: 1439px) {
-		margin-top: -72px;		
+		// margin-top: -72px;		
 	}
 
 	&__status {
@@ -26,6 +26,10 @@
 			font-weight: 500;
 			font-size: 12px;
 			line-height: 15px;
+
+			@media screen and (min-width: 767px) {
+				margin-right: 16px !important;
+			}
 		}
 	}
 
@@ -301,4 +305,22 @@
 
 .dark-black {
 	background-color: #141625;
+}
+
+.preview-enter {
+	transform: translateX(-100%);
+}
+
+.preview-enter-active {
+	transform: translateX(0);
+	transition: transform 500ms;
+}
+
+.preview-exit {
+	transform: translateX(0);
+}
+
+.preview-exit-active {
+	transform: translateX(100%);
+	transition: transform 500ms ;
 }

@@ -1,12 +1,9 @@
 import React, { useReducer } from 'react';
 import DarkContext from './darkContext';
-import darkReducer from './darkReducer';
-import { DARK } from '../types';
+import darkReducer, { initialState } from './darkReducer';
+import { DARK, SET_DARK } from '../types';
 
 const DarkState = (props) => {
-  const initialState = {
-    dark: false,
-  };
 
   const [state, dispatch] = useReducer(darkReducer, initialState);
 
@@ -19,11 +16,18 @@ const DarkState = (props) => {
     dispatch({ type: DARK, payload: newMode });
   };
 
+  const setDarkMode = (boolean) => {
+    dispatch({
+      type: SET_DARK, 
+      payload: boolean})
+  }
+
   return (
     <DarkContext.Provider
       value={{
         dark: state.dark,
         toggleDarkMode,
+        setDarkMode
       }}
     >
       {props.children}

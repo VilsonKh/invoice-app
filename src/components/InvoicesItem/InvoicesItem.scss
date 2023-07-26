@@ -1,4 +1,5 @@
 .invoicesList {
+	padding-top: 32px;
 	&__item {
 		padding: 24px !important;
 		background-color: white;
@@ -47,6 +48,8 @@
 
 		@media screen and (min-width: 767px) {
 			grid-area: 1/5/2/6;
+			margin-left: 0;
+			margin-right: auto
 		}		
 	}
 

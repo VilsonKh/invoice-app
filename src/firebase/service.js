@@ -1,16 +1,17 @@
-import { collection, onSnapshot, getDocs, addDoc, doc, where, query, deleteDoc, writeBatch, orderBy, setDoc, updateDoc } from "@firebase/firestore";
+import { collection, onSnapshot, getDocs, addDoc, doc, where, query, deleteDoc, writeBatch, orderBy, updateDoc } from "@firebase/firestore";
 import { db } from "./config";
 import { useContext, useEffect } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 export const useQueryAllInvoicesData = () => {
-	const { getAllInvoices, filters } = useContext(invoiceContext);
+	const { getAllInvoices, filters, setIsPending, isPending } = useContext(invoiceContext);
 
 	useEffect(() => {
-		let ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"));
+		setIsPending(true);
+		let ref = query(collection(db, "invoices"), orderBy("createdAt", "desc"));
 
 		if (filters.length > 0) {
-			ref = query(collection(db, "invoices"), orderBy("paymentDue", "desc"), where("status", "in", [...filters]));
+			ref = query(collection(db, "invoices"), orderBy("createdAt", "desc"), where("status", "in", [...filters]));
 		}
 
 		onSnapshot(ref, (snapshot) => {
@@ -18,6 +19,7 @@ export const useQueryAllInvoicesData = () => {
 			snapshot.docs.forEach((doc) => {
 				results.push({ id: doc.id, ...doc.data() });
 			});
+			setIsPending(false);
 			getAllInvoices(results);
 		});
 	}, [filters]);

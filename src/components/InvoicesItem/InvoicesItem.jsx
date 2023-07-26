@@ -10,10 +10,9 @@ import darkContext from "../../context/dark/darkContext";
 
 const InvoicesItem = ({ id, number, name, dateDue, status, total }) => {
 	const { dark } = useContext(darkContext);
-
 	let dateText = new Date(dateDue).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 
-
+const invoiceTotal = parseInt(total).toFixed(2)
 
 	return (
 		<div key={number} id={id} data-number={number} className={`invoicesList__item ${dark ? " dark-header" : ""}`}>
@@ -26,7 +25,7 @@ const InvoicesItem = ({ id, number, name, dateDue, status, total }) => {
 				</p>
 				<p className="item__name">{name}</p>
 				<p className="item__amount">
-					£ <span>{+total > 1000000 ? (+total/1000000).toFixed(1) + ' mln.' : total.toLocaleString('en-GB')}</span>
+					£ <span>{invoiceTotal > 1000000 ? (+invoiceTotal/1000000).toFixed(1) + ' mln.' : invoiceTotal.toLocaleString('en-GB')}</span>
 				</p>
 				<StatusElem status={status}></StatusElem>
 				<img className="item__arrowRight" src={arrowRight} alt="" />

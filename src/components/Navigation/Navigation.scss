@@ -37,9 +37,11 @@
 
 	&__dropdown {
 		margin-right: 20px;
+		transition: opacity .3s linear;
 		& img {
 			margin-left: 10px;
 		}
+
 	}
 
 	&__addButton {
@@ -47,6 +49,11 @@
 		background-color: #7c5dfa;
 		border: none;
 		padding: 0 6px;
+		transition: opacity .3s linear;
+
+		&:hover {
+			opacity: 0.7;
+		}
 
 		& p {
 			padding: 6px 15px 6px 8px;
@@ -71,4 +78,9 @@
 	font-weight: 700;
 	font-size: 12px;
 	line-height: 15px;
+	transition: opacity .3s linear;
+
+	&:hover {
+		opacity: 0.5;
+	}
 }
