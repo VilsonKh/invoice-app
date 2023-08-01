@@ -1,3 +1,4 @@
+/** Receives a new instance of Date object and returns string in format yyyy-mm-dd */
 export const getFormatedDate = (date) => {
 	let day = date.getDate();
 	if (day < 10) day = "0" + day;

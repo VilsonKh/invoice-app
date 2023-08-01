@@ -10,15 +10,12 @@ import { useContext } from "react";
 import darkContext from "../../context/dark/darkContext";
 import invoiceContext from "../../context/invoice/invoiceContext";
 
-const Navigation = ({onClickOpenNewInvoiceForm}) => {
+const Navigation = () => {
 	const { dark} = useContext(darkContext);
-	const {invoices,setIsNewInvoice,resetForm} = useContext(invoiceContext)
+	const {invoices,setIsNewInvoice} = useContext(invoiceContext)
 
 	const onClickButton = (e)=> {
 		e.preventDefault();
-
-		// document.style.overflow = 'hidden'
-		resetForm()
 		setIsNewInvoice(true);
 	}
 
@@ -33,7 +30,7 @@ const Navigation = ({onClickOpenNewInvoiceForm}) => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<button onClick={(e)=>onClickButton(e)} className="nav__addButton d-flex align-items-center ">
+				<button onClick={(e)=>onClickButton(e)} data-testid="newInvoiceButton" className="nav__addButton d-flex align-items-center ">
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>

@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
 export const useQueryAllInvoicesData = () => {
-	const { getAllInvoices, filters, setIsPending, isPending } = useContext(invoiceContext);
+	const { getAllInvoices, filters, setIsPending } = useContext(invoiceContext);
 
 	useEffect(() => {
 		setIsPending(true);

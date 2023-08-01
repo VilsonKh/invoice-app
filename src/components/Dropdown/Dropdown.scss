@@ -1,4 +1,7 @@
 .dropdown {
+	&:hover{
+		background: none !important;
+	}
 
 	&__button {
 		background: transparent;
@@ -69,10 +72,8 @@
 		box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25) !important;
     top: 10px !important;
     left: -40px !important;
-
-		&-item:focus, &-item:hover {
-			background-color: transparent !important;
-		}
 	}
+
+
 
 }

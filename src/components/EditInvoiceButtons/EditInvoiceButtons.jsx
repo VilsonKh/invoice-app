@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import darkContext from "../../context/dark/darkContext";
 import { useFormContext } from "react-hook-form";
-import { updateInvoice } from "../../firebase/service";
+import { queryInvoiceItems, updateInvoice } from "../../firebase/service";
 import invoiceContext from "../../context/invoice/invoiceContext";
 
 const EditInvoiceButtons = () => {
 	const { dark } = useContext(darkContext);
-	const formData = useFormContext();
-	const { setIsEditInvoice, setIsNewInvoice, currentInvoiceId, currentInvoiceNumber, invoices, invoiceItems} = useContext(invoiceContext);
-
+	const { handleSubmit } = useFormContext();
+	const { setIsEditInvoice, setIsNewInvoice, currentInvoiceId, currentInvoiceNumber, invoices, invoiceItems, getInvoiceItems } = useContext(invoiceContext);
 
 	const saveChangesHandler = (data) => {
 		let itemsSum = 0;
@@ -16,13 +15,13 @@ const EditInvoiceButtons = () => {
 			itemsSum += +item.total;
 		});
 		data.total = itemsSum;
-    data.invoiceId = currentInvoiceNumber
+		data.invoiceId = currentInvoiceNumber;
 		// необходимо для сохранения статуса инвойса, так как форма его не содержит
 		invoices.forEach((invoice) => {
-			if(invoice.invoiceId === currentInvoiceNumber) {
-				data.status = invoice.status
+			if (invoice.invoiceId === currentInvoiceNumber) {
+				data.status = invoice.status;
 			}
-		})
+		});
 		//разделяет объект
 		const fieldItems = [...data.items];
 		delete data.inputs;
@@ -33,24 +32,30 @@ const EditInvoiceButtons = () => {
 
 		invoiceItems.forEach((item) => {
 			fieldItems.forEach((fieldItem) => {
-				if(item.itemId !== fieldItem.itemId) {
-					deletedItems.push(item.itemId)
+				if (item.itemId !== fieldItem.itemId) {
+					deletedItems.push(item.itemId);
 				}
-			})
-		})
+			});
+		});
 
-		if (!fieldItems.length) {
-		} else {
-			updateInvoice(currentInvoiceId, data, fieldItems, deletedItems);
-			setIsNewInvoice(false)
-			setIsEditInvoice(false)	
-		}
+		updateInvoice(currentInvoiceId, data, fieldItems, deletedItems);
+		queryInvoiceItems(currentInvoiceId, getInvoiceItems)
+		setIsNewInvoice(false);
+		setIsEditInvoice(false);
 	};
 
 	return (
 		<div className="editInvoice__buttons">
-			<button className={`editInvoice__cancel ${dark ? "dark-light dark-font" : ""}`} onClick={() => {setIsEditInvoice(false); setIsNewInvoice(false)}}>Cancel</button>
-			<button className="editInvoice__save" type="submit" form="newInvoice" onClick={formData.handleSubmit(saveChangesHandler)}>
+			<button
+				className={`editInvoice__cancel ${dark ? "dark-light dark-font" : ""}`}
+				onClick={() => {
+					setIsEditInvoice(false);
+					setIsNewInvoice(false);
+				}}
+			>
+				Cancel
+			</button>
+			<button className="editInvoice__save" type="submit" form="newInvoice" onClick={handleSubmit(saveChangesHandler)}>
 				Save Changes
 			</button>
 		</div>

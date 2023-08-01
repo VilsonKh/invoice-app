@@ -11,11 +11,7 @@ const darkReducer = (state, action) => {
         ...state,
         dark: action.payload,
       };
-    case SET_DARK:
-      return {
-        ...state,
-        dark: action.payload
-      }
+  
     default:
       return state;
   }

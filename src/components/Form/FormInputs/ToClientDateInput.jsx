@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import invoiceContext from "../../../context/invoice/invoiceContext";
 import darkContext from "../../../context/dark/darkContext";
 import { useFormContext } from "react-hook-form";
@@ -22,17 +22,18 @@ const ToClientDateInput = () => {
 
 	const { createdAt } = currentInvoice?.[0] ?? {};
 
-  if (isNewInvoice) {
-		setValue("createdAt", getFormatedDate(new Date()));
-	} else {
-		setValue("createdAt", createdAt);
-	}
+  useLayoutEffect(() => {
+		if (isNewInvoice) {
+			setValue("createdAt", getFormatedDate(new Date()));
+		}
+	}, [isNewInvoice, isEditInvoice])
+	
 	return (
 		<input
 			className={`form__input ${dark ? "dark-input" : ""}`}
 			id="date"
 			type="date"
-			defaultValue={createdAt}
+			defaultValue={setValue('createdAt', createdAt)}
 			{...register("createdAt", { required: true })}
 			aria-invalid={errors.createdAt ? "true" : "false"}
 			disabled={isEditInvoice ? true : false}

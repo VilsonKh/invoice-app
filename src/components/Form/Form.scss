@@ -12,6 +12,7 @@
 	background-color: rgba(0,0,0,.3);
 	width: 100%;
 	min-width: 375px;
+	transition: all 0.3s ease;
 	@media screen and (min-width: 767px) {
 
 	}
@@ -251,7 +252,7 @@
 
 
 
-	&__submit {
+	&__addItem {
 		background-color: transparent;
 		border: none;
 		width: 100%;
@@ -269,6 +270,14 @@
 		&:hover {
 			background-color: #dfe3fa;
 		}
+	}
+
+	&__addItem[disabled] {
+		opacity: 0.5;
+	}
+
+	&__addItem[disabled]:hover {
+		background: #f9fafe;
 	}
 }
 

@@ -1,19 +1,17 @@
 .confirmDelete {
-	position: absolute;
+	position: fixed;
 	z-index: 9999;
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
 
 	&__overlay {
-
-	
 		position: absolute;
 		top: 0;
 	}
 
 	&__modal {
-		
 		position: relative;
 		top: 50%;
 		left: 50%;
@@ -42,7 +40,6 @@
 		line-height: 22px;
 		color: #888eb0;
 		margin-bottom: 2.4rem !important;
-
 	}
 	&__buttons {
 		text-align: end;
@@ -80,6 +77,5 @@
 
 .confirmation-exit-active {
 	opacity: 0;
-	transition: opacity 500ms ;
+	transition: opacity 500ms;
 }
-

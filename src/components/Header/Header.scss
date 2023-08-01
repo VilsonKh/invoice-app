@@ -1,5 +1,3 @@
-@import "../customBootstrap.scss";
-
 .header {
 	background: #373b53;
 	display: flex;
@@ -9,7 +7,6 @@
 	@media screen and (min-width: 1500px) {
 		position: fixed;
 		top: 0;
-		left: 0;
 		height: 100vh;
 		width: 102px;
 		border-radius: 0 20px 20px 0;
@@ -69,7 +66,7 @@
 	&__avatar {
 		height: 100%;
 		position: relative;
-		border-top: 2px solid #494e6e !important;
+
 		height: 72px;
 		width: 80px;
 
@@ -90,7 +87,7 @@
 
 		@media screen and (min-width: 1500px) {
 			// padding: 24px 31px;
-
+			border-top: 2px solid #494e6e !important;
 			& img {
 				width: 40px;
 			}

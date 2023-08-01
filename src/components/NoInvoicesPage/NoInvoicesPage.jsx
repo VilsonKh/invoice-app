@@ -7,7 +7,7 @@ const NoInvoicesPage = () => {
   return (
     <div className='container'>
       <div className='nothingPage__container'>
-        <img className='nothingPage__img' src={illustrationEmpty} alt="" />
+        <img className='nothingPage__img' src={illustrationEmpty} alt="noInvoiceImage" />
         <p className={`nothingPage__heading ${dark ? "dark-font" : ''}`}>There is nothing here</p>
         <p className='nothingPage__text'>Create an invoice by clicking the <span style={{'fontWeight': 'bold'}}>New</span> button and get started</p>
       </div>

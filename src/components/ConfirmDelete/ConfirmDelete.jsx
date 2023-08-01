@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import "./DeleteConf.scss";
+import "./ConfirmDelete.scss";
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
 import { deleteInvoice } from "../../firebase/service";
 import { CSSTransition } from "react-transition-group";
 
 
-const ConfirmDelete = ({confClose}) => {
+const ConfirmDelete = () => {
 	
 	const {currentInvoiceNumber,currentInvoiceId,setDeleteConf,setPreviewInvoice, isDeleteConf} = useContext(invoiceContext);
 	const {dark} = useContext(darkContext)

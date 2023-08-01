@@ -10,6 +10,10 @@ const ButtonBack = () => {
 
 	const {setIsNewInvoice, setPreviewInvoice,setIsEditInvoice, setDefaultFilters} = useContext(invoiceContext);
 
+
+	/**  Sets the value false for the states isPreviewInvoice, isEditInvoice, isNewInvoice and resets invoice filtering
+		* @return {void} nothing
+	*/
 	const onButtonBackClick = () => {
 		setPreviewInvoice(false);
 		setIsNewInvoice(false);
@@ -19,7 +23,7 @@ const ButtonBack = () => {
 
 	return (
 		<div onClick={onButtonBackClick} className={`addInvoice__button-container ${darkFont}`}>
-			<img src={leftArrow} alt="" />
+			<img src={leftArrow} alt="backArrow" />
 			<button  className={darkFont}>Go back</button>
 		</div>
 	);

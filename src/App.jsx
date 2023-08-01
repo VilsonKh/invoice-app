@@ -8,7 +8,7 @@ import Form from "./components/Form/Form";
 //context
 import invoiceContext from "./context/invoice/invoiceContext";
 //hooks
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 //libs
 import InvoicePreview from "./components/InvoicePreview/InvoicePreview";
 import darkContext from "./context/dark/darkContext";
@@ -26,15 +26,19 @@ function App() {
 		}
 	}, [isNewInvoice, isPreviewInvoice, isEditInvoice, isDeleteConf]);
 
-	useEffect(() => {
-		if (window.matchMedia) {
+	useLayoutEffect(() => {
+		if (localStorage.getItem("dark") === null) {
 			if (window.matchMedia("(prefers-color-scheme: dark").matches) {
 				toggleDarkMode();
-			} else {
 			}
-		} 
-		//eslint-disable-next-line
+		} else if (localStorage.getItem("dark") === 'true') {
+			toggleDarkMode()
+		} else {
+			return
+		}
+	// 	//eslint-disable-next-line
 	}, []);
+
 
 	return (
 		<>

@@ -14,6 +14,7 @@ import ToClientDateInput from "../FormInputs/ToClientDateInput";
 import PaymentTermsSelect from "../FormInputs/PaymentTermsSelect";
 import ProjectDescriptionMessage from "../ErrorMessages/ProjectDescriptionMessage";
 import InvoiceDateMessage from "../ErrorMessages/InvoiceDateMessage";
+import ProjectDescriptionInput from "../FormInputs/ProjectDescriptionInput";
 
 const FormPartBillTo = () => {
 	return (
@@ -100,7 +101,7 @@ const FormPartBillTo = () => {
 						</label>
 						<ProjectDescriptionMessage/>
 					</div>
-					
+					<ProjectDescriptionInput/>
 				</div>
 			</div>
 		</fieldset>

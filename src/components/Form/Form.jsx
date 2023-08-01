@@ -13,12 +13,11 @@ import { useForm, FormProvider } from "react-hook-form";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
-import { postNewInvoice } from "../../firebase/service";
 //animations
 import { CSSTransition } from "react-transition-group";
 
 
-const Form = ({ onClickCloseInvoiceForm }) => {
+const Form = () => {
 	const { isEditInvoice, isNewInvoice, currentInvoiceNumber, setIsEditInvoice, setIsNewInvoice } = useContext(invoiceContext);
 
 	const { dark } = useContext(darkContext);
@@ -49,7 +48,6 @@ const Form = ({ onClickCloseInvoiceForm }) => {
 
 
 	const backdropHandler = (e) => {
-		console.log(e.target)
 		if (e.target.className === "formPage") {
 			setIsNewInvoice(false);
 			setIsEditInvoice(false);
@@ -74,7 +72,7 @@ const Form = ({ onClickCloseInvoiceForm }) => {
 		>
 			<div className={`formPage`} onClick={(e) => backdropHandler(e)}>
 				<div className={`formContainer ${dark ? "dark-black" : ""}`} ref={nodeRef}>
-					{window.screen.width < "767" ? <ButtonBack onClickCloseInvoiceForm={onClickCloseInvoiceForm}></ButtonBack> : null}
+					{window.screen.width < "767" ? <ButtonBack ></ButtonBack> : null}
 					{visibleNewTitle && <h2 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>New Invoice</h2>}
 					{visibleEditTitle && (
 						<h1 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>
@@ -82,13 +80,10 @@ const Form = ({ onClickCloseInvoiceForm }) => {
 						</h1>
 					)}
 					<FormProvider {...formData}>
-						<form method="post" id="newInvoice" className={`form ${dark ? "dark-black" : ""}`} >
+						<form id="newInvoice" className={`form ${dark ? "dark-black" : ""}`} >
 							<FormPartBillFrom />
 							<FormPartBillTo />
-							<fieldset className="form__fieldset">
-								<legend className="form__legend-second">Item List</legend>
-								<FormPartItemsList />
-							</fieldset>
+							<FormPartItemsList />
 						</form>
 						{isEditInvoice && <EditInvoiceButtons />}
 						{isNewInvoice && <NewInvoiceButtons />}

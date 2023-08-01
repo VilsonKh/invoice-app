@@ -4,15 +4,15 @@ import "./InvoicePreview.scss";
 //components
 import ButtonBack from "../ButtonBack/ButtonBack";
 import StatusElem from "../StatusElem/StatusElem";
-import ConfirmDelete from "../DeleteConf/DeleteConf";
+import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
-import {  updateInvoiceStatus } from "../../firebase/service";
+import PreviewButtons from "../PreviewButtons/PreviewButtons";
 
-const InvoicePreview = (setIsPreviewOpen) => {
+const InvoicePreview = () => {
 	const { dark } = useContext(darkContext);
-	const { invoices, invoiceItems, currentInvoiceNumber, setIsEditInvoice, currentInvoiceId, setDeleteConf } = useContext(invoiceContext);
+	const { invoices, invoiceItems, currentInvoiceNumber} = useContext(invoiceContext);
 
 	const currentInvoice = [...invoices].filter((invoice) => {
 		if (invoice.invoiceId === currentInvoiceNumber) {
@@ -41,6 +41,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 	} = currentInvoice[0];
 
 	const paymentDue = new Date(new Date(createdAt).setDate(new Date(createdAt).getDate() + parseInt(paymentTerms)));
+
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
@@ -48,7 +49,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 
 	const TotalItemsSM = invoiceItems.map((elem, i) => {
 		return (
-			<li className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
+			<li key={i} className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
 				<div className="invoicePreview__list-item-left">
 					<p className="invoicePreview__itemName">{elem.name}</p>
 					<p className="invoicePreview__qtySum">
@@ -77,29 +78,13 @@ const InvoicePreview = (setIsPreviewOpen) => {
 	return (
 		<>
 			<ConfirmDelete />
-			<div className={`invoicePreview ${dark ? "dark-nav" : ""}`}>
+			<div className={`invoicePreview ${dark ? "dark-nav" : ""}`} data-testid="invoicePreview">
 				<div className="container">
-					<ButtonBack setIsPreviewOpen={setIsPreviewOpen}></ButtonBack>
+					<ButtonBack/>
 					<div className={`invoicePreview__status ${dark ? "dark-header" : ""}`}>
 						<p className="invoicePreview__status-text">Status</p>
 						<StatusElem status={status}></StatusElem>
-						<div className={`invoicePreview__groupButtons invoicePreview__statusButtons ${dark ? "dark-header" : ""}`}>
-							<button onClick={() => setIsEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
-								Edit
-							</button>
-
-							<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">
-								Delete
-							</button>
-							<button
-								onClick={() => updateInvoiceStatus(currentInvoiceId)}
-								style={status === "paid" ? { opacity: "0.5" } : null}
-								disabled={status === "paid" ? true : false}
-								className="invoicePreview__btn-paid"
-							>
-								Mark as Paid
-							</button>
-						</div>
+						{window.screen.width > 767 ? <PreviewButtons status={status}/> : null}
 					</div>
 					<div className={`invoicePreview__info ${dark ? "dark-header" : ""}`}>
 						<div className="invoicePreview__heading">
@@ -167,22 +152,7 @@ const InvoicePreview = (setIsPreviewOpen) => {
 							</div>
 						</div>
 					</div>
-					<div className={`invoicePreview__groupButtons ${dark ? "dark-header" : ""}`}>
-						<button onClick={() => setIsEditInvoice(true)} className={`invoicePreview__btn-edit ${dark ? "dark-light dark-font_purple" : ""}`}>
-							Edit
-						</button>
-						<button onClick={() => setDeleteConf(true)} className="invoicePreview__btn-delete">
-							Delete
-						</button>
-						<button
-							onClick={() => updateInvoiceStatus(currentInvoiceId)}
-							className="invoicePreview__btn-paid"
-							style={status === "paid" ? { opacity: "0.5" } : null}
-							disabled={status === "paid" ? true : false}
-						>
-							Mark as Paid
-						</button>
-					</div>
+					{window.screen.width < 767 ? <PreviewButtons status={status}/> : null}
 				</div>
 			</div>
 		</>

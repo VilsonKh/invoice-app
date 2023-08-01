@@ -3,23 +3,16 @@ import InvoiceContext from "./invoiceContext";
 import invoiceReducer, { initialState } from "./invoiceReducer";
 import {
 	GET_ALL_INVOICES,
-	ADD_NEW_FORMFIELD,
-	ADD_TO_ALL_INVOICES,
 	CHANGE_FILTERS,
-	CONFIRM_DELETE,
 	CURRENT_INVOICE_NUMBER,
-	DELETE_NEW_FORMFIELD,
 	IS_DELETE_CONF,
 	IS_EDIT_INVOICE,
 	IS_NEW_INVOICE,
 	IS_PREVIEW_INVOICE,
-	MARK_AS_PAID,
-	RESET_FORM,
 	GET_INVOICE_ITEMS,
-	SET_VISIBLE_INVOICES,
 	SET_CURRENT_INVOICE_ID,
-	SET_DEFAULT_FILTERS,
 	SET_IS_PENDING,
+	SET_DEFAULT_FILTERS,
 } from "../types";
 
 
@@ -51,13 +44,6 @@ const InvoiceState = ({ children }) => {
 		dispatch({
 			type: IS_PREVIEW_INVOICE,
 			payload: boolean,
-		});
-	};
-
-	const setVisibleInvoices = (numb) => {
-		dispatch({
-			type: SET_VISIBLE_INVOICES,
-			payload: numb,
 		});
 	};
 
@@ -96,50 +82,12 @@ const InvoiceState = ({ children }) => {
 		});
 	};
 
-	const confirmDeletion = () => {
-		dispatch({
-			type: CONFIRM_DELETE,
-		});
-	};
 
-
-	const resetForm = () => {
-		dispatch({
-			type: RESET_FORM,
-		});
-	};
 
 	const changeFilters = (filter) => {
 		dispatch({
 			type: CHANGE_FILTERS,
 			payload: filter,
-		});
-	};
-
-
-	const markAsPaid = () => {
-		dispatch({
-			type: MARK_AS_PAID,
-		});
-	};
-
-	const addNewFormfield = (invoiceNumber) => {
-		dispatch({
-			type: ADD_NEW_FORMFIELD,
-			payload: invoiceNumber
-		});
-	};
-
-	const deleteNewFormfield = () => {
-		dispatch({
-			type: DELETE_NEW_FORMFIELD,
-		});
-	};
-
-	const addToAllInvoices = (data) => {
-		dispatch({
-			type: ADD_TO_ALL_INVOICES,
-			payload: data,
 		});
 	};
 
@@ -168,20 +116,13 @@ const InvoiceState = ({ children }) => {
 		setIsNewInvoice,
 		setPreviewInvoice,
 		setIsEditInvoice,
-		resetForm,
 		changeFilters,
-		markAsPaid,
-		confirmDeletion,
 		setDeleteConf,
-		addNewFormfield,
-		deleteNewFormfield,
-		addToAllInvoices,
 		getAllInvoices,
 		getInvoiceItems,
-		setVisibleInvoices,
 		setCurrentInvoiceId,
-		setDefaultFilters,
-		setIsPending
+		setIsPending,
+		setDefaultFilters
 	};
 
 	return <InvoiceContext.Provider value={value}>

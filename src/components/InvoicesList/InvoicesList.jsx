@@ -12,7 +12,7 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 import { queryInvoiceItems, useQueryAllInvoicesData } from "../../firebase/service";
 
 const InvoicesList = () => {
-	const { invoices, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, getInvoiceItems, isPending } = useContext(invoiceContext);
+	const { invoices, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, getInvoiceItems, isPending, filters } = useContext(invoiceContext);
 
 	useQueryAllInvoicesData();
 
@@ -20,11 +20,7 @@ const InvoicesList = () => {
 		if (invoices.length === 0) {
 			return <NoInvoicesPage />;
 		} else {
-			let visibleList = [];
-			invoices.forEach((invoice) => {
-				visibleList.push(invoice);
-			});
-			const listItems = visibleList.map((invoice) => {
+			const listItems = invoices.map((invoice) => {
 				const { invoiceId, id, paymentDue, clientName, status, total } = invoice;
 				return <InvoicesItem key={id} id={id} number={invoiceId} dateDue={paymentDue} name={clientName} status={status} total={total} />;
 			});
@@ -49,26 +45,17 @@ const InvoicesList = () => {
 	return (
 		<section className="invoicesList">
 			<Navigation />
-			
+			{filters.length > 0 ? (
 				<div className="container">
 					{
 						<ul onClick={(e) => getCurrentInvoiceNumber(e)} className="invoicesList__list">
-							{isPending ? <span className="loader"></span> : items()}
-						</ul>
-					}
-				</div>
-			
-			{/* {filters.length > 0 ? (
-				<div className="container">
-					{
-						<ul onClick={(e) => getCurrentInvoiceNumber(e)} className="invoicesList__list">
-							{items()}
+								{isPending ? <span className="loader"></span> : items()}
 						</ul>
 					}
 				</div>
 			) : (  
 				<NoInvoicesPage /> 
-			)} */}
+			)}
 		</section>
 	);
 };

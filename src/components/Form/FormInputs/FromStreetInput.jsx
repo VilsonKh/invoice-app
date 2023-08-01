@@ -27,6 +27,7 @@ const FromStreetInput = () => {
 			id="fromStreet"
 			type="text"
 			defaultValue={fromStreet}
+			data-testid='testInput'
 			{...register("fromStreet", {
 				required: "can't be empty",
 				maxLength: {

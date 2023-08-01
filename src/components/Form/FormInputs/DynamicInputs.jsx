@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useMemo } from "react";
 import DynamicItemName from "../ErrorMessages/DynamicItemName";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import darkContext from "../../../context/dark/darkContext";
 import DynamicItemPrice from "../ErrorMessages/DynamicItemPrice";
 import busket from "../../../assets/icon-delete.svg";
 import invoiceContext from "../../../context/invoice/invoiceContext";
 import { item } from "../constants";
-import { ErrorMessage } from "@hookform/error-message";
 
 const DynamicInputs = ({ fields, remove, append }) => {
+	
 	const {
 		register,
 		control,
@@ -48,7 +48,10 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		if (isNewInvoice) {
 			const inputs = document.querySelectorAll("input");
 			inputs.forEach((input) => {
-				input.value = "";
+				//checking type is needed as cleaning all input will remove today's value
+				if(input.type !== 'date') {
+					input.value = "";
+				}
 			});
 			append(item, { shouldFocus: false });
 			setFocus("fromStreet");
@@ -104,17 +107,17 @@ const DynamicInputs = ({ fields, remove, append }) => {
 							id="qty"
 							defaultValue={field.quantity}
 							{...register(`items.${index}.quantity`, {
-								required: "can't be empty",
+								required: `quantity on line ${index + 1} can't be empty`,
 								max: {
 									value: 10,
-									message: "exceed max",
+									message: `quantity on line ${index + 1}  exceed max`,
 								},
 								pattern: {
-									value: /\d/,
-									message: "only numbers",
+									value: /^[0-9]*$/,
+									message: `quantity on line ${index + 1}  accept only integer`,
 								},
 								validate: {
-									numbers: (v) => parseInt(v) > 0 || "only positive",
+									numbers: (v) => parseInt(v) > 0 || `quantity on line ${index + 1}  accept only positive numbers`,
 								},
 							})}
 							aria-invalid={errors?.["items"]?.[index]?.["quantity"] ? true : false}
@@ -159,7 +162,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 						<ShowTotal index={index} />
 					</div>
 					<div className="form__button-container col-1">
-						<button type="button" className="form__button" onClick={() => remove(index)} disabled={fields.length === 1 ? true : false}>
+						<button data-testid="deleteButton" type="button" className="form__button" onClick={() => remove(index)} disabled={fields.length === 1 ? true : false}>
 							<img src={busket} alt="" />
 						</button>
 					</div>
