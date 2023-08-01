@@ -1,4 +1,4 @@
-import { DARK, SET_DARK } from '../types';
+import { DARK } from '../types';
 
 export const initialState = {
   dark: false,

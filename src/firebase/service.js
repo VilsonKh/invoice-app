@@ -22,6 +22,7 @@ export const useQueryAllInvoicesData = () => {
 			setIsPending(false);
 			getAllInvoices(results);
 		});
+		//eslint-disable-next-line
 	}, [filters]);
 };
 
@@ -31,14 +32,13 @@ export const queryInvoiceItems = async (docId, method) => {
 		const items = snapshot.docs;
 		let result = [];
 		items.map((item) => {
-			result.push({ ...item.data(), itemId: item.id });
+			return result.push({ ...item.data(), itemId: item.id });
 		});
 		method(result);
 	});
 };
 
 export const postNewInvoice = async (invoiceData, itemsData) => {
-	console.log("добавлен новый инвойс");
 	const batch = writeBatch(db);
 
 	//создает новый id документа
@@ -64,7 +64,6 @@ export const postNewInvoice = async (invoiceData, itemsData) => {
 };
 
 export const deleteInvoice = async (docId) => {
-	console.log("удален инвойс");
 	await deleteDoc(doc(db, `invoices/${docId}`));
 };
 
@@ -79,7 +78,6 @@ export const updateInvoice = async (invoiceId, invoiceData, itemsData, deletedIt
 	});
 
 	itemsData.forEach((item) => {
-		console.log(item);
 		if (item.itemId) {
 			batch.set(doc(db, "invoices", invoiceId, "items", item.itemId), { ...item });
 			//дополнительная проверка нужна для добавления нового item в старом invoice,тк этот item нужно просто добавить, а не перезаписать
@@ -92,7 +90,6 @@ export const updateInvoice = async (invoiceId, invoiceData, itemsData, deletedIt
 };
 
 export const updateInvoiceStatus = async (docId) => {
-	console.log(docId);
 	const docRef = doc(db, "invoices", docId);
 	await updateDoc(docRef, { status: "paid" });
 };

@@ -1,6 +1,5 @@
 // dark context
 export const DARK = "DARK";
-export const SET_DARK = "SET_DARK";
 //invoice context
 export const SET_IS_PENDING = "SET_IS_PENDING";
 export const CHANGE_FILTERS = "CHANGE_FILTERS";

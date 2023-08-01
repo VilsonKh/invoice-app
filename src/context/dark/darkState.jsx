@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import DarkContext from './darkContext';
 import darkReducer, { initialState } from './darkReducer';
-import { DARK, SET_DARK } from '../types';
+import { DARK } from '../types';
 
 const DarkState = (props) => {
 

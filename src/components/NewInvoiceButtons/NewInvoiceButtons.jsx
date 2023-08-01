@@ -31,7 +31,6 @@ const NewInvoiceButtons = () => {
 		const items = [...data.items];
 		delete data.items;
 		delete data.inputs;
-		console.log(data)
 
 		if (!items.length) {
 		} else {

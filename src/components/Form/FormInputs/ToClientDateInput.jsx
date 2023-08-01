@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect } from "react";
+import { useContext } from "react";
 import invoiceContext from "../../../context/invoice/invoiceContext";
 import darkContext from "../../../context/dark/darkContext";
 import { useFormContext } from "react-hook-form";
@@ -10,7 +10,6 @@ const ToClientDateInput = () => {
 	const {
 		register,
 		formState: { errors },
-    setValue
 	} = useFormContext();
 
 	const currentInvoice = [...invoices].filter((invoice) => {

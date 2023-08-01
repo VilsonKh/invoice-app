@@ -24,8 +24,6 @@ const FormPartItemsList = (formData) => {
 		setQuantityErrorMessage((prev) =>  [...prev, prev[prev.length - 1] + 1])
 	}
 
-	// console.log(errors?.["items"]?.[0]?.quantity?.message)
-
 	return (
 		<>
 			<fieldset className="form__fieldset">
