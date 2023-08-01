@@ -21,19 +21,13 @@ const ToClientDateInput = () => {
 	});
 
 	const { createdAt } = currentInvoice?.[0] ?? {};
-
-  useLayoutEffect(() => {
-		if (isNewInvoice) {
-			setValue("createdAt", getFormatedDate(new Date()));
-		}
-	}, [isNewInvoice, isEditInvoice])
 	
 	return (
 		<input
 			className={`form__input ${dark ? "dark-input" : ""}`}
 			id="date"
 			type="date"
-			defaultValue={setValue('createdAt', createdAt)}
+			defaultValue={isNewInvoice ? 	 getFormatedDate(new Date()) : createdAt}
 			{...register("createdAt", { required: true })}
 			aria-invalid={errors.createdAt ? "true" : "false"}
 			disabled={isEditInvoice ? true : false}

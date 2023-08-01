@@ -2,6 +2,7 @@
 	margin: 0 auto;
 	margin-bottom: 32px !important;
 	max-width: 730px;
+	background: inherit;
 
 	@media screen and (min-width: 767px) {
 		padding-top: 50px;
@@ -37,7 +38,7 @@
 
 	&__dropdown {
 		margin-right: 20px;
-		transition: opacity .3s linear;
+		
 		& img {
 			margin-left: 10px;
 		}

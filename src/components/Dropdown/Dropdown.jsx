@@ -20,9 +20,9 @@ const Dropdown = () => {
 
 	return (
 		<div className={`nav__dropdown d-flex align-items-center ${dark ? 'dark-font' : ''}`}>
-					<form className="dropdown nav__dropdown d-flex align-items-center">
-						<button className={`dropdown__button ${dark ? 'dark-font' : ''}`} type="button"  data-bs-toggle="dropdown" aria-expanded="false">
-							{window.screen.width > "767" ? 'Filter by status' : 'Filter'}
+					<div className="dropdown nav__dropdown d-flex align-items-center">
+						<button className={`dropdown__button ${dark ? 'dark-font' : ''}`} type="button"  data-bs-toggle="dropdown" aria-expanded="false" >
+							Filter <span>by status</span>
 						</button>
 						<ul onClick={(e)=> onFilterClick(e)} className={`dropdown-menu ${dark ? 'dark-font dark-light' : ''}`}>
 							<li className="dropdown-item">
@@ -50,7 +50,7 @@ const Dropdown = () => {
 								</div>
 							</li>
 						</ul>
-					</form>
+					</div>
 				</div>
 	);
 };

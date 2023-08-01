@@ -67,7 +67,7 @@
 		height: 100%;
 		position: relative;
 
-		height: 72px;
+
 		width: 80px;
 
 		& img {
@@ -80,8 +80,8 @@
 		}
 
 		@media screen and (min-width: 767px) {
-			height: 102px;
-			width: 102px;
+			height: 100px;
+			width: 100px;
 			border: none !important;
 		}
 
@@ -95,16 +95,4 @@
 	}
 }
 
-.dark-header {
-	background-color: #1e2139 !important;
-	color: white !important;
-}
 
-.dark-font {
-	color: white;
-}
-
-.dark-nav {
-	background-color: rgb(20, 22, 37);
-	color: white;
-}

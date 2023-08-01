@@ -78,7 +78,7 @@ const InvoicePreview = () => {
 	return (
 		<>
 			<ConfirmDelete />
-			<div className={`invoicePreview ${dark ? "dark-nav" : ""}`} data-testid="invoicePreview">
+			<div className={`invoicePreview ${dark ? "dark-black" : ""}`} data-testid="invoicePreview">
 				<div className="container">
 					<ButtonBack/>
 					<div className={`invoicePreview__status ${dark ? "dark-header" : ""}`}>
