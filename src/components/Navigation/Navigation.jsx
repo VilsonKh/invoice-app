@@ -29,7 +29,7 @@ const Navigation = () => {
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>
-					<p>{window.screen.width > '767' ? 'New Invoice' : 'New'}</p> 
+					<p>New <span>Invoice</span></p> 
 				</button>
 			</div>
 		</nav>
