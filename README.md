@@ -6,7 +6,7 @@ The **Invoice App** project can be accessed vie [this link]()
 
 ## Project Functionality
 
-The Invoice App simplifies the process of creating invoices through a user-friendly form. Users can input necessary details, such as client information, itemized charges, and due dates. The app employs the React Hook Form library for form validation, ensuring that all information entered is accurate and complete. If an invoice becomes irrelevant or is no longer needed, the app offers a deletion process.
+The Invoice App simplifies the process of creating invoices through a user-friendly form. Users can input necessary details, such as client information, itemized charges, and due dates. The app employs the React Hook Form library for form validation, ensuring that all information entered is accurate and complete. If an invoice becomes irrelevant or is no longer needed, the app offers a deletion process. The app covered with tests.
 
 <img width="1920" alt="InvoiceApp" src="https://github.com/VilsonKh/VilsonKh/blob/main/invoice%20app.png">
 
@@ -22,7 +22,8 @@ The project was developed using the following technology stack:
 -   React;
 -   React-hook-form;
 -   React Transition Group;
--   Firestore.
+-   Firestore;
+-   React testing library.
 
 ## Installation
 
