@@ -21,7 +21,7 @@ const FormPartBillFrom = () => {
 					<label className="form__label" htmlFor="fromStreet">
 						Street Address
 					</label>
-					<InputErrorMessage inputName={"fromStreet"}/>
+					<InputErrorMessage inputName={"fromStreet"} errors={errors}/>
 				</div>
 				<Input inputName={'fromStreet'} 
 							 defaultValue={fromStreet} 

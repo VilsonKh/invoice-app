@@ -1,16 +1,15 @@
-import React, { useContext } from 'react'
-import darkContext from '../../../context/dark/darkContext';
-import { useFormContext } from 'react-hook-form';
+import React, { useContext } from "react";
+import darkContext from "../../../context/dark/darkContext";
+import { useFormContext } from "react-hook-form";
 
-const Input = ({inputName, defaultValue, type, maxLength, minLength, content}) => {
-
+const Input = ({ inputName, defaultValue, type, maxLength, minLength, content }) => {
 	const { dark } = useContext(darkContext);
 	const {
 		register,
 		formState: { errors },
 	} = useFormContext();
 
-	const registerInputText = { 
+	const registerInputText = {
 		required: "can't be empty",
 		maxLength: {
 			value: maxLength,
@@ -22,9 +21,9 @@ const Input = ({inputName, defaultValue, type, maxLength, minLength, content}) =
 		},
 		pattern: {
 			value: /^[A-Za-z\s]+$/,
-			message: "incorrect city"
-		}
-	}
+			message: "incorrect city",
+		},
+	};
 
 	const registerInputNumber = {
 		required: "cant't be empty",
@@ -40,7 +39,7 @@ const Input = ({inputName, defaultValue, type, maxLength, minLength, content}) =
 			value: /^[0-9]/,
 			message: "only numbers",
 		},
-}
+	};
 
 	const registerInputEmail = {
 		required: "can't be empty",
@@ -49,35 +48,36 @@ const Input = ({inputName, defaultValue, type, maxLength, minLength, content}) =
 			value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
 			message: "incorrect email",
 		},
-}
+	};
 
-	let currentInputRegister = '';
+	let currentInputRegister = "";
 
 	switch (content) {
-		case 'text':
+		case "text":
 			currentInputRegister = registerInputText;
 			break;
-		case 'email':
+		case "email":
 			currentInputRegister = registerInputEmail;
 			break;
-		case 'postcode':
+		case "postcode":
 			currentInputRegister = registerInputNumber;
 			break;
 		default:
-			return
+			return;
 	}
-	// "fromCity"
-  return (
-    <input
-						name={inputName}
-						className={`form__input ${dark && "dark-input"}`}
-						id={inputName}
-						type={type}
-						defaultValue={defaultValue}
-						{...register(inputName, {...currentInputRegister})}
-						aria-invalid={errors.fromCity ? "true" : "false"}
-					/>
-  )
-}
 
-export default Input
+	const errorIndicator = errors[inputName] ? "true" : "false";
+	return (
+		<input
+			name={inputName}
+			className={`form__input ${dark && "dark-input"}`}
+			id={inputName}
+			type={type}
+			defaultValue={defaultValue}
+			{...register(inputName, { ...currentInputRegister })}
+			aria-invalid={errorIndicator}
+		/>
+	);
+};
+
+export default Input;

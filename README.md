@@ -8,7 +8,7 @@ The **Invoice App** project can be accessed vie [this link]()
 
 The Invoice App simplifies the process of creating invoices through a user-friendly form. Users can input necessary details, such as client information, itemized charges, and due dates. The app employs the React Hook Form library for form validation, ensuring that all information entered is accurate and complete. If an invoice becomes irrelevant or is no longer needed, the app offers a deletion process.
 
-<img width="1920" alt="InvoiceApp" src="https://github.com/VilsonKh/VilsonKh/blob/main/Invoice%20App.png">
+<img width="1920" alt="InvoiceApp" src="https://github.com/VilsonKh/VilsonKh/blob/main/invoice%20app.png">
 
 ## Technology Stack
 
@@ -38,7 +38,7 @@ The project was developed using the following technology stack:
   cd invoice-app
 ```
 
-3. change the name of the keys_public.env file to key.env using this command
+3. change the name of the keys_public.env file to .env using this command
 
 ```
   cp keys_public.env keys.env
