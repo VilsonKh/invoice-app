@@ -4,12 +4,11 @@ import darkContext from "../../../context/dark/darkContext";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { item } from "../constants";
 import DynamicInputs from "../FormInputs/DynamicInputs";
-import { ErrorMessage } from "@hookform/error-message";
+import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
 
 const FormPartItemsList = (formData) => {
 	const { dark } = useContext(darkContext);
-	const { control } = useFormContext();
-	const {formState: {errors}} = useFormContext();
+	const { control, formState: {errors} } = useFormContext();
 
 	const { fields, append, remove } = useFieldArray({
 		control,
@@ -36,17 +35,7 @@ const FormPartItemsList = (formData) => {
 				</div>
 				{quantityErrorMessage.map((index) => {
 					return (
-						<>
-							<ErrorMessage errors={errors} name={`items.${index}.quantity`} as={<p className="error-message"></p>} />
-
-							<ErrorMessage
-								errors={errors}
-								name={`items.${index}.quantity`}
-								render={({ message }) => {
-									<p>{message}</p>;
-								}}
-							/>
-						</>
+						<InputErrorMessage inputName={`items.${index}.quantity`} errors={errors}/>
 					);
 				})}
 			</fieldset>

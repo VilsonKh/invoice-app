@@ -8,7 +8,7 @@ import InvoicesItem from "../InvoicesItem/InvoicesItem";
 import { useContext } from "react";
 //context
 import invoiceContext from "../../context/invoice/invoiceContext";
-
+//service
 import { queryInvoiceItems, useQueryAllInvoicesData } from "../../firebase/service";
 
 const InvoicesList = () => {

@@ -1,15 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 
-const ToClientCityMessage = () => {
-  const {formState: {errors}} = useFormContext();
+const InputErrorMessage = ({inputName, errors}) => {
 	return (
 		<>
-			<ErrorMessage errors={errors} name="clientCity" as={<p className="error-message"></p>} />
+			<ErrorMessage errors={errors} name={inputName} as={<p className="error-message"></p>} />
 
 			<ErrorMessage
 				errors={errors}
-				name="clientCity"
+				name={inputName}
 				render={({ message }) => {
 					<p>{message}</p>;
 				}}
@@ -18,4 +17,4 @@ const ToClientCityMessage = () => {
 	);
 };
 
-export default ToClientCityMessage;
+export default InputErrorMessage;

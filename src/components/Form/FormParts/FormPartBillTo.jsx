@@ -1,22 +1,27 @@
-import ToClientNameInput from "../FormInputs/ToClientNameInput";
-import ToClientNameMessage from "../ErrorMessages/ToClientNameMessage";
-import ToClientEmailMessage from "../ErrorMessages/ToClientEmailMessage";
-import ToClientEmailInput from "../FormInputs/ToClientEmailInput";
-import ToClientStreetMessage from "../ErrorMessages/ToClientStreetMessage";
-import ToClientStreetInput from "../FormInputs/ToClientStreetInput";
-import ToClientCityMessage from "../ErrorMessages/ToClientCityMessage";
-import ToClientCityInput from "../FormInputs/ToClientCityInput";
-import ToClientPostCodeMessage from "../ErrorMessages/ToClientPostCodeMessage";
-import ToClientPostCodeInput from "../FormInputs/ToClientPostCodeInput";
-import ToClientCountryMessage from "../ErrorMessages/ToClientCountryMessage";
-import ToClientCountryInput from "../FormInputs/ToClientCountryInput";
 import ToClientDateInput from "../FormInputs/ToClientDateInput";
 import PaymentTermsSelect from "../FormInputs/PaymentTermsSelect";
-import ProjectDescriptionMessage from "../ErrorMessages/ProjectDescriptionMessage";
-import InvoiceDateMessage from "../ErrorMessages/InvoiceDateMessage";
-import ProjectDescriptionInput from "../FormInputs/ProjectDescriptionInput";
+import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
+import Input from "../FormInputs/Input";
+import invoiceContext from "../../../context/invoice/invoiceContext";
+import { useContext } from "react";
+import { useFormContext } from "react-hook-form";
 
 const FormPartBillTo = () => {
+
+	const { invoices, currentInvoiceNumber } = useContext(invoiceContext);
+	const {formState: {errors}} = useFormContext();
+
+	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
+
+	const { clientName, 
+					clientEmail, 
+					clientStreet, 
+					clientCity, 
+					clientPostCode,
+					clientCountry,
+					description,
+				} = currentInvoice?.[0] ?? {};
+
 	return (
 		<fieldset className="form__fieldset">
 			<legend className="form__legend">Bill To</legend>
@@ -25,27 +30,42 @@ const FormPartBillTo = () => {
 					<label className="form__label" htmlFor="name">
 						Client's Name
 					</label>
-					<ToClientNameMessage />
+					<InputErrorMessage inputName={'clientName'} errors={errors}/>
 				</div>
-				<ToClientNameInput />
+				<Input inputName={'clientName'} 
+								 defaultValue={clientName} 
+								 type={"text"}
+								 maxLength={20}
+								 minLength={2}
+								 content={"text"}/>
 			</div>
 			<div className="form__input-container col-12">
 				<div className="form__label-container">
 					<label className="form__label" htmlFor="email">
 						Client's Email
 					</label>
-					<ToClientEmailMessage />
+					<InputErrorMessage inputName={'clientEmail'} errors={errors}/>
 				</div>
-				<ToClientEmailInput />
+				<Input inputName={'clientEmail'} 
+								 defaultValue={clientEmail} 
+								 type={"text"}
+								 maxLength={20}
+								 minLength={2}
+								 content={"email"}/>
 			</div>
 			<div className="form__input-container col-12">
 				<div className="form__label-container">
 					<label className="form__label" htmlFor="toAddress">
 						Street Address
 					</label>
-					<ToClientStreetMessage />
+					<InputErrorMessage inputName={'clientStreet'} errors={errors}/>
 				</div>
-				<ToClientStreetInput />
+				<Input inputName={'clientStreet'} 
+								 defaultValue={clientStreet} 
+								 type={"text"}
+								 maxLength={20}
+								 minLength={2}
+								 content={"text"}/>
 			</div>
 			<div className="row">
 				<div className="form__input-container col-6 col-md-4">
@@ -53,27 +73,42 @@ const FormPartBillTo = () => {
 						<label className="form__label" htmlFor="toCity">
 							City
 						</label>
-						<ToClientCityMessage />
+						<InputErrorMessage inputName={'clientCity'} errors={errors}/>
 					</div>
-					<ToClientCityInput/>
+					<Input inputName={'clientCity'} 
+								 defaultValue={clientCity} 
+								 type={"text"}
+								 maxLength={20}
+								 minLength={2}
+								 content={"text"}/>
 				</div>
 				<div className="form__input-container col-6 col-md-4">
 					<div className="form__label-container">
 						<label className="form__label" htmlFor="toPostCode">
 							Post Code
 						</label>
-						<ToClientPostCodeMessage/>
+						<InputErrorMessage inputName={'clientPostCode'} errors={errors}/>
 					</div>
-					<ToClientPostCodeInput/>
+					<Input inputName={'clientPostCode'} 
+								 defaultValue={clientPostCode} 
+								 type={"text"}
+								 maxLength={8}
+								 minLength={6}
+								 content={"postcode"}/>
 				</div>
 				<div className="form__input-container col-12 col-md-4">
 					<div className="form__label-container">
 						<label className="form__label" htmlFor="toCountry">
 							Country
 						</label>
-						<ToClientCountryMessage/>
+						<InputErrorMessage inputName={'clientCountry'} errors={errors}/>
 					</div>
-					<ToClientCountryInput/>
+					<Input inputName={'clientCountry'} 
+								 defaultValue={clientCountry} 
+								 type={"text"}
+								 maxLength={20}
+								 minLength={2}
+								 content={"text"}/>
 				</div>
 			</div>
 			<div className="row">
@@ -82,7 +117,7 @@ const FormPartBillTo = () => {
 						<label className="form__label" htmlFor="date">
 							Invoice Date
 						</label>
-						<InvoiceDateMessage/>
+						<InputErrorMessage inputName={'createdAt'} errors={errors}/>
 					</div>
 					<ToClientDateInput/>
 				</div>
@@ -99,9 +134,14 @@ const FormPartBillTo = () => {
 						<label htmlFor="" className="form__label">
 							Project Desctiption
 						</label>
-						<ProjectDescriptionMessage/>
+						<InputErrorMessage inputName={'description'} errors={errors}/>
 					</div>
-					<ProjectDescriptionInput/>
+					<Input inputName={'description'} 
+								 defaultValue={description} 
+								 type={"text"}
+								 maxLength={40}
+								 minLength={2}
+								 content={"text"}/>
 				</div>
 			</div>
 		</fieldset>

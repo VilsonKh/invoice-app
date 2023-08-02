@@ -7,37 +7,32 @@ import { createRandomInvoiceNumber } from "../helpers/createInvoiceNumber";
 
 const NewInvoiceButtons = () => {
 	const formData = useFormContext();
-	const {setIsNewInvoice, setIsEditInvoice} = useContext(invoiceContext)
-		//создает новый рандомный ID
-
+	const { setIsNewInvoice, setIsEditInvoice } = useContext(invoiceContext);
+	//создает новый рандомный ID
 
 	const newInvoiceSubmitHandler = (data, e) => {
-
 		//суммирует items
 		let itemsSum = 0;
 		data.items.forEach((item) => {
 			itemsSum += +item.total;
 		});
 		data.total = itemsSum;
-		const status = e.target.getAttribute('id')
+		const status = e.target.getAttribute("id");
 		data.status = status;
 		data.invoiceId = createRandomInvoiceNumber();
 
 		const paymentDue = new Date(new Date(data.createdAt).setDate(new Date(data.createdAt).getDate() + parseInt(data.paymentTerms)));
-		data.paymentDue = getFormatedDate(paymentDue)
-
+		data.paymentDue = getFormatedDate(paymentDue);
 
 		//разделяет объект
 		const items = [...data.items];
 		delete data.items;
 		delete data.inputs;
 
-		if (!items.length) {
-		} else {
-			postNewInvoice(data, items);
-		}
-		setIsNewInvoice(false)
-		setIsEditInvoice(false)	
+		postNewInvoice(data, items);
+
+		setIsNewInvoice(false);
+		setIsEditInvoice(false);
 	};
 
 	return (

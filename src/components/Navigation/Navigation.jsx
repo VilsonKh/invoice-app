@@ -14,11 +14,6 @@ const Navigation = () => {
 	const { dark} = useContext(darkContext);
 	const {invoices,setIsNewInvoice} = useContext(invoiceContext)
 
-	const onClickButton = (e)=> {
-		e.preventDefault();
-		setIsNewInvoice(true);
-	}
-
 	return (
 		<nav className={"nav"}>
 			<div className="container d-flex justify-content-between">
@@ -30,7 +25,7 @@ const Navigation = () => {
 				</div>
 				
 				<Dropdown></Dropdown>
-				<button onClick={(e)=>onClickButton(e)} data-testid="newInvoiceButton" className="nav__addButton d-flex align-items-center ">
+				<button type="button" onClick={() => setIsNewInvoice(true)} data-testid="newInvoiceButton" className="nav__addButton d-flex align-items-center ">
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>

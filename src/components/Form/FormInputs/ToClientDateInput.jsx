@@ -12,12 +12,7 @@ const ToClientDateInput = () => {
 		formState: { errors },
 	} = useFormContext();
 
-	const currentInvoice = [...invoices].filter((invoice) => {
-		if (invoice.invoiceId === currentInvoiceNumber) {
-			return invoice;
-		}
-		return false;
-	});
+	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
 	const { createdAt } = currentInvoice?.[0] ?? {};
 	

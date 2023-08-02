@@ -10,12 +10,7 @@ const PaymentTermsSelect = () => {
 		register,
 	} = useFormContext();
 
-	const currentInvoice = [...invoices].filter((invoice) => {
-		if (invoice.invoiceId === currentInvoiceNumber) {
-			return invoice;
-		}
-		return false;
-	});
+	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
 	const { paymentTerms } = currentInvoice?.[0] ?? {};
 	return (

@@ -8,9 +8,10 @@ export const useQueryAllInvoicesData = () => {
 
 	useEffect(() => {
 		setIsPending(true);
-		let ref = query(collection(db, "invoices"), orderBy("createdAt", "desc"));
-
-		if (filters.length > 0) {
+		let ref = undefined;
+		if (!filters.length) {
+			return;
+		} else {
 			ref = query(collection(db, "invoices"), orderBy("createdAt", "desc"), where("status", "in", [...filters]));
 		}
 

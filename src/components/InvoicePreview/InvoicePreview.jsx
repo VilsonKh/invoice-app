@@ -14,12 +14,7 @@ const InvoicePreview = () => {
 	const { dark } = useContext(darkContext);
 	const { invoices, invoiceItems, currentInvoiceNumber} = useContext(invoiceContext);
 
-	const currentInvoice = [...invoices].filter((invoice) => {
-		if (invoice.invoiceId === currentInvoiceNumber) {
-			return invoice;
-		}
-		return false;
-	});
+	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
 	const {
 		status,

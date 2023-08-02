@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import DynamicItemName from "../ErrorMessages/DynamicItemName";
+import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
 import { useFormContext, useWatch } from "react-hook-form";
 import darkContext from "../../../context/dark/darkContext";
-import DynamicItemPrice from "../ErrorMessages/DynamicItemPrice";
 import busket from "../../../assets/icon-delete.svg";
 import invoiceContext from "../../../context/invoice/invoiceContext";
 import { item } from "../constants";
@@ -73,7 +72,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 							<label className="form__label" htmlFor="name">
 								Item Name
 							</label>
-              <DynamicItemName index={index}/>
+              <InputErrorMessage inputName={`items.${index}.name`}/>
 						</div>
 						<input
 							className={`form__input ${dark ? "dark-input" : ""}`}
@@ -114,10 +113,10 @@ const DynamicInputs = ({ fields, remove, append }) => {
 								},
 								pattern: {
 									value: /^[0-9]*$/,
-									message: `quantity on line ${index + 1}  accept only integer`,
+									message: `quantity on line ${index + 1}  accepts only integer`,
 								},
 								validate: {
-									numbers: (v) => parseInt(v) > 0 || `quantity on line ${index + 1}  accept only positive numbers`,
+									numbers: (v) => parseInt(v) > 0 || `quantity on line ${index + 1}  accepts only positive numbers`,
 								},
 							})}
 							aria-invalid={errors?.["items"]?.[index]?.["quantity"] ? true : false}
@@ -129,7 +128,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 							<label className="form__label" htmlFor="itemPrice">
 								Price
 							</label>
-							<DynamicItemPrice index={index} />
+							<InputErrorMessage inputName={`items.${index}.price`}/>
 						</div>
 
 						<input
