@@ -68,7 +68,7 @@
 
 .confirmation-enter-active {
 	opacity: 1;
-	transition: opacity 500ms;
+	transition: all 500ms;
 }
 
 .confirmation-exit {
@@ -77,5 +77,5 @@
 
 .confirmation-exit-active {
 	opacity: 0;
-	transition: opacity 500ms;
+	transition: all 500ms;
 }

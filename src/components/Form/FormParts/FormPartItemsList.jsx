@@ -33,9 +33,9 @@ const FormPartItemsList = (formData) => {
 						+ Add New Item
 					</button>
 				</div>
-				{quantityErrorMessage.map((index) => {
+				{quantityErrorMessage.map((index, i) => {
 					return (
-						<InputErrorMessage inputName={`items.${index}.quantity`} errors={errors}/>
+						<InputErrorMessage key={i} inputName={`items.${index}.quantity`} errors={errors}/>
 					);
 				})}
 			</fieldset>

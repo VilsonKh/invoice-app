@@ -72,7 +72,7 @@ const Form = () => {
 		>
 			<div className={`formPage`} onClick={(e) => backdropHandler(e)}>
 				<div className={`formContainer ${dark ? "dark-black" : ""}`} ref={nodeRef}>
-					{window.screen.width < "767" ? <ButtonBack ></ButtonBack> : null}
+					{window.screen.width < "767" && <ButtonBack ></ButtonBack>}
 					{visibleNewTitle && <h2 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>New Invoice</h2>}
 					{visibleEditTitle && (
 						<h1 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>

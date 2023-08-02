@@ -8,12 +8,14 @@ import Form from "./components/Form/Form";
 //context
 import invoiceContext from "./context/invoice/invoiceContext";
 //hooks
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 //libs
 import InvoicePreview from "./components/InvoicePreview/InvoicePreview";
+import darkContext from "./context/dark/darkContext";
 
 function App() {
 	const { isNewInvoice, isPreviewInvoice, isEditInvoice, isDeleteConf } = useContext(invoiceContext);
+	const {toggleDarkMode} = useContext(darkContext)
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -22,18 +24,33 @@ function App() {
 		} else {
 			window.document.body.className = "";
 		}
-	}, [isNewInvoice, isPreviewInvoice, isEditInvoice, isDeleteConf]);
+		//eslint-disable-next-line
+	}, [isNewInvoice, isPreviewInvoice,isDeleteConf]);
 
-
-
+	useLayoutEffect(() => {
+		if (localStorage.getItem("dark") === null) {
+			if (window.matchMedia("(prefers-color-scheme: dark").matches) {
+				toggleDarkMode();
+			}
+		} else if (localStorage.getItem("dark") === 'true') {
+			toggleDarkMode()
+		} else {
+			return
+		}
+		//eslint-disable-next-line
+	}, []);
 
 	return (
 		<>
-			<Header></Header>
-			<main>
-				<Form />
-				{isPreviewInvoice ? <InvoicePreview /> : <InvoicesList />}
-			</main>
+			<div className="themeWrapper">
+				<Header></Header>
+				<main>
+					{<Form />}
+					{/* {isPreviewInvoice ? <InvoicePreview /> : <InvoicesList />} */}
+					<InvoicePreview/>
+					<InvoicesList></InvoicesList>
+				</main>
+			</div>
 		</>
 	);
 }

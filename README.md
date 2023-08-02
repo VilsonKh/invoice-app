@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+## 🧾Invoice App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Invoice App is a tool designed to simplify your invoicing process. This app allows users to effortlessly create, delete, and edit invoices.
 
-## Available Scripts
+The **Invoice App** project can be accessed vie [this link]()
 
-In the project directory, you can run:
+## Project Functionality
 
-### `npm start`
+The Invoice App simplifies the process of creating invoices through a user-friendly form. Users can input necessary details, such as client information, itemized charges, and due dates. The app employs the React Hook Form library for form validation, ensuring that all information entered is accurate and complete. If an invoice becomes irrelevant or is no longer needed, the app offers a deletion process.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<img width="1920" alt="InvoiceApp" src="https://github.com/VilsonKh/VilsonKh/blob/main/Invoice%20App.png">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technology Stack
 
-### `npm test`
+The project was developed using the following technology stack:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   HTML;
+-   SCSS;
+-   Flex;
+-   Grid;
+-   Bootstrap
+-   React;
+-   React-hook-form;
+-   React Transition Group;
+-   Firestore.
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. clone repository to your local storage using this command
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+  git clone https://github.com/VilsonKh/invoice-app
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. browse to the folder "invoice-app" using this command
 
-### `npm run eject`
+```
+  cd invoice-app
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. change the name of the keys_public.env file to key.env using this command
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+  cp keys_public.env keys.env
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. paste your keys into the keys.env file
+5. install npm packages, using this command
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+  npm i
+```
 
-## Learn More
+6. launch the app using this command
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+  npm start
+```

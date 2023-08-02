@@ -16,7 +16,7 @@ const FormPartBillFrom = () => {
 	return (
 		<fieldset className="form__fieldset">
 			<legend className="form__legend">Bill From</legend>
-			<div	div className="form__input-container col-12">
+			<div className="form__input-container col-12">
 				<div className="form__label-container">
 					<label className="form__label" htmlFor="fromStreet">
 						Street Address

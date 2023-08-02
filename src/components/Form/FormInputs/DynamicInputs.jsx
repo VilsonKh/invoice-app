@@ -14,6 +14,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		setValue,
 		formState: { errors },
 		setFocus,
+
 	} = useFormContext();
 
 	const { dark } = useContext(darkContext);
@@ -33,12 +34,14 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		const updateTotal = useMemo(() => (+quantityWatch ?? 0) * (+priceWatch ?? 0), [quantityWatch, priceWatch]);
 
 		useEffect(() => {
-			if (updateTotal >= 0) {
+			if (updateTotal <= 99999) {
 				setValue(`items.${index}.total`, updateTotal);
 			}
 		}, [index, updateTotal]);
 
-		return <input name="total" className={`form__input form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={updateTotal} {...register(`items.${index}.total`, { required: true })} />;
+		return <input name="total" 
+									className={`form__input form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={toString(updateTotal)} 
+									{...register(`items.${index}.total`, { required: true })} />;
 	};
 
 	//очищает все инпуты
@@ -47,7 +50,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		if (isNewInvoice) {
 			const inputs = document.querySelectorAll("input");
 			inputs.forEach((input) => {
-				//checking type is needed as cleaning all input will remove today's value
+				//checking type is needed as cleaning all input will remove today's date
 				if(input.type !== 'date') {
 					input.value = "";
 				}

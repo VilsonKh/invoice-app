@@ -7,7 +7,7 @@ import sun from "../../assets/icon-sun.svg";
 import avatar from "../../assets/image-avatar.jpg";
 //context
 import darkContext from '../../context/dark/darkContext';
-import { useContext, useLayoutEffect } from 'react';
+import { useContext } from 'react';
 
 const Header = () => {
 
@@ -18,18 +18,7 @@ const Header = () => {
 		localStorage.setItem('dark', !dark)
 	}
 
-	useLayoutEffect(() => {
-		if (localStorage.getItem("dark") === null) {
-			if (window.matchMedia("(prefers-color-scheme: dark").matches) {
-				toggleDarkMode();
-			}
-		} else if (localStorage.getItem("dark") === 'true') {
-			toggleDarkMode()
-		} else {
-			return
-		}
-		//eslint-disable-next-line
-	}, []);
+
 
   return (
     <header className={`header ${dark ? "dark-header" : ''}`} data-testid="header">

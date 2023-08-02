@@ -44,3 +44,12 @@ ul, li {
   width: 0;
 }
 
+.themeWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  min-width: 375px;
+  transition: all .3s ease;
+}
+

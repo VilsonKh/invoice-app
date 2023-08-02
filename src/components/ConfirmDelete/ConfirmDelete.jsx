@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import "./ConfirmDelete.scss";
 import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
@@ -21,6 +21,8 @@ const ConfirmDelete = () => {
     setDeleteConf(false)
   }
 
+	const nodeRef = useRef(null)
+
 	return (
 		<CSSTransition
 			in={isDeleteConf}
@@ -28,8 +30,9 @@ const ConfirmDelete = () => {
 			classNames="confirmation"
 			mountOnEnter
 			unmountOnExit
+			nodeRef={nodeRef}
 		>
-		<div className={`confirmDelete`} onClick={onCloseClick}>
+		<div className={`confirmDelete`} onClick={onCloseClick} ref={nodeRef}>
 				<div className={`confirmDelete__modal ${dark ? 'dark-header' : ''}`}>
 					<h2 className="confirmDelete__title">Confirm Deletion</h2>
 					<p className="confirmDelete__text">Are you sure you want to delete invoice #{currentInvoiceNumber}? This action cannot be undone.</p>
