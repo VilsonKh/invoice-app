@@ -83,9 +83,9 @@ const InvoicePreview = () => {
 			mountOnEnter
 			unmountOnExit
 			nodeRef={nodeRef}
-			// onEntering={() => {
-			// 	setIsInvoicesListVisible(false)
-			// }}
+			onEntering={() => {
+				setIsInvoicesListVisible(false)
+			}}
 		>
 		
 			

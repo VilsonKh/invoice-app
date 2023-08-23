@@ -12,7 +12,7 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 import { queryInvoiceItems, useQueryAllInvoicesData } from "../../firebase/service";
 
 const InvoicesList = () => {
-	const { invoices, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, getInvoiceItems, isPending, filters, setIsInvoicesListVisible } = useContext(invoiceContext);
+	const { invoices, setCurrentInvoiceNumber, setPreviewInvoice, setCurrentInvoiceId, getInvoiceItems, isPending, filters } = useContext(invoiceContext);
 
 	useQueryAllInvoicesData();
 
