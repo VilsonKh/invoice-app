@@ -1,17 +1,24 @@
+//components
 import Input from "../FormInputs/Input";
 import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
+//hooks
 import { useContext } from "react";
+//context
 import invoiceContext from "../../../context/invoice/invoiceContext";
+//form conrol lib
 import { useFormContext } from "react-hook-form";
 
+//component renders fieldset with input
 const FormPartBillFrom = () => {
   const { invoices, currentInvoiceNumber } = useContext(invoiceContext);
   const {formState: {errors}} = useFormContext();
 
 	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 		
-
-	const { fromCity, fromStreet, senderPostCode, fromCountry} = currentInvoice?.[0] ?? {};
+	const { fromCity, 
+					fromStreet, 
+					senderPostCode, 
+					fromCountry} = currentInvoice?.[0] ?? {};
 
 	return (
 		<fieldset className="form__fieldset">

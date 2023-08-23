@@ -5,11 +5,13 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 import { getFormatedDate } from "../helpers/formatDate";
 import { createRandomInvoiceNumber } from "../helpers/createInvoiceNumber";
 
+//componets renders when isNewInvoice state is true
 const NewInvoiceButtons = () => {
 	const formData = useFormContext();
 	const { setIsNewInvoice, setIsEditInvoice } = useContext(invoiceContext);
 	//создает новый рандомный ID
 
+	//function get data from form, transform it and post it to the firestore
 	const newInvoiceSubmitHandler = (data, e) => {
 		//суммирует items
 		let itemsSum = 0;
@@ -38,13 +40,25 @@ const NewInvoiceButtons = () => {
 	return (
 		// onClick={onSaveButtonsClick}
 		<div className="addInvoice__groupButtons">
-			<button type="submit" form="newInvoice" id="discard" className="addInvoice__discard btn-status" onClick={() => setIsNewInvoice(false)}>
+			<button type="submit" 
+							form="newInvoice" 
+							id="discard" 
+							className="addInvoice__discard btn-status" 
+							onClick={() => setIsNewInvoice(false)}>
 				Discard
 			</button>
-			<button type="submit" form="newInvoice" id="draft" className="addInvoice__draft btn-status" onClick={formData.handleSubmit((data, e) => newInvoiceSubmitHandler(data, e))}>
+			<button type="submit" 
+							form="newInvoice" 
+							id="draft" 
+							className="addInvoice__draft btn-status" 
+							onClick={formData.handleSubmit((data, e) => newInvoiceSubmitHandler(data, e))}>
 				Save as Draft
 			</button>
-			<button type="submit" form="newInvoice" id="pending" className="addInvoice__send btn-status" onClick={formData.handleSubmit((data, e) => newInvoiceSubmitHandler(data, e))}>
+			<button type="submit" 
+							form="newInvoice" 
+							id="pending" 
+							className="addInvoice__send btn-status" 
+							onClick={formData.handleSubmit((data, e) => newInvoiceSubmitHandler(data, e))}>
 				Save & Send
 			</button>
 		</div>

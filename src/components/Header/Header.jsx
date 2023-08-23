@@ -15,10 +15,9 @@ const Header = () => {
 
 	const onChangeThemeClick = () => {
 		toggleDarkMode()
+		//localStorage saves defined theme mode to read id next change app theme for preferable mode
 		localStorage.setItem('dark', !dark)
 	}
-
-
 
   return (
     <header className={`header ${dark ? "dark-header" : ''}`} data-testid="header">
@@ -26,7 +25,9 @@ const Header = () => {
 					<div className="header__logo">
 						<img src={logo} alt="logo" />
 					</div>
-					<button onClick={onChangeThemeClick} data-testid="switchThemeButton" className="header__switcher">
+					<button onClick={onChangeThemeClick} 
+									data-testid="switchThemeButton" 
+									className="header__switcher">
 						{dark ? <img src={sun} alt="sun" /> : <img src={moon} alt="moon" />}
 					</button>
 				</div>

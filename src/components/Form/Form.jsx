@@ -15,13 +15,16 @@ import invoiceContext from "../../context/invoice/invoiceContext";
 import darkContext from "../../context/dark/darkContext";
 //animations
 import { CSSTransition } from "react-transition-group";
+//constants
+import { tabWidth } from "../helpers/const";
 
-
+//component assembles part of the form and define parametres for reach-hook-form
 const Form = () => {
 	const { isEditInvoice, isNewInvoice, currentInvoiceNumber, setIsEditInvoice, setIsNewInvoice } = useContext(invoiceContext);
 
 	const { dark } = useContext(darkContext);
 
+	//define react-hook-form
 	const formData = useForm({
 		mode: "onChange",
 		criteriaMode: "all",
@@ -37,6 +40,7 @@ const Form = () => {
 		},
 	});
 
+	//this hooks is used to UI purposes to change titles, when animation completed
 	const [visibleEditTitle, setVisibleEditTitle] = useState(false);
 	const [visibleNewTitle, setVisibleNewTitle] = useState(false);
 
@@ -46,7 +50,7 @@ const Form = () => {
 		//eslint-disable-next-line
 	}, [visibleEditTitle, visibleNewTitle]);
 
-
+	//close popup when click on backdrop
 	const backdropHandler = (e) => {
 		if (e.target.className === "formPage") {
 			setIsNewInvoice(false);
@@ -72,7 +76,7 @@ const Form = () => {
 		>
 			<div className={`formPage`} onClick={(e) => backdropHandler(e)}>
 				<div className={`formContainer ${dark ? "dark-black" : ""}`} ref={nodeRef}>
-					{window.screen.width < "767" && <ButtonBack ></ButtonBack>}
+					{window.screen.width < tabWidth && <ButtonBack ></ButtonBack>}
 					{visibleNewTitle && <h2 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>New Invoice</h2>}
 					{visibleEditTitle && (
 						<h1 className={`editInvoice__heading ${dark ? "dark-font" : ""}`}>

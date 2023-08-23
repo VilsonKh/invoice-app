@@ -1,7 +1,19 @@
-import React, { useContext } from "react";
+//hooks
+import { useContext } from "react";
+//context
 import darkContext from "../../../context/dark/darkContext";
+//form control lib
 import { useFormContext } from "react-hook-form";
 
+/**Component returns input element  with props
+ * @param inputName {string} - Name for registration in react-hook-form
+ * @param defaultValue {string} - Default value
+ * @param type {string} - Type of input (ex. text, number)
+ * @param maxLength {number} - Max length for text inputs
+ * @param minLength {number} - Min length for text inputs
+ * @param content {string} - Key to register input with correct parametrs
+ * @return {element} Input element defined with neccessary props
+*/
 const Input = ({ inputName, defaultValue, type, maxLength, minLength, content }) => {
 	const { dark } = useContext(darkContext);
 	const {

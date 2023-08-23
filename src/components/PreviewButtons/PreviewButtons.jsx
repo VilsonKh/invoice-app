@@ -1,8 +1,11 @@
+//context
 import { useContext } from "react"
 import invoiceContext from "../../context/invoice/invoiceContext"
 import darkContext from "../../context/dark/darkContext"
+//service
 import { updateInvoiceStatus } from "../../firebase/service"
 
+//component renders when isPreviewInvoice state is true
 const PreviewButtons = ({status}) => {
   const {dark} = useContext(darkContext)
   const {setIsEditInvoice, currentInvoiceId, setDeleteConf} = useContext(invoiceContext)

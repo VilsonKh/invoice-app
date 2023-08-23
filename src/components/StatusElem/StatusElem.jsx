@@ -2,6 +2,7 @@ import { useContext } from "react";
 import "./StatusElem.scss";
 import darkContext from "../../context/dark/darkContext";
 
+// component receives status like 'paid', 'pending' of 'paid' and renders with correct theme
 const StatusElem = ({ status }) => {
 	const { dark } = useContext(darkContext);
 	let statusText = "";

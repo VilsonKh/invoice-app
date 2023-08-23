@@ -1,5 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 
+//component render error message component from react-hook-form with passed props
 const InputErrorMessage = ({inputName, errors}) => {
 	return (
 		<>

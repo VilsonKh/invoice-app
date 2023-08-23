@@ -1,11 +1,16 @@
+//components
 import ToClientDateInput from "../FormInputs/ToClientDateInput";
 import PaymentTermsSelect from "../FormInputs/PaymentTermsSelect";
 import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
 import Input from "../FormInputs/Input";
+//context
 import invoiceContext from "../../../context/invoice/invoiceContext";
+//hooks
 import { useContext } from "react";
+//form conrol lib
 import { useFormContext } from "react-hook-form";
 
+//component renders fieldset with input
 const FormPartBillTo = () => {
 
 	const { invoices, currentInvoiceNumber } = useContext(invoiceContext);

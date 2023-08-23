@@ -1,14 +1,19 @@
+//hooks
 import { useContext, useState } from "react";
-import darkContext from "../../../context/dark/darkContext";
-
 import { useFieldArray, useFormContext } from "react-hook-form";
+//context
+import darkContext from "../../../context/dark/darkContext";
+//constant
 import { item } from "../constants";
+//components
 import DynamicInputs from "../FormInputs/DynamicInputs";
 import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
 
-const FormPartItemsList = (formData) => {
+//component renders dynamic inputs and error messages
+const FormPartItemsList = () => {
 	const { dark } = useContext(darkContext);
-	const { control, formState: {errors} } = useFormContext();
+	const { control, 
+					formState: {errors} } = useFormContext();
 
 	const { fields, append, remove } = useFieldArray({
 		control,

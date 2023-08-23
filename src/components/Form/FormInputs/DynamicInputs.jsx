@@ -1,11 +1,22 @@
-import React, { useContext, useEffect, useMemo } from "react";
+//hooks
+import { useContext, useEffect, useMemo } from "react";
+//components
 import InputErrorMessage from "../ErrorMessage/InputErrorMessage";
+//form control lib
 import { useFormContext, useWatch } from "react-hook-form";
+//context
 import darkContext from "../../../context/dark/darkContext";
-import busket from "../../../assets/icon-delete.svg";
 import invoiceContext from "../../../context/invoice/invoiceContext";
+//assets
+import busket from "../../../assets/icon-delete.svg";
+//constants
 import { item } from "../constants";
 
+/** Component renders dynamic inputs
+ * @param {array} fields - From react-hook-form lib. Needs to map inputs.
+ * @param {function} remove - From react-hook-form lib. Needs to delete element from fields.
+ * @param {function} append - From react-hook-form lib. Needs to add element ro fields.
+ */
 const DynamicInputs = ({ fields, remove, append }) => {
 	
 	const {
@@ -14,12 +25,15 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		setValue,
 		formState: { errors },
 		setFocus,
-
 	} = useFormContext();
 
 	const { dark } = useContext(darkContext);
 	const { isNewInvoice, isEditInvoice, invoiceItems } = useContext(invoiceContext);
 
+	/** Function watches for the quantity and price inputs changes and multiply them
+	 * @param {number} index - Index of element in fields array from react-hook-form
+	 * @return {element} The input with default value of multiplication
+	 */
 	const ShowTotal = ({ index }) => {
 		const quantityWatch = useWatch({
 			control,
@@ -44,7 +58,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 									{...register(`items.${index}.total`, { required: true })} />;
 	};
 
-	//очищает все инпуты
+	//clean all inputs
 	useEffect(() => {
 		remove();
 		if (isNewInvoice) {

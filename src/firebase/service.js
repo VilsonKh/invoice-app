@@ -3,6 +3,7 @@ import { db } from "./config";
 import { useContext, useEffect } from "react";
 import invoiceContext from "../context/invoice/invoiceContext";
 
+/** Function gets all invoices from firestore */
 export const useQueryAllInvoicesData = () => {
 	const { getAllInvoices, filters, setIsPending } = useContext(invoiceContext);
 
@@ -27,6 +28,10 @@ export const useQueryAllInvoicesData = () => {
 	}, [filters]);
 };
 
+/** Function gets single invoice dynamic items
+ * @params {string} docId - Firestore doc id
+ * @params {function} method - Stores received data in context
+ */
 export const queryInvoiceItems = async (docId, method) => {
 	const ref = query(collection(db, `invoices/${docId}/items`), orderBy("total"));
 	await getDocs(ref).then((snapshot) => {
@@ -39,6 +44,10 @@ export const queryInvoiceItems = async (docId, method) => {
 	});
 };
 
+/** Function add new invoice in firestore 
+ * @param {object} invoiceData - Data from form exclude dynamic items
+ * @param {object} itemsData - Data from form, only dynamic items
+ */
 export const postNewInvoice = async (invoiceData, itemsData) => {
 	const batch = writeBatch(db);
 
@@ -64,10 +73,19 @@ export const postNewInvoice = async (invoiceData, itemsData) => {
 	await batch.commit();
 };
 
+/** Function delete invoice from firestore
+ * @param {string} docId - Firestore document id
+ */
 export const deleteInvoice = async (docId) => {
 	await deleteDoc(doc(db, `invoices/${docId}`));
 };
 
+/** Function updates document in firestore
+ * @param {string} invoceId - Firestore document id
+ * @param {object} invoiceData - Data from form exclude dynamic inputs
+ * @param {object} itemsData - Data from form only dynamic inputs
+ * @param {array} deletedItemsId - Array with doc's id of items subcollection
+ */
 export const updateInvoice = async (invoiceId, invoiceData, itemsData, deletedItemsId) => {
 	const batch = writeBatch(db);
 
@@ -90,6 +108,7 @@ export const updateInvoice = async (invoiceId, invoiceData, itemsData, deletedIt
 	await batch.commit();
 };
 
+/** Functin updates invoice status */
 export const updateInvoiceStatus = async (docId) => {
 	const docRef = doc(db, "invoices", docId);
 	await updateDoc(docRef, { status: "paid" });

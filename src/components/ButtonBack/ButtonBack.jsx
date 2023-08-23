@@ -1,9 +1,14 @@
+//hooks
 import { useContext } from "react";
-import leftArrow from "../../assets/icon-arrow-left.svg";
+//context
 import darkContext from "../../context/dark/darkContext";
 import invoiceContext from "../../context/invoice/invoiceContext";
+//assets
+import leftArrow from "../../assets/icon-arrow-left.svg";
+//styles
 import "./ButtonBack.scss";
 
+//componenet is used to navigate backwards and reset opening states
 const ButtonBack = () => {
 	const {dark} = useContext(darkContext);
 	const darkFont = dark ? 'dark-font' : ''

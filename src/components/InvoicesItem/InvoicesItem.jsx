@@ -6,10 +6,13 @@ import StatusElem from "../StatusElem/StatusElem";
 import arrowRight from "../../assets/icon-arrow-right.svg";
 //hooks
 import { useContext } from "react";
+//context
 import darkContext from "../../context/dark/darkContext";
 
+//component renders items for main page
 const InvoicesItem = ({ id, number, name, dateDue, status, total }) => {
 	const { dark } = useContext(darkContext);
+
 	let dateText = new Date(dateDue).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 
 	const invoiceTotal = parseInt(total).toFixed(2);

@@ -11,6 +11,7 @@ import darkContext from "../../context/dark/darkContext";
 import invoiceContext from "../../context/invoice/invoiceContext";
 import { tabWidth } from "../helpers/const";
 
+//component renders a navigation bar 
 const Navigation = () => {
 	const { dark} = useContext(darkContext);
 	const {invoices,setIsNewInvoice} = useContext(invoiceContext)
@@ -21,12 +22,18 @@ const Navigation = () => {
 				<div className="nav__info">
 					<h1  className={`${dark ? 'dark-font' : ''}`}>Invoices</h1>
 					<p>
-						{window.screen.width > tabWidth ? <span>{`There are ${invoices.length} total invoices`}</span> : <span>{`${invoices.length} invoices`}</span> }
+						{
+						window.screen.width > tabWidth ? 
+						<span>{`There are ${invoices.length} total invoices`}</span> : 
+						<span>{`${invoices.length} invoices`}</span> 
+						}
 					</p>
 				</div>
-				
 				<Dropdown></Dropdown>
-				<button type="button" onClick={() => setIsNewInvoice(true)} data-testid="newInvoiceButton" className="nav__addButton d-flex align-items-center ">
+				<button type="button" 
+								onClick={() => setIsNewInvoice(true)} 
+								data-testid="newInvoiceButton" 
+								className="nav__addButton d-flex align-items-center">
 					<div className="addButton__icon">
 						<img src={addIcon} alt="" />
 					</div>

@@ -1,7 +1,13 @@
-import './NoInvoicesPage.scss'
-import illustrationEmpty from '../../assets/illustration-empty.svg'
-import darkContext from '../../context/dark/darkContext'
+//styles
+import './NoInvoicesPage.scss';
+//assets
+import illustrationEmpty from '../../assets/illustration-empty.svg';
+//context
+import darkContext from '../../context/dark/darkContext';
+//hooks
 import { useContext } from 'react'
+
+//component renders when there is no data in database
 const NoInvoicesPage = () => {
   const {dark} = useContext(darkContext)
   return (

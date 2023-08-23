@@ -13,9 +13,14 @@ import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
 import { tabWidth } from "../helpers/const";
 
+//renders preview component when isPreview invoice state is true
 const InvoicePreview = () => {
 	const { dark } = useContext(darkContext);
-	const { invoices, invoiceItems, currentInvoiceNumber, isPreviewInvoice, setIsInvoicesListVisible} = useContext(invoiceContext);
+	const { invoices, 
+					invoiceItems, 
+					currentInvoiceNumber, 
+					isPreviewInvoice, 
+					setIsInvoicesListVisible} = useContext(invoiceContext);
 
 	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
@@ -38,13 +43,16 @@ const InvoicePreview = () => {
 		total,
 	} = currentInvoice?.[0] ?? {};
 
+	//increases the 'created' date by the number of days defined by user in form 
 	const paymentDue = new Date(new Date(createdAt).setDate(new Date(createdAt).getDate() + parseInt(paymentTerms)));
 
+	//transforms date into UK format
 	const dateTransform = (date) => {
 		const invoiceDate = new Date(date).toLocaleDateString("en-GB", { month: "short", day: "numeric", year: "numeric" });
 		return invoiceDate;
 	};
 
+	//returns a list items for mobile and tabs
 	const TotalItemsSM = invoiceItems.map((elem, i) => {
 		return (
 			<li key={i} className={`invoicePreview__list-item ${dark ? "dark-light" : ""}`}>
@@ -60,7 +68,7 @@ const InvoicePreview = () => {
 			</li>
 		);
 	});
-
+	//returns a list items for desktop
 	const TotalItemsLG = invoiceItems.map((elem, i) => {
 		return (
 			<tr key={i}>
@@ -87,8 +95,6 @@ const InvoicePreview = () => {
 				setIsInvoicesListVisible(false)
 			}}
 		>
-		
-			
 				<div ref={nodeRef} className={`invoicePreview ${dark ? "dark-black" : ""}`} data-testid="invoicePreview">
 					<div className="container">
 						<ButtonBack/>
