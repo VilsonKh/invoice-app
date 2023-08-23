@@ -28,7 +28,7 @@ export const useQueryAllInvoicesData = () => {
 };
 
 export const queryInvoiceItems = async (docId, method) => {
-	const ref = collection(db, `invoices/${docId}/items`);
+	const ref = query(collection(db, `invoices/${docId}/items`), orderBy("total"));
 	await getDocs(ref).then((snapshot) => {
 		const items = snapshot.docs;
 		let result = [];
