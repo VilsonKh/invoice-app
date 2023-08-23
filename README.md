@@ -14,16 +14,16 @@ The Invoice App simplifies the process of creating invoices through a user-frien
 
 The project was developed using the following technology stack:
 
--   HTML;
--   SCSS;
--   Flex;
--   Grid;
+-   HTML
+-   SCSS
+-   Flex
+-   Grid
 -   Bootstrap
--   React;
--   React-hook-form;
--   React Transition Group;
--   Firestore;
--   React testing library.
+-   React
+-   React-hook-form
+-   React Transition Group
+-   Firestore
+-   React testing library
 
 ## Installation
 
