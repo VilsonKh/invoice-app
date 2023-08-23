@@ -34,10 +34,10 @@ const DynamicInputs = ({ fields, remove, append }) => {
 		const updateTotal = useMemo(() => (+quantityWatch ?? 0) * (+priceWatch ?? 0), [quantityWatch, priceWatch]);
 
 		useEffect(() => {
-			if (updateTotal <= 99999) {
+			if (!isNaN(updateTotal)) {
 				setValue(`items.${index}.total`, updateTotal);
 			}
-		}, [index, updateTotal]);
+		}, [index, updateTotal, quantityWatch, priceWatch]);
 
 		return <input name="total" 
 									className={`form__input form__totalPrice ${dark ? "dark-input" : ""}`} defaultValue={toString(updateTotal)} 
@@ -146,7 +146,7 @@ const DynamicInputs = ({ fields, remove, append }) => {
 									message: "exceed max",
 								},
 								pattern: {
-									value: /\d/,
+									value: /^[0-9]*$/,
 									message: "only numbers",
 								},
 								validate: {

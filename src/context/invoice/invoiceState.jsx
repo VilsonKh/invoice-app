@@ -13,6 +13,7 @@ import {
 	SET_CURRENT_INVOICE_ID,
 	SET_IS_PENDING,
 	SET_DEFAULT_FILTERS,
+	IS_INCOICESLIST_VISIBLE,
 } from "../types";
 
 
@@ -82,8 +83,6 @@ const InvoiceState = ({ children }) => {
 		});
 	};
 
-
-
 	const changeFilters = (filter) => {
 		dispatch({
 			type: CHANGE_FILTERS,
@@ -97,6 +96,13 @@ const InvoiceState = ({ children }) => {
 			payload: data,
 		});
 	};
+
+	const setIsInvoicesListVisible = (boolean) => {
+		dispatch({
+			type: IS_INCOICESLIST_VISIBLE,
+			payload: boolean,
+		})
+	}
 
 
 	const value = {
@@ -112,6 +118,7 @@ const InvoiceState = ({ children }) => {
 		currentInvoiceNumber: state.currentInvoiceNumber,
 		isDeleteConf: state.isDeleteConf,
 		isPending: state.isPending,
+		isInvoicesListVisible: state.isInvoicesListVisible,
 		setCurrentInvoiceNumber,
 		setIsNewInvoice,
 		setPreviewInvoice,
@@ -122,7 +129,8 @@ const InvoiceState = ({ children }) => {
 		getInvoiceItems,
 		setCurrentInvoiceId,
 		setIsPending,
-		setDefaultFilters
+		setDefaultFilters,
+		setIsInvoicesListVisible,
 	};
 
 	return <InvoiceContext.Provider value={value}>

@@ -21,7 +21,7 @@ const Input = ({ inputName, defaultValue, type, maxLength, minLength, content })
 		},
 		pattern: {
 			value: /^[A-Za-z\s]+$/,
-			message: "incorrect city",
+			message: "incorrect input",
 		},
 	};
 

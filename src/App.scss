@@ -50,6 +50,7 @@ ul, li {
   position: fixed;
   left: 0;
   min-width: 375px;
-  transition: all .3s ease;
+  transition: background-color .3s ease;
+  overflow: scroll;
 }
 

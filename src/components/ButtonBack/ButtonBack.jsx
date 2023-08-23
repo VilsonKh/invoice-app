@@ -8,7 +8,7 @@ const ButtonBack = () => {
 	const {dark} = useContext(darkContext);
 	const darkFont = dark ? 'dark-font' : ''
 
-	const {setIsNewInvoice, setPreviewInvoice,setIsEditInvoice, setDefaultFilters} = useContext(invoiceContext);
+	const {setIsNewInvoice, setPreviewInvoice,setIsEditInvoice, setDefaultFilters, setIsInvoicesListVisible} = useContext(invoiceContext);
 
 
 	/**  Sets the value false for the states isPreviewInvoice, isEditInvoice, isNewInvoice and resets invoice filtering
@@ -19,6 +19,7 @@ const ButtonBack = () => {
 		setIsNewInvoice(false);
 		setIsEditInvoice(false);
 		setDefaultFilters()
+		setIsInvoicesListVisible(true)
 	}
 
 	return (

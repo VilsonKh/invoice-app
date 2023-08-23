@@ -2,6 +2,7 @@ import {
 	CHANGE_FILTERS,
 	CURRENT_INVOICE_NUMBER,
 	GET_ALL_INVOICES,
+	IS_INCOICESLIST_VISIBLE,
 	IS_DELETE_CONF,
 	IS_EDIT_INVOICE,
 	IS_NEW_INVOICE,
@@ -20,6 +21,7 @@ export const initialState = {
 	isPreviewInvoice: false,
 	isEditInvoice: false,
 	isDeleteConf: false,
+	isInvoicesListVisible: true,
 	confirmDeletion: false,
 	currentInvoiceNumber: "",
 	filters: ["paid", "pending", "draft"],
@@ -102,6 +104,11 @@ const invoiceReducer = (state, action) => {
 				...state,
 				isDeleteConf: action.payload,
 			};
+		case IS_INCOICESLIST_VISIBLE:
+			return {
+				...state,
+				isInvoicesListVisible: action.payload,
+			}
 
 		default:
 			return state;

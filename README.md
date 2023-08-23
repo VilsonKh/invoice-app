@@ -39,7 +39,7 @@ The project was developed using the following technology stack:
   cd invoice-app
 ```
 
-3. change the name of the keys_public.env file to .env using this command
+3. change the name of the keys\_\_public.env file to .env using this command
 
 ```
   cp keys_public.env keys.env

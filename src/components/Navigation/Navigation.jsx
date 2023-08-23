@@ -9,6 +9,7 @@ import { useContext } from "react";
 //context
 import darkContext from "../../context/dark/darkContext";
 import invoiceContext from "../../context/invoice/invoiceContext";
+import { tabWidth } from "../helpers/const";
 
 const Navigation = () => {
 	const { dark} = useContext(darkContext);
@@ -20,7 +21,7 @@ const Navigation = () => {
 				<div className="nav__info">
 					<h1  className={`${dark ? 'dark-font' : ''}`}>Invoices</h1>
 					<p>
-						{window.screen.width > '767' ? <span>{`There are ${invoices.length} total invoices`}</span> : <span>{`${invoices.length} invoices`}</span> }
+						{window.screen.width > tabWidth ? <span>{`There are ${invoices.length} total invoices`}</span> : <span>{`${invoices.length} invoices`}</span> }
 					</p>
 				</div>
 				

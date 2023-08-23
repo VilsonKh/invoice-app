@@ -10,18 +10,21 @@ const ToClientDateInput = () => {
 	const {
 		register,
 		formState: { errors },
+		setValue
 	} = useFormContext();
 
 	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
 	const { createdAt } = currentInvoice?.[0] ?? {};
 	
+	if(isEditInvoice) setValue('createdAt', createdAt)
+
 	return (
 		<input
 			className={`form__input ${dark ? "dark-input" : ""}`}
 			id="date"
 			type="date"
-			defaultValue={isNewInvoice ? 	 getFormatedDate(new Date()) : createdAt}
+			defaultValue={isNewInvoice  ?	 getFormatedDate(new Date()) : createdAt}
 			{...register("createdAt", { required: true })}
 			aria-invalid={errors.createdAt ? "true" : "false"}
 			disabled={isEditInvoice ? true : false}

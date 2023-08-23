@@ -4,7 +4,10 @@
 	min-width: 375px;
 	background: #f8f8fb;
 	width: 100%;
-	// transition: background .3s ease;
+	height: 100vh;
+	@media screen and (min-width: 767px) {
+		position: fixed;
+	}
 
 	&__status {
 		display: flex;
@@ -14,7 +17,7 @@
 		background-color: white;
 		border-radius: 8px;
 		margin-bottom: 16px;
-		transition: all .3s auto;
+		transition: all 0.3s auto;
 
 		@media screen and (min-width: 767px) {
 			align-items: center;
@@ -269,8 +272,6 @@
 	color: #0c0e16;
 }
 
-
-
 .preview-enter {
 	transform: translateX(-100%);
 }
@@ -286,5 +287,5 @@
 
 .preview-exit-active {
 	transform: translateX(100%);
-	transition: all 500ms ;
+	transition: all 500ms;
 }

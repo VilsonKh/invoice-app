@@ -132,7 +132,7 @@ const FormPartBillTo = () => {
 				<div className="form__input-container col-12">
 					<div className="form__label-container">
 						<label htmlFor="" className="form__label">
-							Project Desctiption
+							Project Description
 						</label>
 						<InputErrorMessage inputName={'description'} errors={errors}/>
 					</div>

@@ -12,14 +12,15 @@ import { useContext, useEffect, useLayoutEffect } from "react";
 //libs
 import InvoicePreview from "./components/InvoicePreview/InvoicePreview";
 import darkContext from "./context/dark/darkContext";
+import { tabWidth } from "./components/helpers/const";
 
 function App() {
-	const { isNewInvoice, isPreviewInvoice, isEditInvoice, isDeleteConf } = useContext(invoiceContext);
+	const { isNewInvoice, isPreviewInvoice, isEditInvoice, isDeleteConf, isInvoicesListVisible } = useContext(invoiceContext);
 	const {toggleDarkMode} = useContext(darkContext)
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		if ((isNewInvoice || isEditInvoice || isDeleteConf) && window.screen.width > 767) {
+		if ((isNewInvoice || isEditInvoice || isDeleteConf) && window.screen.width > tabWidth) {
 			window.document.body.className = "blockScroll";
 		} else {
 			window.document.body.className = "";
@@ -46,9 +47,8 @@ function App() {
 				<Header></Header>
 				<main>
 					{<Form />}
-					{/* {isPreviewInvoice ? <InvoicePreview /> : <InvoicesList />} */}
 					<InvoicePreview/>
-					<InvoicesList></InvoicesList>
+					{isInvoicesListVisible && <InvoicesList/>}
 				</main>
 			</div>
 		</>

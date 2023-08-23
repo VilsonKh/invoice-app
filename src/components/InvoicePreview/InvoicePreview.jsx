@@ -11,10 +11,11 @@ import darkContext from "../../context/dark/darkContext";
 import PreviewButtons from "../PreviewButtons/PreviewButtons";
 import { CSSTransition } from "react-transition-group";
 import { useRef } from "react";
+import { tabWidth } from "../helpers/const";
 
 const InvoicePreview = () => {
 	const { dark } = useContext(darkContext);
-	const { invoices, invoiceItems, currentInvoiceNumber, isPreviewInvoice} = useContext(invoiceContext);
+	const { invoices, invoiceItems, currentInvoiceNumber, isPreviewInvoice, setIsInvoicesListVisible} = useContext(invoiceContext);
 
 	const currentInvoice = [...invoices].filter((invoice) => invoice.invoiceId === currentInvoiceNumber )
 
@@ -50,7 +51,7 @@ const InvoicePreview = () => {
 				<div className="invoicePreview__list-item-left">
 					<p className="invoicePreview__itemName">{elem.name}</p>
 					<p className="invoicePreview__qtySum">
-						<span>1</span> x £ <span>{parseInt(elem.price).toFixed()}</span>
+						<span>{elem.quantity}</span> x £ <span>{parseInt(elem.price).toFixed()}</span>
 					</p>
 				</div>
 				<div className="invoicePreview__list-item-right">
@@ -66,13 +67,12 @@ const InvoicePreview = () => {
 				<td>{elem.name}</td>
 				<td className="invoicePreview__qtyCell">{elem.quantity}</td>
 				<td className="invoicePreview__priceCell">{"£ " + parseInt(elem.price).toFixed().toLocaleString("en-GB")}</td>
-				<td className="invoicePreview__totalCell">{"£ " + parseInt(elem.price).toFixed().toLocaleString("en-GB")}</td>
+				<td className="invoicePreview__totalCell">{"£ " + parseInt(elem.total).toFixed().toLocaleString("en-GB")}</td>
 			</tr>
 		);
 	});
 
 	const nodeRef = useRef(null)
-
 	return (
 		<>
 			<ConfirmDelete />
@@ -83,14 +83,19 @@ const InvoicePreview = () => {
 			mountOnEnter
 			unmountOnExit
 			nodeRef={nodeRef}
+			// onEntering={() => {
+			// 	setIsInvoicesListVisible(false)
+			// }}
 		>
+		
+			
 				<div ref={nodeRef} className={`invoicePreview ${dark ? "dark-black" : ""}`} data-testid="invoicePreview">
 					<div className="container">
 						<ButtonBack/>
 						<div className={`invoicePreview__status ${dark ? "dark-header" : ""}`}>
 							<p className="invoicePreview__status-text">Status</p>
 							<StatusElem status={status}></StatusElem>
-							{window.screen.width > 767 ? <PreviewButtons status={status}/> : null}
+							{window.screen.width > tabWidth ? <PreviewButtons status={status}/> : null}
 						</div>
 						<div className={`invoicePreview__info ${dark ? "dark-header" : ""}`}>
 							<div className="invoicePreview__heading">
@@ -130,7 +135,7 @@ const InvoicePreview = () => {
 								<p className={`invoicePreview__email big-fs ${dark ? "dark-font" : ""}`}>{clientEmail}</p>
 							</div>
 							<div className="invoicePreview__totalItems">
-								{window.screen.width > "767" ? (
+								{window.screen.width > tabWidth ? (
 									<div className="invoicePreview__table-container">
 										<table className={`invoicePreview__table ${dark ? "dark-light" : ""}`}>
 											<thead className="invoicePreview__tableHead">
@@ -158,7 +163,7 @@ const InvoicePreview = () => {
 								</div>
 							</div>
 						</div>
-						{window.screen.width < 767 ? <PreviewButtons status={status}/> : null}
+						{window.screen.width < tabWidth ? <PreviewButtons status={status}/> : null}
 					</div>
 				</div>
 			</CSSTransition>
