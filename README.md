@@ -2,7 +2,7 @@
 
 The Invoice App is a tool designed to simplify your invoicing process. This app allows users to effortlessly create, delete, and edit invoices.
 
-The **Invoice App** project can be accessed vie [this link]()
+The **Invoice App** project can be accessed vie [this link](https://projects.devilson.me/invoice-app)
 
 ## Project Functionality
 

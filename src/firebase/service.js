@@ -44,7 +44,7 @@ export const queryInvoiceItems = async (docId, method) => {
 	});
 };
 
-/** Function add new invoice in firestore 
+/** Function add new invoice in firestore
  * @param {object} invoiceData - Data from form exclude dynamic items
  * @param {object} itemsData - Data from form, only dynamic items
  */
