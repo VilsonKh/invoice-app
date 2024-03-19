@@ -17,7 +17,11 @@ const ConfirmDelete = () => {
 				 currentInvoiceId,
 				 setDeleteConf,
 				 setPreviewInvoice, 
-				 isDeleteConf
+				 isDeleteConf,
+				 setIsEditInvoice,
+				 setIsNewInvoice,
+				 setDefaultFilters,
+				 setIsInvoicesListVisible
 				} = useContext(invoiceContext);
 
 	const {dark} = useContext(darkContext)
@@ -30,6 +34,17 @@ const ConfirmDelete = () => {
 
 	const nodeRef = useRef(null)
 
+	const onDeleteInvoice = () => {
+		setDeleteConf(false)
+    setIsEditInvoice(false)
+    setPreviewInvoice(false);
+		setIsNewInvoice(false);
+		setIsEditInvoice(false);
+		setDefaultFilters()
+		setIsInvoicesListVisible(true)
+
+  }
+
 	return (
 		<CSSTransition
 			in={isDeleteConf}
@@ -40,7 +55,7 @@ const ConfirmDelete = () => {
 			nodeRef={nodeRef}
 		>
 		<div className={`confirmDelete`} 
-				 onClick={() => setDeleteConf(false)} 
+				 onClick={onDeleteInvoice} 
 				 ref={nodeRef}>
 				<div className={`confirmDelete__modal ${dark ? 'dark-header' : ''}`}>
 					<h2 className="confirmDelete__title">Confirm Deletion</h2>
